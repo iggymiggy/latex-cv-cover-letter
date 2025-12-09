@@ -1,0 +1,11 @@
+# LaTeX build files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.bak
+
+# System files
+.DS_Store
