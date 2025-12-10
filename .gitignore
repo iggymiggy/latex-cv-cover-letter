@@ -23,8 +23,16 @@
 *.backup
 *.old
 
-# PDF files (excluded for now as requested)
+# PDF files (excluded, except in examples folder)
 *.pdf
+!examples/*.pdf
+
+# Build artifacts in examples folder (keep only PDFs)
+examples/*.aux
+examples/*.log
+examples/*.out
+examples/*.synctex.gz
+examples/*.synctex
 
 # LaTeX package files
 *.cls.bak
