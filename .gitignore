@@ -5,7 +5,40 @@
 *.log
 *.out
 *.synctex.gz
+*.synctex
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.idx
+*.ilg
+*.ind
+*.nav
+*.snm
+*.vrb
 *.bak
+*.backup
+*.old
 
-# System files
+# PDF files (excluded for now as requested)
+*.pdf
+
+# LaTeX package files
+*.cls.bak
+*.sty.bak
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp

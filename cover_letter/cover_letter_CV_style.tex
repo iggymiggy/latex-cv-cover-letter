@@ -1,0 +1,208 @@
+% !TEX program = pdflatex
+%-------------------------
+% Resume in LateX
+% Author : iggymiggy
+% Based on: Sourabh Bajaj repo
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{xcolor}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}  % Added for font awesome icons (LinkedIn and GitHub icons)
+% \input{glyphtounicode}  % Commented out - \pdfgentounicode=1 below already handles Unicode encoding
+
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate PDF is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textbf{#1}{: #2 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeItemSimple}[2]{
+  \item\small{
+    #2 \vspace{-2pt}
+  }
+}
+
+% Just in case someone needs a heading that does not need to be in a list
+\newcommand{\resumeHeading}[4]{
+    \begin{tabular*}{0.99\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheadingWithDetails}[6]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small#4} \\
+    \end{tabular*}
+    \vspace{-3pt} % Adjust spacing as needed
+    \begin{tabular*}{0.97\textwidth}[t]{l}
+      \textit{\small Major: #5 \hspace{20pt} Minor: #6} \\
+    \end{tabular*}
+    \vspace{-5pt} % Adjust spacing after details
+}
+
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+\renewcommand{\labelitemii}{$\circ$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+
+\newcommand{\resumeProjectItem}[4]{
+  \item\small{
+    \textbf{#1} — \textit{#2} \hfill \textit{\small #3}
+  }
+  \vspace{-4pt}
+  \begin{itemize}[leftmargin=1em]
+    \item\small{#4 \vspace{-2pt}}
+  \end{itemize}
+}
+
+%-------------------------
+\newcommand{\resumeCertificates}[1]{
+  \vspace{-4pt}
+  \section*{Certificates}  
+  \vspace{-3pt}  
+  \begin{tabularx}{\textwidth}{X r} % Two-column layout
+    #1
+  \end{tabularx}
+  \vspace{-5pt} % Reduce bottom space
+}
+
+%-------------------------
+% Letter section command with full page line (emphasized like original)
+\newcommand{\lettersection}[1]{
+  \vspace{12pt}
+  \noindent{\large\bfseries #1} \textcolor{gray}{\hrulefill} \\
+  \vspace{6pt}
+}
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+% %----------HEADING-----------------
+\begin{center}
+  {\Huge \textbf{John Doe}} \\
+  \vspace{2pt}
+  {\Large DevOps Engineer | Cloud Architect} \\
+  \vspace{4pt}
+  \href{https://www.linkedin.com/in/yourusername}{\faLinkedin\ linkedin.com/in/yourusername} \quad
+  \href{https://github.com/yourusername}{\faGithub\ github.com/yourusername} \quad
+  \href{https://yourportfolio.github.io}{\faFolderOpen\ yourportfolio.github.io} \\
+  \href{mailto:john.doe@pm.me}{john.doe@pm.me} \quad
+  \href{tel:+1234567890}{+1234567890} \\
+\end{center}
+
+\vspace{20pt}
+
+% %----------COMPANY DETAILS AND DATE-----------------
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l@{\extracolsep{0pt}}r}
+  \begin{minipage}[t]{0.5\textwidth}
+    \small
+    \textbf{Company Recruitment Team} \\
+    \textcolor{gray}{Google Inc.} \\
+    \textcolor{gray}{1600 Amphitheatre Parkway} \\
+    \textcolor{gray}{Mountain View, CA 94043} \\
+  \end{minipage} &
+  \begin{minipage}[t]{0.4\textwidth}
+    \small
+    \flushright
+    \textcolor{gray}{\today} \\
+  \end{minipage} \\
+\end{tabular*}
+
+\vspace{16pt}
+
+% %----------LETTER TITLE AND OPENING-----------------
+\noindent{\large\bfseries\underline{Job Application for Software Engineer}} \\
+\vspace{8pt}
+\noindent Dear Mr./Ms./Dr. LastName, \\
+\vspace{12pt}
+
+% %----------LETTER CONTENT-----------------
+\lettersection{About Me}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+LOLOLOLOOLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper neque sit amet lectus facilisis sed luctus nisl iaculis. Vivamus at neque arcu, sed tempor quam. Curabitur pharetra tincidunt tincidunt. Morbi volutpat feugiat mauris, quis tempor neque vehicula volutpat. Duis tristique justo vel massa fermentum accumsan. Mauris ante elit, feugiat vestibulum tempor eget, eleifend ac ipsum. Donec scelerisque lobortis ipsum eu vestibulum. Pellentesque vel massa at felis accumsan rhoncus.
+
+\lettersection{Why Google?}
+Suspendisse commodo, massa eu congue tincidunt, elit mauris pellentesque orci, cursus tempor odio nisl euismod augue. Aliquam adipiscing nibh ut odio sodales et pulvinar tortor laoreet. Mauris a accumsan ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse vulputate sem vehicula ipsum varius nec tempus dui dapibus. Phasellus et est urna, ut auctor erat. Sed tincidunt odio id odio aliquam mattis. Donec sapien nulla, feugiat eget adipiscing sit amet, lacinia ut dolor. Phasellus tincidunt, leo a fringilla consectetur, felis diam aliquam urna, vitae aliquet lectus orci nec velit. Vivamus dapibus varius blandit.
+
+\lettersection{Why Me?}
+Duis sit amet magna ante, at sodales diam. Aenean consectetur porta risus et sagittis. Ut interdum, enim varius pellentesque tincidunt, magna libero sodales tortor, ut fermentum nunc metus a ante. Vivamus odio leo, tincidunt eu luctus ut, sollicitudin sit amet metus. Nunc sed orci lectus. Ut sodales magna sed velit volutpat sit amet pulvinar diam venenatis.
+
+\vspace{12pt}
+
+% %----------LETTER CLOSING-----------------
+\vspace{8pt}
+\noindent Sincerely, \\
+\vspace{6pt}
+\noindent\textbf{John Doe} \\
+\vspace{20pt}
+\noindent\small\textcolor{gray}{\textit{Attached: Curriculum Vitae}}
+
+%-------------------------------------------
+\end{document}
