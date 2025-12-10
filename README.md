@@ -16,8 +16,14 @@ A clean, modern LaTeX template for CV and cover letter. ATS-friendly and easy to
 - `cover_letter_template.tex` - Cover letter template
 - `personal_info.tex` - Personal information (edit this)
 - `examples/` - Example PDF outputs
-  - [example_cv.pdf](examples/example_cv.pdf) - Example CV output
-  - [example_cover_letter.pdf](examples/example_cover_letter.pdf) - Example cover letter output
+
+## Examples
+
+![Example CV](examples/example_cv.png)
+[View PDF](examples/example_cv.pdf)
+
+![Example Cover Letter](examples/example_cover_letter.png)
+[View PDF](examples/example_cover_letter.pdf)
 
 ## Quick Start
 
