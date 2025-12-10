@@ -62,8 +62,8 @@ All sections can be modified or removed as needed.
 
 Set language in `personal_info.tex`:
 ```latex
-\newcommand{\mydatelanguage}{finnish}  % or "english"
-\newcommand{\mydate}{auto}  % or set manually
+\newcommand{\letterdatelanguage}{finnish}  % or "english"
+\newcommand{\letterdate}{auto}  % or set manually
 ```
 
 You can modify the date formatting for other languages by editing the babel configuration in `cover_letter_template.tex`.

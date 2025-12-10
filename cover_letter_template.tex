@@ -163,8 +163,8 @@
 \begin{document}
 
 % Set language and date based on personal_info.tex
-% Expand \mydatelanguage to get its value, then check
-\edef\templang{\mydatelanguage}%
+% Expand \letterdatelanguage to get its value, then check
+\edef\templang{\letterdatelanguage}%
 \def\tempfinnish{finnish}%
 \ifx\templang\tempfinnish
   \selectlanguage{finnish}%
@@ -173,13 +173,13 @@
 \fi
 
 % Use manual date if set, otherwise use \today (which respects the language)
-% Check if \mydate equals "auto" and replace with \today if so
+% Check if \letterdate equals "auto" and replace with \today if so
 % IMPORTANT: Language must be selected BEFORE expanding \today
 \def\checkdateauto{auto}%
-\edef\mydateexpanded{\mydate}%
-\ifx\mydateexpanded\checkdateauto
+\edef\letterdateexpanded{\letterdate}%
+\ifx\letterdateexpanded\checkdateauto
   % Use \protect to prevent expansion until the date is actually used
-  \renewcommand{\mydate}{\today}%
+  \renewcommand{\letterdate}{\today}%
 \fi
 
 % %----------HEADING-----------------
@@ -201,24 +201,24 @@
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l@{\extracolsep{0pt}}r}
   \begin{minipage}[t]{0.5\textwidth}
     \small
-    \textbf{\mycompanyname} \\
-    \textcolor{gray}{\mycompanyorg} \\
-    \textcolor{gray}{\mycompanyaddress} \\
-    \textcolor{gray}{\mycompanycity} \\
+    \textbf{\companyrecipient} \\
+    \textcolor{gray}{\companyname} \\
+    \textcolor{gray}{\companyaddress} \\
+    \textcolor{gray}{\companycity} \\
   \end{minipage} &
   \begin{minipage}[t]{0.4\textwidth}
     \small
     \flushright
-    \textcolor{gray}{\mydate} \\
+    \textcolor{gray}{\letterdate} \\
   \end{minipage} \\
 \end{tabular*}
 
 \vspace{16pt}
 
 % %----------LETTER TITLE AND OPENING-----------------
-\noindent{\large\bfseries\underline{\mylettertitle}} \\
+\noindent{\large\bfseries\underline{\lettertitle}} \\
 \vspace{8pt}
-\noindent \myletteropening \\
+\noindent \letteropening \\
 \vspace{12pt}
 
 % %----------LETTER CONTENT-----------------
@@ -228,7 +228,7 @@
 % EXAMPLE CONTENT - Replace with your actual cover letter content
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecati cupiditate non provident, sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
 
-\lettersection{Why \mycompanyorg?}
+\lettersection{Why \companyname?}
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
 
 \lettersection{Why Me?}
@@ -238,11 +238,11 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
 
 % %----------LETTER CLOSING-----------------
 \vspace{8pt}
-\noindent \myclosing, \\
+\noindent \letterclosing, \\
 \vspace{6pt}
 \noindent\textbf{\myname} \\
 \vspace{20pt}
-\noindent\small\textcolor{gray}{\textit{\myattachedline}}
+\noindent\small\textcolor{gray}{\textit{\letterattachment}}
 
 %-------------------------------------------
 \end{document}
