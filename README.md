@@ -19,11 +19,24 @@ A clean, modern LaTeX template for CV and cover letter. ATS-friendly and easy to
 
 ## Examples
 
+<table>
+<tr>
+<td width="50%">
+
 ![Example CV](examples/example_cv.png)
+
 [View PDF](examples/example_cv.pdf)
 
+</td>
+<td width="50%">
+
 ![Example Cover Letter](examples/example_cover_letter.png)
+
 [View PDF](examples/example_cover_letter.pdf)
+
+</td>
+</tr>
+</table>
 
 ## Quick Start
 
