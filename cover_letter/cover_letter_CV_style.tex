@@ -16,9 +16,11 @@
 \usepackage{xcolor}
 \usepackage{verbatim}
 \usepackage{enumitem}
+\usepackage{etoolbox}
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
-\usepackage[english]{babel}
+\usepackage[finnish,english]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{tabularx}
 \usepackage{fontawesome5}  % Added for font awesome icons (LinkedIn and GitHub icons)
 % \input{glyphtounicode}  % Commented out - \pdfgentounicode=1 below already handles Unicode encoding
@@ -140,20 +142,42 @@
 %-------------------------------------------
 %%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Load personal information
+\input{../personal_info}
 
 \begin{document}
 
+% Set language and date based on personal_info.tex
+% Expand \mydatelanguage to get its value, then check
+\edef\templang{\mydatelanguage}%
+\def\tempfinnish{finnish}%
+\ifx\templang\tempfinnish
+  \selectlanguage{finnish}%
+\else
+  \selectlanguage{english}%
+\fi
+
+% Use manual date if set, otherwise use \today (which respects the language)
+% Check if \mydate equals "auto" and replace with \today if so
+% IMPORTANT: Language must be selected BEFORE expanding \today
+\def\checkdateauto{auto}%
+\edef\mydateexpanded{\mydate}%
+\ifx\mydateexpanded\checkdateauto
+  % Use \protect to prevent expansion until the date is actually used
+  \renewcommand{\mydate}{\today}%
+\fi
+
 % %----------HEADING-----------------
 \begin{center}
-  {\Huge \textbf{John Doe}} \\
+  {\Huge \textbf{\myname}} \\
   \vspace{2pt}
-  {\Large DevOps Engineer | Cloud Architect} \\
+  {\Large \mytitle} \\
   \vspace{4pt}
-  \href{https://www.linkedin.com/in/yourusername}{\faLinkedin\ linkedin.com/in/yourusername} \quad
-  \href{https://github.com/yourusername}{\faGithub\ github.com/yourusername} \quad
-  \href{https://yourportfolio.github.io}{\faFolderOpen\ yourportfolio.github.io} \\
-  \href{mailto:john.doe@pm.me}{john.doe@pm.me} \quad
-  \href{tel:+1234567890}{+1234567890} \\
+  \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
+  \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
+  \href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\
+  \href{mailto:\myemail}{\myemail} \quad
+  \href{tel:\myphone}{\myphone} \\
 \end{center}
 
 \vspace{20pt}
@@ -162,24 +186,24 @@
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l@{\extracolsep{0pt}}r}
   \begin{minipage}[t]{0.5\textwidth}
     \small
-    \textbf{Company Recruitment Team} \\
-    \textcolor{gray}{Google Inc.} \\
-    \textcolor{gray}{1600 Amphitheatre Parkway} \\
-    \textcolor{gray}{Mountain View, CA 94043} \\
+    \textbf{\mycompanyname} \\
+    \textcolor{gray}{\mycompanyorg} \\
+    \textcolor{gray}{\mycompanyaddress} \\
+    \textcolor{gray}{\mycompanycity} \\
   \end{minipage} &
   \begin{minipage}[t]{0.4\textwidth}
     \small
     \flushright
-    \textcolor{gray}{\today} \\
+    \textcolor{gray}{\mydate} \\
   \end{minipage} \\
 \end{tabular*}
 
 \vspace{16pt}
 
 % %----------LETTER TITLE AND OPENING-----------------
-\noindent{\large\bfseries\underline{Job Application for Software Engineer}} \\
+\noindent{\large\bfseries\underline{\mylettertitle}} \\
 \vspace{8pt}
-\noindent Dear Mr./Ms./Dr. LastName, \\
+\noindent \myletteropening \\
 \vspace{12pt}
 
 % %----------LETTER CONTENT-----------------
@@ -198,11 +222,11 @@ Duis sit amet magna ante, at sodales diam. Aenean consectetur porta risus et sag
 
 % %----------LETTER CLOSING-----------------
 \vspace{8pt}
-\noindent Sincerely, \\
+\noindent \myclosing, \\
 \vspace{6pt}
-\noindent\textbf{John Doe} \\
+\noindent\textbf{\myname} \\
 \vspace{20pt}
-\noindent\small\textcolor{gray}{\textit{Attached: Curriculum Vitae}}
+\noindent\small\textcolor{gray}{\textit{\myattachedline}}
 
 %-------------------------------------------
 \end{document}
