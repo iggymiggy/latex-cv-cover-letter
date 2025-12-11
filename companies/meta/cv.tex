@@ -1,0 +1,328 @@
+% !TEX program = pdflatex
+%-------------------------
+% Professional CV Template in LaTeX
+% Author : iggymiggy
+% License : MIT
+%
+% One-page CV template, ATS-friendly and easy to customize.
+% Personal info from personal_info.tex, defaults from base_config.tex,
+% company-specific overrides from config.tex (in company folders).
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{xcolor}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}  % Added for font awesome icons (LinkedIn and GitHub icons)
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate PDF is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textbf{#1}{: #2 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeItemSimple}[2]{
+  \item\small{
+    #2 \vspace{-2pt}
+  }
+}
+
+% Just in case someone needs a heading that does not need to be in a list
+\newcommand{\resumeHeading}[4]{
+    \begin{tabular*}{0.99\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheadingWithDetails}[6]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small#4} \\
+    \end{tabular*}
+    \vspace{-3pt} % Adjust spacing as needed
+    \begin{tabular*}{0.97\textwidth}[t]{l}
+      \textit{\small Major: #5 \hspace{20pt} Minor: #6} \\
+    \end{tabular*}
+    \vspace{-5pt} % Adjust spacing after details
+}
+
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+\renewcommand{\labelitemii}{$\circ$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+
+\newcommand{\resumeProjectItem}[4]{
+  \item\small{
+    \textbf{#1} — \textit{#2} \hfill \textit{\small #3}
+  }
+  \vspace{-4pt}
+  \begin{itemize}[leftmargin=1em]
+    \item\small{#4 \vspace{-2pt}}
+  \end{itemize}
+}
+
+%-------------------------
+\newcommand{\resumeCertificates}[1]{
+  \vspace{-4pt}
+  \section*{Certificates}  
+  \vspace{-3pt}  
+  \begin{tabularx}{\textwidth}{X r} % Two-column layout
+    #1
+  \end{tabularx}
+  \vspace{-5pt} % Reduce bottom space
+}
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Load personal information
+% Handles compilation from root, templates/, or companies/company_name/
+\IfFileExists{../../personal_info.tex}{\input{../../personal_info}}{%
+\IfFileExists{../personal_info.tex}{\input{../personal_info}}{\input{personal_info}}}
+
+% Load base/default configuration first
+% This provides default values for all CV and cover letter fields
+\IfFileExists{../../templates/base_config.tex}{\input{../../templates/base_config}}{%
+\IfFileExists{../templates/base_config.tex}{\input{../templates/base_config}}{%
+\IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
+
+% Load company-specific configuration (optional)
+% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
+% Company config can override any field from base_config.tex using \renewcommand
+% If a field is not defined in config.tex, the base default will be used
+\IfFileExists{config.tex}{\input{config}}{}
+
+\begin{document}
+
+% %----------HEADING-----------------
+\begin{center}
+  {\Huge \textbf{\myname}} \\
+  \vspace{2pt}
+  {\Large \cvtitle} \\
+  \vspace{4pt}
+  \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
+  \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
+  \href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\
+  \href{mailto:\myemail}{\myemail} \quad
+  \href{tel:\myphone}{\myphone} \\
+\end{center}
+
+
+%-----------TECHNOLOGIES/SKILLS------------
+% Layout is defined in base_config.tex or company config.tex
+% Companies can override with single column, two columns, or skills format
+% Section header is included in the \cvtechnologies command
+\cvtechnologies
+
+%-----------EXPERIENCE-----------------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+  \resumeSubheading
+  {OpenAI}{\textcolor{gray}{San Francisco, CA}}
+  {AI-Powered Cloud Solutions Architect}{\textcolor{gray}{Oct 2023 -- Present}}
+  \resumeItemListStart
+    \resumeItemSimple{}
+      {Optimizing AI/ML cloud infrastructure for large-scale GPT models on AWS. Spearheading Kubernetes-based AI inference, cutting latency by 40\%. Automating MLOps with CI/CD for seamless deployments.}
+  \resumeItemListEnd
+
+
+  \resumeSubheading
+  {Meta}{\textcolor{gray}{Menlo Park, CA}}
+  {Lead DevOps Engineer}{\textcolor{gray}{Oct 2018 -- Sep 2023}}
+  \resumeItemListStart
+    \resumeItemSimple{}
+      {Led design and automation of Meta's global cloud infrastructure, supporting billions of daily requests. Architected highly available Kubernetes clusters, improving uptime to 99.99\%. Implemented Infrastructure-as-Code with Terraform and Ansible, reducing provisioning time by 70\%.
+      }
+  \resumeItemListEnd
+
+%--------Multiple Positions Heading------------
+  \resumeSubSubheading
+  {Senior Site Reliability Engineer (SRE)}{\textcolor{gray}{Oct 2016 -- Sep 2018}}
+  \resumeItemListStart
+    \resumeItemSimple{}
+      {Optimized large-scale distributed systems, improving fault tolerance and auto-recovery. Developed monitoring solutions with Prometheus and Grafana, reducing incident resolution time by 60\%.
+      }
+  \resumeItemListEnd
+
+%-------------------------------------------
+
+  \resumeSubheading
+    {Netflix}{\textcolor{gray}{Los Gatos, CA}}
+    {Junior DevOps Engineer}{\textcolor{gray}{Oct 2015 -- Sep 2016}}
+  \resumeItemListStart
+    \resumeItemSimple{}
+      {Managed cloud infrastructure for Netflix's streaming platform. Automated deployment with Terraform and AWS CloudFormation, reducing manual effort by 60\%. Improved CI/CD workflows, speeding up deployments.}
+  \resumeItemListEnd
+
+
+  \resumeSubHeadingListEnd
+
+%-----------EDUCATION-----------------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheadingWithDetails
+      {Stanford University}{\textcolor{gray}{Stanford, CA}}
+      {Master of Science in Data Science}{\textcolor{gray}{Oct 2013 -- Sep 2016}}
+      {Major in Data Analytics}{Minor in Machine Learning and AI Ethics}
+    \resumeSubheadingWithDetails
+      {Harvard University}{\textcolor{gray}{Cambridge, MA}}
+      {Bachelor of Science in Computer Science}{\textcolor{gray}{Oct 2011 -- Sep 2013}}
+      {Major in Computer Science}{Minor in Cognitive Neuroscience}
+  \resumeSubHeadingListEnd
+
+
+
+%-----------CERTIFICATES------------
+% Uses content from base_config.tex or company config.tex override
+% If empty, section is hidden
+% 
+% Certificate links: To make a certificate name clickable, wrap it in \href{url}{\textbf{Name}}
+% Example with link: \href{https://www.credly.com/badges/YOUR_BADGE_ID}{\textbf{Certificate Name}} & \textcolor{gray}{\textit{Date}}
+% Example without link: \textbf{Certificate Name} & \textcolor{gray}{\textit{Date}}
+% 
+% To get your Credly badge URL: Log into Credly, select your badge, copy the URL from the address bar
+% Credly badge URLs follow the format: https://www.credly.com/badges/BADGE_ID
+%
+% Check if command expands to empty by comparing expanded content
+\expandafter\def\expandafter\tempcheckcert\expandafter{\cvcertificates}
+\def\tempemptycert{}
+\ifx\tempcheckcert\tempemptycert
+\else
+  \resumeCertificates{\cvcertificates}%
+\fi
+
+%-----------OPEN SOURCE CONTRIBUTIONS------------
+% Uses content from base_config.tex or company config.tex override
+% If empty, section is hidden
+\expandafter\def\expandafter\tempcheckos\expandafter{\cvopensource}
+\def\tempemptyos{}
+\ifx\tempcheckos\tempemptyos
+\else
+  \section{Open Source Contributions}
+  \resumeSubHeadingListStart
+    \cvopensource
+  \resumeSubHeadingListEnd
+\fi
+
+%-----------VOLUNTEER WORK------------
+% Uses content from base_config.tex or company config.tex override
+% If empty, section is hidden
+\expandafter\def\expandafter\tempcheckvol\expandafter{\cvvolunteer}
+\def\tempemptyvol{}
+\ifx\tempcheckvol\tempemptyvol
+\else
+  \section{Volunteer Work}
+  \resumeSubHeadingListStart
+    \cvvolunteer
+  \resumeSubHeadingListEnd
+\fi
+
+%-----------LANGUAGES------------
+% Uses content from base_config.tex or company config.tex override
+% If empty, section is hidden
+\expandafter\def\expandafter\tempchecklang\expandafter{\cvlanguages}
+\def\tempemptylang{}
+\ifx\tempchecklang\tempemptylang
+\else
+  \section{Languages}
+  \resumeSubHeadingListStart
+    \cvlanguages
+  \resumeSubHeadingListEnd
+\fi
+
+%-----------AWARDS/HONORS------------
+% Uses content from base_config.tex or company config.tex override
+% If empty, section is hidden
+\expandafter\def\expandafter\tempcheckawards\expandafter{\cvawards}
+\def\tempemptyawards{}
+\ifx\tempcheckawards\tempemptyawards
+\else
+  \section{Awards \& Honors}
+  \resumeSubHeadingListStart
+    \cvawards
+  \resumeSubHeadingListEnd
+\fi
+
+% %-----------PROJECTS-----------------
+% \section{Projects}
+%   \resumeSubHeadingListStart
+%     \resumeProjectItem{Cloud Infrastructure Automation with AWS}{Cloud Engineer}{Jan 2023 -- Present}{
+%       Developed and automated a scalable cloud infrastructure using AWS CloudFormation and Terraform. Implemented VPCs, EC2 instances, and RDS databases with automated provisioning and scaling, reducing setup time by 50\%.
+%     }
+%     \resumeProjectItem{Kubernetes Cluster Deployment and Management}{DevOps Engineer}{Apr 2022 -- Dec 2022}{
+%       Designed and deployed highly available Kubernetes clusters on AWS EKS. Implemented Helm charts for application deployment, improving deployment consistency and reducing application downtime by 40\%.
+%     }
+%     \resumeProjectItem{CI/CD Pipeline with Azure DevOps}{DevOps Engineer}{Sep 2021 -- Mar 2022}{
+%       Automated build and deployment processes using Azure DevOps pipelines for a microservices architecture. Integrated automated testing and deployment strategies, cutting release cycle time by 60\%.
+%     }
+%     \resumeProjectItem{Dockerized Microservices Architecture}{Cloud Solutions Architect}{Jan 2021 -- Aug 2021}{
+%       Designed and deployed a microservices-based application using Docker containers and Kubernetes. Orchestrated services using AWS EKS, ensuring high availability and fault tolerance in production environments.
+%     }
+%   \resumeSubHeadingListEnd
+
+
+% %
+
+%-------------------------------------------
+\end{document}

@@ -1,0 +1,245 @@
+% !TEX program = pdflatex
+%-------------------------
+% Professional Cover Letter Template in LaTeX
+% Author : iggymiggy
+% License : MIT
+%
+% Cover letter template matching CV styling.
+% Personal info from personal_info.tex, defaults from base_config.tex,
+% company-specific overrides from config.tex (in company folders).
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{xcolor}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[finnish,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{fontawesome5}  % Added for font awesome icons (LinkedIn and GitHub icons)
+% \input{glyphtounicode}  % Commented out - \pdfgentounicode=1 below already handles Unicode encoding
+
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate PDF is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textbf{#1}{: #2 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeItemSimple}[2]{
+  \item\small{
+    #2 \vspace{-2pt}
+  }
+}
+
+% Just in case someone needs a heading that does not need to be in a list
+\newcommand{\resumeHeading}[4]{
+    \begin{tabular*}{0.99\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheadingWithDetails}[6]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small#4} \\
+    \end{tabular*}
+    \vspace{-3pt} % Adjust spacing as needed
+    \begin{tabular*}{0.97\textwidth}[t]{l}
+      \textit{\small Major: #5 \hspace{20pt} Minor: #6} \\
+    \end{tabular*}
+    \vspace{-5pt} % Adjust spacing after details
+}
+
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+\renewcommand{\labelitemii}{$\circ$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+
+\newcommand{\resumeProjectItem}[4]{
+  \item\small{
+    \textbf{#1} — \textit{#2} \hfill \textit{\small #3}
+  }
+  \vspace{-4pt}
+  \begin{itemize}[leftmargin=1em]
+    \item\small{#4 \vspace{-2pt}}
+  \end{itemize}
+}
+
+%-------------------------
+\newcommand{\resumeCertificates}[1]{
+  \vspace{-4pt}
+  \section*{Certificates}  
+  \vspace{-3pt}  
+  \begin{tabularx}{\textwidth}{X r} % Two-column layout
+    #1
+  \end{tabularx}
+  \vspace{-5pt} % Reduce bottom space
+}
+
+%-------------------------
+% Letter section command with full page line (emphasized like original)
+\newcommand{\lettersection}[1]{
+  \vspace{12pt}
+  \noindent{\large\bfseries #1} \textcolor{gray}{\hrulefill} \\
+  \vspace{6pt}
+}
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Load personal information
+% Handles compilation from root, templates/, or companies/company_name/
+\IfFileExists{../../personal_info.tex}{\input{../../personal_info}}{%
+\IfFileExists{../personal_info.tex}{\input{../personal_info}}{\input{personal_info}}}
+
+% Load base/default configuration first
+% This provides default values for all CV and cover letter fields
+\IfFileExists{../../templates/base_config.tex}{\input{../../templates/base_config}}{%
+\IfFileExists{../templates/base_config.tex}{\input{../templates/base_config}}{%
+\IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
+
+% Load company-specific configuration (optional)
+% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
+% Company config can override any field from base_config.tex using \renewcommand
+% If a field is not defined in config.tex, the base default will be used
+\IfFileExists{config.tex}{\input{config}}{}
+
+\begin{document}
+
+% Set date language (from base_config.tex or config.tex override)
+\edef\templang{\letterdatelanguage}%
+\def\tempfinnish{finnish}%
+\ifx\templang\tempfinnish
+  \selectlanguage{finnish}%
+\else
+  \selectlanguage{english}%
+\fi
+
+% Set date (auto uses \today, respects language setting)
+\def\checkdateauto{auto}%
+\edef\letterdateexpanded{\letterdate}%
+\ifx\letterdateexpanded\checkdateauto
+  \renewcommand{\letterdate}{\today}%
+\fi
+
+%-----------HEADING------------
+\begin{center}
+  {\Huge \textbf{\myname}} \\
+  \vspace{2pt}
+  {\Large \cvtitle} \\
+  \vspace{4pt}
+  \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
+  \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
+  \href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\
+  \href{mailto:\myemail}{\myemail} \quad
+  \href{tel:\myphone}{\myphone} \\
+\end{center}
+
+\vspace{20pt}
+
+% %----------COMPANY DETAILS AND DATE-----------------
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l@{\extracolsep{0pt}}r}
+  \begin{minipage}[t]{0.52\textwidth}
+    \small
+    \raggedright
+    \textbf{\companyrecipient} \\
+    \textcolor{gray}{\companyname} \\
+    \textcolor{gray}{\companyaddress} \\
+    \textcolor{gray}{\companycity} \\
+  \end{minipage} &
+  \begin{minipage}[t]{0.38\textwidth}
+    \small
+    \raggedleft
+    \textcolor{gray}{\letterdate} \\
+  \end{minipage} \\
+\end{tabular*}
+
+\vspace{36pt}
+
+%-----------LETTER TITLE AND OPENING------------
+\noindent{\large\bfseries\underline{\lettertitle}} \\
+\vspace{8pt}
+\noindent \letteropening \\
+\vspace{12pt}
+
+%-----------LETTER CONTENT------------
+% Content from base_config.tex or config.tex override
+\lettersection{About Me}
+\letteraboutme
+
+\lettersection{Why \companyname?}
+\letterwhycompany
+
+\lettersection{Why Me?}
+\letterwhyme
+
+\vspace{12pt}
+
+%-----------LETTER CLOSING------------
+\vspace{8pt}
+\noindent \letterclosing, \\
+\vspace{6pt}
+\noindent\textbf{\myname} \\
+\vspace{20pt}
+\noindent\small\textcolor{gray}{\textit{\letterattachment}}
+
+%-------------------------------------------
+\end{document}

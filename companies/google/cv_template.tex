@@ -141,7 +141,25 @@
 %%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Load personal information
-\input{personal_info}
+% Handles compilation from root, templates/, or companies/company_name/
+\IfFileExists{../../personal_info.tex}{\input{../../personal_info}}{%
+\IfFileExists{../personal_info.tex}{\input{../personal_info}}{\input{personal_info}}}
+
+% Load company-specific configuration (optional)
+% When compiling from companies/nasa/, companies/google/, etc., this loads company_info.tex
+% If not defined, CV will use default content
+\IfFileExists{company_info.tex}{\input{company_info}}{}
+
+% Default title if company-specific not defined
+\providecommand{\cvtitle}{Cloud Evangelist | AI Whisperer}
+
+% Default technologies if company-specific not defined
+\providecommand{\cvtechnologies}{%
+\textbf{Cloud:} AWS, Azure \\
+\textbf{Containerization \& Orchestration: } Docker, Kubernetes \\
+\textbf{CI/CD \& IaaC:} Terraform, Pulumi, Ansible, Jenkins, GitLab, Azure DevOps \\ 
+\textbf{Languages:} Python, React
+}
 
 \begin{document}
 
@@ -149,7 +167,7 @@
 \begin{center}
   {\Huge \textbf{\myname}} \\
   \vspace{2pt}
-  {\Large \mytitle} \\
+  {\Large \cvtitle} \\
   \vspace{4pt}
   \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
   \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
@@ -173,12 +191,10 @@
 % \resumeSubHeadingListEnd
 
 % % Version 2: Technologies Section
+% Uses company-specific content if defined, otherwise uses default
 \section*{Technologies}
 \noindent
-\textbf{Cloud:} AWS, Azure \\
-\textbf{Containerization \& Orchestration: } Docker, Kubernetes \\
-\textbf{CI/CD \& IaaC:} Terraform, Pulumi, Ansible, Jenkins, GitLab, Azure DevOps \\ 
-\textbf{Languages:} Python, React
+\cvtechnologies
 
 %-----------EXPERIENCE-----------------
 \section{Experience}
@@ -244,13 +260,23 @@
 \resumeCertificates{
   \textbf{AWS Certified Solutions Architect – Professional} & \textcolor{gray}{\textit{May 2022 - May 2025}} \\
   \textbf{AWS Certified DevOps Engineer – Professional} & \textcolor{gray}{\textit{May 2019 - May 2022}} \\
-  \textbf{AWS Certified Solutions Architect – Associate} & \textcolor{gray}{\textit{Dec 2018 - Dec 2021}} \\
-  \textbf{AWS Certified Developer – Associate} & \textcolor{gray}{\textit{Sep 2017 - May 2022}} \\
   \textbf{CKA: Certified Kubernetes Administrator} & \textcolor{gray}{\textit{Aug 2024 - Aug 2026}} \\
   \textbf{Microsoft Certified: DevOps Engineer Expert} & \textcolor{gray}{\textit{Jan 2021 - Jan 2026}} \\
-  \textbf{Microsoft Certified: Azure Administrator Associate} & \textcolor{gray}{\textit{Jan 2021 - Jan 2026}} \\
 
 }
+
+%-----------Open Source Contributions (Optional)-----------------
+% Uncomment to add open source section
+% \section{Open Source Contributions}
+%   \resumeSubHeadingListStart
+%     \resumeSubheading
+%       {Kubernetes}{\textcolor{gray}{GitHub}}
+%       {Core Contributor}{\textcolor{gray}{2022 -- Present}}
+%       \resumeItemListStart
+%         \resumeItemSimple{}
+%           {Contributing to Kubernetes core infrastructure, focusing on container orchestration improvements and performance optimizations.}
+%       \resumeItemListEnd
+%   \resumeSubHeadingListEnd
 
 % %-----------PROJECTS-----------------
 % \section{Projects}

@@ -1,0 +1,77 @@
+% Company-specific configuration for NASA
+% Overrides base_config.tex defaults using \renewcommand
+% Only define fields that differ from base defaults
+
+%-----------COMPANY DETAILS------------
+\renewcommand{\companyrecipient}{NASA Recruitment Team}
+\renewcommand{\companyname}{NASA}
+\renewcommand{\companyaddress}{300 E Street SW}
+\renewcommand{\companycity}{Washington, DC 20546}
+
+%-----------COVER LETTER SETTINGS------------
+\renewcommand{\letterdatelanguage}{english}
+\renewcommand{\letterdate}{auto}
+\renewcommand{\letterclosing}{Sincerely}
+\renewcommand{\letteropening}{Dear Hiring Manager,}
+\renewcommand{\lettertitle}{Job Application for Distinguished Engineer}
+\renewcommand{\letterattachment}{Attached: Curriculum Vitae}
+
+% Letter Content (override base defaults)
+% About Me section - introduce yourself and your background
+\renewcommand{\letteraboutme}{%
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+}
+
+% Why [Company Name]? section - explain your interest in the company
+\renewcommand{\letterwhycompany}{%
+  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+}
+
+% Why Me? section - highlight your qualifications and fit for the role
+\renewcommand{\letterwhyme}{%
+  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+}
+
+%-----------CV CUSTOMIZATIONS------------
+\renewcommand{\cvtitle}{Space Systems Engineer | Flight Software Specialist}
+
+% Technologies section - Skills format (Technical and Soft Skills)
+\renewcommand{\cvtechnologies}{%
+  \section{Skills}
+  \resumeSubHeadingListStart
+    \item{\textbf{Technical Skills}{:} Space Systems, Satellite Operations, Mission Control, Ground Systems, AWS, Azure, Docker, Kubernetes, Python, C++, Rust, Go, MATLAB, Real-time Systems, Embedded Systems, Flight Software} \vspace{-8pt}
+    \item{\textbf{Soft Skills}{:} Problem-solving, Critical thinking, Strategic planning, Continuous learning, Communication, Attention to detail, Safety-first mindset}
+  \resumeSubHeadingListEnd
+}
+
+% Certificates (reduced to 5 to fit on one page with both degrees)
+% Example: some with links, some without
+% Replace YOUR_BADGE_ID with your actual Credly badge ID from your Credly profile
+\renewcommand{\cvcertificates}{%
+  \href{https://www.credly.com/badges/YOUR_AWS_SA_PRO_BADGE_ID}{\textbf{AWS Certified Solutions Architect – Professional}} & \textcolor{gray}{\textit{May 2022 - May 2025}} \\
+  \href{https://www.credly.com/badges/YOUR_AWS_DEVOPS_PRO_BADGE_ID}{\textbf{AWS Certified DevOps Engineer – Professional}} & \textcolor{gray}{\textit{May 2019 - May 2022}} \\
+  \textbf{CKA: Certified Kubernetes Administrator} & \textcolor{gray}{\textit{Aug 2024 - Aug 2026}} \\
+  \href{https://www.credly.com/badges/YOUR_MS_DEVOPS_BADGE_ID}{\textbf{Microsoft Certified: DevOps Engineer Expert}} & \textcolor{gray}{\textit{Jan 2021 - Jan 2026}} \\
+  \textbf{Microsoft Certified: Azure Administrator Associate} & \textcolor{gray}{\textit{Jan 2021 - Jan 2026}}
+}
+
+% Open Source Contributions (none - explicitly set to empty)
+\renewcommand{\cvopensource}{}
+
+% Volunteer Work (NASA example: space education outreach)
+\renewcommand{\cvvolunteer}{%
+  \resumeSubheading
+    {Space Education Foundation}{\textcolor{gray}{Remote}}
+    {Volunteer Mentor}{\textcolor{gray}{2020 -- Present}}
+  \resumeItemListStart
+    \resumeItemSimple{}
+      {Mentoring students in space systems engineering. Conducting workshops on satellite operations.}
+  \resumeItemListEnd
+}
+
+% Languages (none - leave empty to save space)
+\renewcommand{\cvlanguages}{}
+
+% Awards (none - leave empty)
+\renewcommand{\cvawards}{}
+

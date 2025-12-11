@@ -2,23 +2,11 @@
 %-------------------------
 % Professional Cover Letter Template in LaTeX
 % Author : iggymiggy
-
 % License : MIT
 %
-% This template creates a professional cover letter that matches the
-% styling of the cv_template.tex. All personal and company information
-% is loaded from personal_info.tex for easy maintenance.
-%
-% Features:
-%   - Automatic date formatting (Finnish/English)
-%   - Consistent styling with CV template
-%   - Easy customization of sections
-%
-% Usage:
-%   1. Edit personal_info.tex with your information
-%   2. Update company details in personal_info.tex
-%   3. Replace TODO sections with your cover letter content
-%   4. Compile with: pdflatex cover_letter_template.tex
+% Cover letter template matching CV styling.
+% Personal info from personal_info.tex, defaults from base_config.tex,
+% company-specific overrides from config.tex (in company folders).
 %------------------------
 
 \documentclass[letterpaper,11pt]{article}
@@ -158,12 +146,25 @@
 %%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Load personal information
-\input{personal_info}
+% Handles compilation from root, templates/, or companies/company_name/
+\IfFileExists{../../personal_info.tex}{\input{../../personal_info}}{%
+\IfFileExists{../personal_info.tex}{\input{../personal_info}}{\input{personal_info}}}
+
+% Load base/default configuration first
+% This provides default values for all CV and cover letter fields
+\IfFileExists{../../templates/base_config.tex}{\input{../../templates/base_config}}{%
+\IfFileExists{../templates/base_config.tex}{\input{../templates/base_config}}{%
+\IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
+
+% Load company-specific configuration (optional)
+% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
+% Company config can override any field from base_config.tex using \renewcommand
+% If a field is not defined in config.tex, the base default will be used
+\IfFileExists{config.tex}{\input{config}}{}
 
 \begin{document}
 
-% Set language and date based on personal_info.tex
-% Expand \letterdatelanguage to get its value, then check
+% Set date language (from base_config.tex or config.tex override)
 \edef\templang{\letterdatelanguage}%
 \def\tempfinnish{finnish}%
 \ifx\templang\tempfinnish
@@ -172,21 +173,18 @@
   \selectlanguage{english}%
 \fi
 
-% Use manual date if set, otherwise use \today (which respects the language)
-% Check if \letterdate equals "auto" and replace with \today if so
-% IMPORTANT: Language must be selected BEFORE expanding \today
+% Set date (auto uses \today, respects language setting)
 \def\checkdateauto{auto}%
 \edef\letterdateexpanded{\letterdate}%
 \ifx\letterdateexpanded\checkdateauto
-  % Use \protect to prevent expansion until the date is actually used
   \renewcommand{\letterdate}{\today}%
 \fi
 
-% %----------HEADING-----------------
+%-----------HEADING------------
 \begin{center}
   {\Huge \textbf{\myname}} \\
   \vspace{2pt}
-  {\Large \mytitle} \\
+  {\Large \cvtitle} \\
   \vspace{4pt}
   \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
   \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
@@ -197,7 +195,7 @@
 
 \vspace{20pt}
 
-% %----------COMPANY DETAILS AND DATE-----------------
+%-----------COMPANY DETAILS AND DATE------------
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l@{\extracolsep{0pt}}r}
   \begin{minipage}[t]{0.52\textwidth}
     \small
@@ -216,26 +214,26 @@
 
 \vspace{36pt}
 
-% %----------LETTER TITLE AND OPENING-----------------
+%-----------LETTER TITLE AND OPENING------------
 \noindent{\large\bfseries\underline{\lettertitle}} \\
 \vspace{8pt}
 \noindent \letteropening \\
 \vspace{12pt}
 
-% %----------LETTER CONTENT-----------------
+%-----------LETTER CONTENT------------
+% Content from base_config.tex or config.tex override
 \lettersection{About Me}
-% EXAMPLE CONTENT - Replace with your actual cover letter content
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecati cupiditate non provident, sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+\letteraboutme
 
 \lettersection{Why \companyname?}
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+\letterwhycompany
 
 \lettersection{Why Me?}
-At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+\letterwhyme
 
 \vspace{12pt}
 
-% %----------LETTER CLOSING-----------------
+%-----------LETTER CLOSING------------
 \vspace{8pt}
 \noindent \letterclosing, \\
 \vspace{6pt}

@@ -1,0 +1,80 @@
+% Base/Default Configuration
+% This file contains default values for all CV and cover letter fields.
+% Company-specific configs (config.tex in company folders) can override any of these values using \renewcommand.
+% If a company doesn't define a field, this default will be used.
+
+%-----------CV DEFAULTS------------
+% Professional title/tagline
+\newcommand{\cvtitle}{Cloud Evangelist | AI Whisperer}
+
+% Technologies section (default - single column)
+% Companies can override with two columns or skills format
+% Include section header in the command
+\newcommand{\cvtechnologies}{%
+  \section*{Technologies}
+  \noindent
+  \textbf{Cloud:} AWS, Azure \\
+  \textbf{Containerization \& Orchestration: } Docker, Kubernetes \\
+  \textbf{CI/CD \& IaaC:} Terraform, Pulumi, Ansible, Jenkins, GitLab, Azure DevOps \\ 
+  \textbf{Languages:} Python, React
+}
+
+% Certificates
+% To add a clickable link, wrap the certificate name in \href{url}{\textbf{Name}}
+% Example with link: \href{https://www.credly.com/badges/YOUR_BADGE_ID}{\textbf{Certificate Name}}
+% Example without link: \textbf{Certificate Name}
+% 
+% To get your Credly badge URL: Log into Credly, select your badge, copy the URL from the address bar
+% Credly badge URLs follow the format: https://www.credly.com/badges/BADGE_ID
+\newcommand{\cvcertificates}{%
+  \textbf{AWS Certified Solutions Architect – Professional} & \textcolor{gray}{\textit{May 2022 - May 2025}} \\
+  \textbf{AWS Certified DevOps Engineer – Professional} & \textcolor{gray}{\textit{May 2019 - May 2022}} \\
+  \textbf{CKA: Certified Kubernetes Administrator} & \textcolor{gray}{\textit{Aug 2024 - Aug 2026}} \\
+  \textbf{Microsoft Certified: DevOps Engineer Expert} & \textcolor{gray}{\textit{Jan 2021 - Jan 2026}}
+}
+
+% Open Source Contributions (empty by default)
+\newcommand{\cvopensource}{}
+
+% Volunteer Work (empty by default)
+\newcommand{\cvvolunteer}{}
+
+% Languages (empty by default)
+\newcommand{\cvlanguages}{}
+
+% Awards/Honors (empty by default)
+\newcommand{\cvawards}{}
+
+%-----------COVER LETTER DEFAULTS------------
+% Date configuration
+\newcommand{\letterdatelanguage}{english}
+\newcommand{\letterdate}{auto}
+
+% Cover letter content
+\newcommand{\letterclosing}{Sincerely}
+\newcommand{\letteropening}{Dear Hiring Manager,}
+\newcommand{\lettertitle}{Job Application}
+\newcommand{\letterattachment}{Attached: Curriculum Vitae}
+
+% Letter Content (defaults - placeholder text)
+% About Me section - introduce yourself and your background
+\newcommand{\letteraboutme}{%
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+}
+
+% Why [Company Name]? section - explain your interest in the company
+\newcommand{\letterwhycompany}{%
+  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+}
+
+% Why Me? section - highlight your qualifications and fit for the role
+\newcommand{\letterwhyme}{%
+  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+}
+
+% Company details (should be overridden in config.tex)
+\newcommand{\companyrecipient}{Hiring Manager}
+\newcommand{\companyname}{Company Name}
+\newcommand{\companyaddress}{Address}
+\newcommand{\companycity}{City, State ZIP}
+
