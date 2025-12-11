@@ -19,101 +19,101 @@ Each company folder generates customized PDFs with company-specific CV skills an
 ### Google
 
 <table>
-<tr>
-<td width="50%" valign="top">
-<p align="center">
-<strong>CV</strong><br>
-<a href="examples/companies/google_cv.pdf">
-<img src="examples/companies/google_cv.png" alt="Google CV" width="100%">
-</a><br>
-<a href="examples/companies/google_cv.pdf">View PDF</a>
-</p>
-</td>
-<td width="50%" valign="top">
-<p align="center">
-<strong>Cover Letter</strong><br>
-<a href="examples/companies/google_cover_letter.pdf">
-<img src="examples/companies/google_cover_letter.png" alt="Google Cover Letter" width="100%">
-</a><br>
-<a href="examples/companies/google_cover_letter.pdf">View PDF</a>
-</p>
-</td>
-</tr>
+  <tr>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>CV</strong><br>
+        <a href="examples/companies/google_cv.pdf">
+          <img src="examples/companies/google_cv.png" alt="Google CV" width="100%">
+        </a><br>
+        <a href="examples/companies/google_cv.pdf">View PDF</a>
+      </p>
+    </td>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>Cover Letter</strong><br>
+        <a href="examples/companies/google_cover_letter.pdf">
+          <img src="examples/companies/google_cover_letter.png" alt="Google Cover Letter" width="100%">
+        </a><br>
+        <a href="examples/companies/google_cover_letter.pdf">View PDF</a>
+      </p>
+    </td>
+  </tr>
 </table>
 
 ### Hyperion BioSystems
 
 <table>
-<tr>
-<td width="50%" valign="top">
-<p align="center">
-<strong>CV</strong><br>
-<a href="examples/companies/hyperion_cv.pdf">
-<img src="examples/companies/hyperion_cv.png" alt="Hyperion BioSystems CV" width="100%">
-</a><br>
-<a href="examples/companies/hyperion_cv.pdf">View PDF</a>
-</p>
-</td>
-<td width="50%" valign="top">
-<p align="center">
-<strong>Cover Letter</strong><br>
-<a href="examples/companies/hyperion_cover_letter.pdf">
-<img src="examples/companies/hyperion_cover_letter.png" alt="Hyperion BioSystems Cover Letter" width="100%">
-</a><br>
-<a href="examples/companies/hyperion_cover_letter.pdf">View PDF</a>
-</p>
-</td>
-</tr>
+  <tr>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>CV</strong><br>
+        <a href="examples/companies/hyperion_cv.pdf">
+          <img src="examples/companies/hyperion_cv.png" alt="Hyperion BioSystems CV" width="100%">
+        </a><br>
+        <a href="examples/companies/hyperion_cv.pdf">View PDF</a>
+      </p>
+    </td>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>Cover Letter</strong><br>
+        <a href="examples/companies/hyperion_cover_letter.pdf">
+          <img src="examples/companies/hyperion_cover_letter.png" alt="Hyperion BioSystems Cover Letter" width="100%">
+        </a><br>
+        <a href="examples/companies/hyperion_cover_letter.pdf">View PDF</a>
+      </p>
+    </td>
+  </tr>
 </table>
 
 ### Meta
 
 <table>
-<tr>
-<td width="50%" valign="top">
-<p align="center">
-<strong>CV</strong><br>
-<a href="examples/companies/meta_cv.pdf">
-<img src="examples/companies/meta_cv.png" alt="Meta CV" width="100%">
-</a><br>
-<a href="examples/companies/meta_cv.pdf">View PDF</a>
-</p>
-</td>
-<td width="50%" valign="top">
-<p align="center">
-<strong>Cover Letter</strong><br>
-<a href="examples/companies/meta_cover_letter.pdf">
-<img src="examples/companies/meta_cover_letter.png" alt="Meta Cover Letter" width="100%">
-</a><br>
-<a href="examples/companies/meta_cover_letter.pdf">View PDF</a>
-</p>
-</td>
-</tr>
+  <tr>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>CV</strong><br>
+        <a href="examples/companies/meta_cv.pdf">
+          <img src="examples/companies/meta_cv.png" alt="Meta CV" width="100%">
+        </a><br>
+        <a href="examples/companies/meta_cv.pdf">View PDF</a>
+      </p>
+    </td>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>Cover Letter</strong><br>
+        <a href="examples/companies/meta_cover_letter.pdf">
+          <img src="examples/companies/meta_cover_letter.png" alt="Meta Cover Letter" width="100%">
+        </a><br>
+        <a href="examples/companies/meta_cover_letter.pdf">View PDF</a>
+      </p>
+    </td>
+  </tr>
 </table>
 
 ### NASA
 
 <table>
-<tr>
-<td width="50%" valign="top">
-<p align="center">
-<strong>CV</strong><br>
-<a href="examples/companies/nasa_cv.pdf">
-<img src="examples/companies/nasa_cv.png" alt="NASA CV" width="100%">
-</a><br>
-<a href="examples/companies/nasa_cv.pdf">View PDF</a>
-</p>
-</td>
-<td width="50%" valign="top">
-<p align="center">
-<strong>Cover Letter</strong><br>
-<a href="examples/companies/nasa_cover_letter.pdf">
-<img src="examples/companies/nasa_cover_letter.png" alt="NASA Cover Letter" width="100%">
-</a><br>
-<a href="examples/companies/nasa_cover_letter.pdf">View PDF</a>
-</p>
-</td>
-</tr>
+  <tr>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>CV</strong><br>
+        <a href="examples/companies/nasa_cv.pdf">
+          <img src="examples/companies/nasa_cv.png" alt="NASA CV" width="100%">
+        </a><br>
+        <a href="examples/companies/nasa_cv.pdf">View PDF</a>
+      </p>
+    </td>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>Cover Letter</strong><br>
+        <a href="examples/companies/nasa_cover_letter.pdf">
+          <img src="examples/companies/nasa_cover_letter.png" alt="NASA Cover Letter" width="100%">
+        </a><br>
+        <a href="examples/companies/nasa_cover_letter.pdf">View PDF</a>
+      </p>
+    </td>
+  </tr>
 </table>
 
 ## Quick Start
@@ -129,9 +129,9 @@ Pick one of these workflows. In all cases, you run `pdflatex` to **compile a `.t
 - `pdflatex cv.tex` → creates `cv.pdf` (your CV)
 - `pdflatex cover_letter.tex` → creates `cover_letter.pdf` (your cover letter)
 
-**Option A: Use an existing example (NASA, Google, Meta)**
+**Option A: Use an existing example (Google, Hyperion, Meta, NASA)**
 ```bash
-cd companies/nasa  # or google, meta
+cd companies/nasa  # or google, hyperion, meta
 # Edit config.tex (company-specific fields) and personal_info.tex (your personal details)
 pdflatex cv.tex
 pdflatex cover_letter.tex
@@ -176,7 +176,11 @@ project/
     │   ├── cover_letter.tex
     │   └── config.tex        # Overrides base defaults
     ├── hyperion/
+    │   ├── cv.tex
+    │   ├── cover_letter.tex
+    │   └── config.tex
     ├── meta/
+    │   └── ...
     └── nasa/
         └── ...
 ```
