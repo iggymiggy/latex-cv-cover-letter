@@ -26,6 +26,7 @@
 # PDF files (excluded, except in examples folder)
 *.pdf
 !examples/*.pdf
+!examples/**/*.pdf
 
 # Image files (excluded, except in examples folder)
 *.png
@@ -34,6 +35,9 @@
 !examples/*.png
 !examples/*.jpg
 !examples/*.jpeg
+!examples/**/*.png
+!examples/**/*.jpg
+!examples/**/*.jpeg
 
 # Build artifacts in examples folder (keep only PDFs)
 examples/*.aux
