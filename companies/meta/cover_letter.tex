@@ -62,27 +62,27 @@
 
 %-------------------------
 % Custom commands
-\newcommand{\resumeItem}[2]{
+\newcommand{\cvItem}[2]{
   \item\small{
     \textbf{#1}{: #2 \vspace{-2pt}}
   }
 }
 
-\newcommand{\resumeItemSimple}[2]{
+\newcommand{\cvItemSimple}[2]{
   \item\small{
     #2 \vspace{-2pt}
   }
 }
 
 % Just in case someone needs a heading that does not need to be in a list
-\newcommand{\resumeHeading}[4]{
+\newcommand{\cvHeading}[4]{
     \begin{tabular*}{0.99\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & #2 \\
       \textit{\small#3} & \textit{\small #4} \\
     \end{tabular*}\vspace{-5pt}
 }
 
-\newcommand{\resumeSubheading}[4]{
+\newcommand{\cvSubheading}[4]{
   \vspace{-1pt}\item
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & #2 \\
@@ -90,13 +90,13 @@
     \end{tabular*}\vspace{-5pt}
 }
 
-\newcommand{\resumeSubSubheading}[2]{
+\newcommand{\cvSubSubheading}[2]{
     \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
       \textit{\small#1} & \textit{\small #2} \\
     \end{tabular*}\vspace{-5pt}
 }
 
-\newcommand{\resumeSubheadingWithDetails}[6]{
+\newcommand{\cvSubheadingWithDetails}[6]{
   \vspace{-1pt}\item
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & #2 \\
@@ -110,15 +110,15 @@
 }
 
 
-\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+\newcommand{\cvSubItem}[2]{\cvItem{#1}{#2}\vspace{-4pt}}
 \renewcommand{\labelitemii}{$\circ$}
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
-\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+\newcommand{\cvSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\cvSubHeadingListEnd}{\end{itemize}}
+\newcommand{\cvItemListStart}{\begin{itemize}}
+\newcommand{\cvItemListEnd}{\end{itemize}\vspace{-5pt}}
 
 
-\newcommand{\resumeProjectItem}[4]{
+\newcommand{\cvProjectItem}[4]{
   \item\small{
     \textbf{#1} — \textit{#2} \hfill \textit{\small #3}
   }
@@ -129,7 +129,7 @@
 }
 
 %-------------------------
-\newcommand{\resumeCertificates}[1]{
+\newcommand{\cvCertificates}[1]{
   \vspace{-4pt}
   \section*{Certificates}  
   \vspace{-3pt}  

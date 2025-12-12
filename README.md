@@ -1,6 +1,8 @@
-# Professional CV and Cover Letter LaTeX Templates
+# Professional CV / Resume and Cover Letter LaTeX Templates
 
-A clean, modern LaTeX template for CV and cover letter. ATS-friendly and easy to customize.
+A clean, modern LaTeX template for a professional **CV** (also called a **resume/résumé**) and cover letter. ATS-friendly and easy to customize.
+
+**Keywords**: CV, resume, résumé, curriculum vitae, cover letter
 
 ## Features
 
@@ -213,9 +215,9 @@ Override only what's different using `\renewcommand`:
 \renewcommand{\cvtitle}{Space Systems Engineer | Flight Software Specialist}
 \renewcommand{\cvtechnologies}{%
   \section{Skills}
-  \resumeSubHeadingListStart
+  \cvSubHeadingListStart
     \item{\textbf{Technical Skills}{:} Space Systems, Satellite Operations...}
-  \resumeSubHeadingListEnd
+  \cvSubHeadingListEnd
 }
 
 % Certificates with optional links
@@ -297,5 +299,5 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Credits
 
-- Original CV template by [Sourabh Bajaj](https://github.com/sb2nov/resume)
+- Original template by [Sourabh Bajaj](https://github.com/sb2nov/resume)
 - Adapted and enhanced with cover letter template
