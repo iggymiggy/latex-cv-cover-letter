@@ -7,7 +7,12 @@
 % Change the value below and recompile.
 \providecommand{\papersize}{a4paper}
 
+% Font size (default: 11pt)
+% - Use: 10pt, 11pt, 12pt
+\providecommand{\docfontsize}{11pt}
+
 % Pass paper size option to the article class (must happen before \documentclass)
 \expandafter\PassOptionsToClass\expandafter{\papersize}{article}
+\expandafter\PassOptionsToClass\expandafter{\docfontsize}{article}
 
 
