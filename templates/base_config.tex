@@ -1,6 +1,6 @@
 % Base/Default Configuration
 % This file contains default values for all CV and cover letter fields.
-% Company-specific configs (config.tex in company folders) can override any of these values using \renewcommand.
+% Company-specific customizations are defined directly in companies/*/cv.tex and companies/*/cover_letter.tex.
 % If a company doesn't define a field, this default will be used.
 
 %-----------CV DEFAULTS------------
@@ -56,30 +56,7 @@
 \newcommand{\lettertitle}{Job Application}
 \newcommand{\letterattachment}{Attached: Curriculum Vitae}
 
-% Optional: bullets for an "Impact highlights" cover letter style.
-% Company configs can override with \item ... \item ... \item ...
-\newcommand{\letterhighlights}{}
-
-% Letter content/body hooks (defaults)
-% Companies can override \letterbody entirely for different styles.
-% Base stays generic: no "About/Why" structure here.
-\newcommand{\lettercontent}{%
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-  \vspace{10pt}
-
-  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-
-  \vspace{10pt}
-
-  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
-}
-
-\newcommand{\letterbody}{%
-  \lettercontent
-}
-
-% Company details (should be overridden in config.tex)
+% Company details (should be defined in company cover_letter.tex)
 \newcommand{\companyrecipient}{Hiring Manager}
 \newcommand{\companyname}{Company Name}
 \newcommand{\companyaddress}{Address}

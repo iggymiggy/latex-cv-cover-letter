@@ -5,8 +5,8 @@
 % License : MIT
 %
 % One-page CV template, ATS-friendly and easy to customize.
-% Personal info from personal_info.tex, defaults from base_config.tex,
-% company-specific overrides from config.tex (in company folders).
+% Personal info from personal_info.tex, defaults from base_config.tex.
+% Company-specific customizations are defined directly in companies/*/cv.tex.
 %------------------------
 
 % Global document settings (paper size, etc.)
@@ -147,16 +147,10 @@
 \IfFileExists{../personal_info.tex}{\input{../personal_info}}{\input{personal_info}}}
 
 % Load base/default configuration first
-% This provides default values for all CV and cover letter fields
+% This provides default values for all CV fields
 \IfFileExists{../../templates/base_config.tex}{\input{../../templates/base_config}}{%
 \IfFileExists{../templates/base_config.tex}{\input{../templates/base_config}}{%
 \IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
-
-% Load company-specific configuration (optional)
-% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
-% Company config can override any field from base_config.tex using \renewcommand
-% If a field is not defined in config.tex, the base default will be used
-\IfFileExists{config.tex}{\input{config}}{}
 
 \begin{document}
 
@@ -175,7 +169,7 @@
 
 
 %-----------TECHNOLOGIES/SKILLS------------
-% Layout is defined in base_config.tex or company config.tex
+% Layout is defined in base_config.tex or company cv.tex
 % Companies can override with single column, two columns, or skills format
 % Section header is included in the \cvtechnologies command
 % If empty, section is hidden
@@ -246,7 +240,7 @@
 
 
 %-----------CERTIFICATES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 % 
 % Certificate links: To make a certificate name clickable, wrap it in \href{url}{\textbf{Name}}
@@ -265,7 +259,7 @@
 \fi
 
 %-----------OPEN SOURCE CONTRIBUTIONS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckos\expandafter{\cvopensource}
 \def\tempemptyos{}
@@ -278,7 +272,7 @@
 \fi
 
 %-----------VOLUNTEER WORK------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckvol\expandafter{\cvvolunteer}
 \def\tempemptyvol{}
@@ -291,7 +285,7 @@
 \fi
 
 %-----------LANGUAGES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempchecklang\expandafter{\cvlanguages}
 \def\tempemptylang{}
@@ -304,7 +298,7 @@
 \fi
 
 %-----------AWARDS/HONORS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckawards\expandafter{\cvawards}
 \def\tempemptyawards{}
