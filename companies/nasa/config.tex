@@ -19,19 +19,26 @@
 % Letter Content (company example)
 \providecommand{\letteraboutme}{}%
 \renewcommand{\letteraboutme}{%
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  I’m applying for the Distinguished Engineer role because I enjoy building and operating systems where correctness, traceability, and reliability matter. I’ve led large-scale platform work across distributed services and data pipelines, and I’m comfortable translating ambiguous mission goals into concrete technical plans, measurable risk reduction, and steady delivery.
 }
 
 % Why [Company Name]? section - explain your interest in the company
 \providecommand{\letterwhycompany}{}%
 \renewcommand{\letterwhycompany}{%
-  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+  NASA’s missions demand engineering discipline: clear interfaces, robust verification, and thoughtful operational readiness. I’m especially motivated by work that spans flight and ground software, where telemetry, automation, and incident response directly improve mission safety and outcomes.
 }
 
 % Why Me? section - highlight your qualifications and fit for the role
 \providecommand{\letterwhyme}{}%
 \renewcommand{\letterwhyme}{%
-  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+  I bring a systems approach and a strong bias for operational excellence: designing for observability, validating assumptions with data, and treating reliability as a product feature. I’m effective in cross-functional environments—aligning stakeholders, setting engineering standards, and mentoring teams to deliver high-assurance software at scale.
+}
+
+% Impact highlights (for bullet-style cover letter variant)
+\renewcommand{\letterhighlights}{%
+  \item Reduced mission-critical processing time by 42\% by redesigning scheduling, telemetry ingestion, and backpressure handling.
+  \item Led cross-team incident response and blameless postmortems; cut repeat incidents by 30\% through systematic remediation.
+  \item Built automated validation for configuration and deployment artifacts, catching regressions pre-release and improving launch confidence.
 }
 
 %-----------CV CUSTOMIZATIONS------------

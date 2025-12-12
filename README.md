@@ -15,7 +15,7 @@ A clean, modern LaTeX template for CV and cover letter. ATS-friendly and easy to
 
 ## Examples
 
-Each company folder generates customized PDFs with company-specific CV skills and cover letter content.
+Each company folder generates customized PDFs with company-specific CV skills and cover letter content/styles.
 
 ### Google
 
@@ -256,10 +256,19 @@ Override only what's different using `\renewcommand`:
 - Header (same as CV)
 - Company details and date
 - Letter title and opening
-- About Me
-- Why [Company Name]?
-- Why Me?
+- Letter body (**company-specific**)
 - Closing
+
+**Cover letter body styles (examples in this repo):**
+- **Headed sections + horizontal rule**: Google
+- **Headed sections (no horizontal rule)**: Meta
+- **Plain paragraphs (no section headlines)**: Hyperion
+- **Impact bullets (paragraph + 2–3 bullets + paragraphs)**: NASA
+
+**How to customize the body:**
+- **Content**: set `\letteraboutme`, `\letterwhycompany`, `\letterwhyme`, or `\lettercontent` in `companies/*/config.tex`
+- **Layout/style**: override `\letterbody` (and optionally `\lettersection`) in `companies/*/cover_letter.tex`
+- **Impact bullets variant**: set `\letterhighlights` (as `\item ...`) in `companies/*/config.tex` and render it inside `\letterbody`
 
 ## Requirements
 

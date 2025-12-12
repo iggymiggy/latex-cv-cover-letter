@@ -168,11 +168,17 @@
 \IfFileExists{config.tex}{\input{config}}{}
 
 %-----------LETTER BODY STYLE (COMPANY-SPECIFIC)------------
-% Style 3: Plain paragraphs (no section headlines).
+% Style 4: "Impact bullets" (intro + highlights + close paragraphs).
 \renewcommand{\letterbody}{%
   \noindent\letteraboutme
 
   \vspace{10pt}
+
+  \noindent\textbf{Selected impact:}
+  \vspace{-2pt}
+  \begin{itemize}[leftmargin=*]
+    \letterhighlights
+  \end{itemize}
 
   \noindent\letterwhycompany
 
