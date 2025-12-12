@@ -16,18 +16,21 @@
 \renewcommand{\lettertitle}{Job Application for Staff Software Engineer}
 \renewcommand{\letterattachment}{Attached: Curriculum Vitae}
 
-% Letter Content (override base defaults)
-% About Me section - introduce yourself and your background
+% Letter Content (company example)
+% Define sections locally (base template stays generic).
+\providecommand{\letteraboutme}{}%
 \renewcommand{\letteraboutme}{%
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 }
 
 % Why [Company Name]? section - explain your interest in the company
+\providecommand{\letterwhycompany}{}%
 \renewcommand{\letterwhycompany}{%
   Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
 }
 
 % Why Me? section - highlight your qualifications and fit for the role
+\providecommand{\letterwhyme}{}%
 \renewcommand{\letterwhyme}{%
   At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
 }

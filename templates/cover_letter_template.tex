@@ -149,7 +149,7 @@
 }
 
 %-------------------------------------------
-%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%  COVER LETTER STARTS HERE  %%%%%%%%%%%%%%%%%%%
 
 % Load personal information
 % Handles compilation from root, templates/, or companies/company_name/
@@ -228,14 +228,8 @@
 
 %-----------LETTER CONTENT------------
 % Content from base_config.tex or config.tex override
-\lettersection{About Me}
-\letteraboutme
-
-\lettersection{Why \companyname?}
-\letterwhycompany
-
-\lettersection{Why Me?}
-\letterwhyme
+% Company configs can override \letterbody to reorder/add/remove sections.
+\letterbody
 
 \vspace{12pt}
 

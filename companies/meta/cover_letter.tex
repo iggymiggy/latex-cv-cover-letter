@@ -167,6 +167,25 @@
 % If a field is not defined in config.tex, the base default will be used
 \IfFileExists{config.tex}{\input{config}}{}
 
+%-----------LETTER BODY STYLE (COMPANY-SPECIFIC)------------
+% Style 2: Headed sections WITHOUT the horizontal rule line.
+\renewcommand{\lettersection}[1]{%
+  \vspace{12pt}%
+  \noindent{\large\bfseries #1} \\%
+  \vspace{6pt}%
+}
+
+\renewcommand{\letterbody}{%
+  \lettersection{About Me}
+  \letteraboutme
+
+  \lettersection{Why \companyname?}
+  \letterwhycompany
+
+  \lettersection{Why Me?}
+  \letterwhyme
+}
+
 \begin{document}
 
 % Set date language (from base_config.tex or config.tex override)
@@ -227,14 +246,8 @@
 
 %-----------LETTER CONTENT------------
 % Content from base_config.tex or config.tex override
-\lettersection{About Me}
-\letteraboutme
-
-\lettersection{Why \companyname?}
-\letterwhycompany
-
-\lettersection{Why Me?}
-\letterwhyme
+% Company configs can override \letterbody to reorder/add/remove sections.
+\letterbody
 
 \vspace{12pt}
 

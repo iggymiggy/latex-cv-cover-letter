@@ -56,20 +56,23 @@
 \newcommand{\lettertitle}{Job Application}
 \newcommand{\letterattachment}{Attached: Curriculum Vitae}
 
-% Letter Content (defaults - placeholder text)
-% About Me section - introduce yourself and your background
-\newcommand{\letteraboutme}{%
+% Letter content/body hooks (defaults)
+% Companies can override \letterbody entirely for different styles.
+% Base stays generic: no "About/Why" structure here.
+\newcommand{\lettercontent}{%
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-}
 
-% Why [Company Name]? section - explain your interest in the company
-\newcommand{\letterwhycompany}{%
+  \vspace{10pt}
+
   Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+
+  \vspace{10pt}
+
+  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
 }
 
-% Why Me? section - highlight your qualifications and fit for the role
-\newcommand{\letterwhyme}{%
-  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+\newcommand{\letterbody}{%
+  \lettercontent
 }
 
 % Company details (should be overridden in config.tex)
