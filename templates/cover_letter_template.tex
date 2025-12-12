@@ -9,7 +9,13 @@
 % company-specific overrides from config.tex (in company folders).
 %------------------------
 
-\documentclass[letterpaper,11pt]{article}
+% Global document settings (paper size, etc.)
+% Works when compiling from root, templates/, or companies/<name>/
+\IfFileExists{../../document_settings.tex}{\input{../../document_settings}}{%
+\IfFileExists{../document_settings.tex}{\input{../document_settings}}{%
+\IfFileExists{document_settings.tex}{\input{document_settings}}{}}}
+
+\documentclass[11pt]{article}
 
 \usepackage{latexsym}
 \usepackage[empty]{fullpage}

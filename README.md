@@ -11,6 +11,7 @@ A clean, modern LaTeX template for CV and cover letter. ATS-friendly and easy to
 - Optional sections: Certificates, Open Source, Volunteer Work, Languages, Awards
 - Optional certificate links (Credly badges)
 - Bilingual date formatting (configurable)
+- Paper size is configurable (A4 by default)
 
 ## Examples
 
@@ -266,6 +267,13 @@ Override only what's different using `\renewcommand`:
 - Packages: `xcolor`, `hyperref`, `fontawesome5`, `babel`, `tabularx`, `titlesec`, `fancyhdr`, `enumitem`, `etoolbox`
 
 Most packages are included in standard LaTeX distributions.
+
+## Paper size (A4 vs Letter)
+
+Paper size is configured globally in `document_settings.tex`.
+
+- **Default**: `\papersize` = `a4paper`
+- **US/Canada**: set `\papersize` = `letterpaper`
 
 ## Customization
 

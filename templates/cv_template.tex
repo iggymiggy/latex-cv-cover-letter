@@ -9,7 +9,13 @@
 % company-specific overrides from config.tex (in company folders).
 %------------------------
 
-\documentclass[letterpaper,11pt]{article}
+% Global document settings (paper size, etc.)
+% Works when compiling from root, templates/, or companies/<name>/
+\IfFileExists{../../document_settings.tex}{\input{../../document_settings}}{%
+\IfFileExists{../document_settings.tex}{\input{../document_settings}}{%
+\IfFileExists{document_settings.tex}{\input{document_settings}}{}}}
+
+\documentclass[11pt]{article}
 
 \usepackage{latexsym}
 \usepackage[empty]{fullpage}
@@ -213,13 +219,13 @@
 
 %-------------------------------------------
 
-  \resumeSubheading
-    {Netflix}{\textcolor{gray}{Los Gatos, CA}}
-    {Junior DevOps Engineer}{\textcolor{gray}{Oct 2015 -- Sep 2016}}
-  \resumeItemListStart
-    \resumeItemSimple{}
+      \resumeSubheading
+      {Netflix}{\textcolor{gray}{Los Gatos, CA}}
+      {Junior DevOps Engineer}{\textcolor{gray}{Oct 2015 -- Sep 2016}}
+      \resumeItemListStart
+        \resumeItemSimple{}
       {Managed cloud infrastructure for Netflix's streaming platform. Automated deployment with Terraform and AWS CloudFormation, reducing manual effort by 60\%. Improved CI/CD workflows, speeding up deployments.}
-  \resumeItemListEnd
+      \resumeItemListEnd
 
 
   \resumeSubHeadingListEnd
