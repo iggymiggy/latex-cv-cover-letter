@@ -1,24 +1,26 @@
-# Company-Specific Cover Letter Configurations
+# Company-Specific Configurations
 
-Each file in this folder contains company-specific information and letter content for a cover letter.
+Each company folder contains:
+- `cv.tex` - CV with company-specific customizations (title, technologies, certificates, etc.)
+- `cover_letter.tex` - Cover letter with company details and letter content
 
 ## Structure
 
-Each company file should define:
+**`cv.tex`** should define:
+- **CV Customizations**: `\cvtitle`, `\cvtechnologies`, `\cvcertificates`, `\cvopensource`, `\cvvolunteer`, `\cvlanguages`, `\cvawards`
 
+**`cover_letter.tex`** should define:
 - **Company Details**: `\companyrecipient`, `\companyname`, `\companyaddress`, `\companycity`
-- **Letter Title**: `\lettertitle`
-- **Letter Content**: `\letteraboutme`, `\letterwhycompany`, `\letterwhyme`
+- **Letter Settings**: `\lettertitle`, `\letteropening`, `\letterclosing`, `\letterdate`, `\letterdatelanguage`, `\letterattachment`
+- **Letter Body**: `\letterbody` - define your letter content directly here
 
 ## Usage
 
-1. Create a new file for each company (e.g., `google.tex`, `microsoft.tex`)
-2. Copy `nasa.tex` as a template
-3. Edit the company details and letter content
-4. In `cover_letter_template.tex`, change the `\input{companies/nasa}` line to your company file
-5. Compile the cover letter
+1. Copy an existing company folder (e.g., `cp -R companies/nasa companies/your_company`)
+2. Edit `cv.tex` for CV customizations
+3. Edit `cover_letter.tex` for company details and letter content
+4. Compile: `pdflatex cv.tex` and `pdflatex cover_letter.tex`
 
-## Example
+## Examples
 
-See `nasa.tex` for a complete example.
-
+See `companies/google/`, `companies/meta/`, `companies/nasa/`, `companies/hyperion/` for different CV and cover letter styles.

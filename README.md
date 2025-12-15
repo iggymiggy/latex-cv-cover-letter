@@ -135,7 +135,7 @@ Pick one of these workflows. In all cases, you run `pdflatex` to **compile a `.t
 **Option A: Use an existing example (Google, Hyperion, Meta, NASA)**
 ```bash
 cd companies/nasa  # or google, hyperion, meta
-# Edit config.tex (company-specific fields) and personal_info.tex (your personal details)
+# Edit cv.tex and cover_letter.tex (company-specific fields) and personal_info.tex (your personal details)
 pdflatex cv.tex
 pdflatex cover_letter.tex
 ```
@@ -144,7 +144,7 @@ pdflatex cover_letter.tex
 ```bash
 cp -R companies/nasa companies/your_company  # or copy google/meta
 cd companies/your_company
-# Edit config.tex (company-specific fields) and personal_info.tex (your personal details)
+# Edit cv.tex and cover_letter.tex (company-specific fields) and personal_info.tex (your personal details)
 pdflatex cv.tex
 pdflatex cover_letter.tex
 ```
@@ -175,13 +175,11 @@ project/
 │   └── base_config.tex       # Default values
 └── companies/                 # Company-specific folders
     ├── google/
-    │   ├── cv.tex
-    │   ├── cover_letter.tex
-    │   └── config.tex        # Overrides base defaults
+    │   ├── cv.tex            # CV customizations
+    │   └── cover_letter.tex  # Cover letter customizations
     ├── hyperion/
     │   ├── cv.tex
-    │   ├── cover_letter.tex
-    │   └── config.tex
+    │   └── cover_letter.tex
     ├── meta/
     │   └── ...
     └── nasa/
@@ -202,15 +200,12 @@ Contains default values for all fields:
 - CV: title, technologies, certificates (4), open source (empty), volunteer (empty), languages (empty), awards (empty)
 - Cover letter: company details, letter content, date settings
 
-### Company Configuration (`companies/*/config.tex`)
+### Company Files (`companies/*/cv.tex` and `companies/*/cover_letter.tex`)
 
-Override only what's different using `\renewcommand`:
+Define company-specific customizations directly in these files using `\renewcommand`:
 
+**In `cv.tex`:**
 ```latex
-% Company details
-\renewcommand{\companyname}{NASA}
-\renewcommand{\companyaddress}{300 E Street SW}
-
 % CV customizations
 \renewcommand{\cvtitle}{Space Systems Engineer | Flight Software Specialist}
 \renewcommand{\cvtechnologies}{%
@@ -233,6 +228,25 @@ Override only what's different using `\renewcommand`:
 \renewcommand{\cvawards}{...}         % Awards & Honors
 ```
 
+**In `cover_letter.tex`:**
+```latex
+% Company details
+\renewcommand{\companyname}{NASA}
+\renewcommand{\companyaddress}{300 E Street SW}
+\renewcommand{\companyrecipient}{NASA Hiring Team}
+\renewcommand{\companycity}{Washington, DC 20546}
+
+% Letter settings
+\renewcommand{\lettertitle}{Application for Space Systems Engineer Position}
+\renewcommand{\letteropening}{Dear NASA Hiring Team,}
+\renewcommand{\letterclosing}{Sincerely,}
+
+% Letter body
+\renewcommand{\letterbody}{%
+  Your letter content here...
+}
+```
+
 **Key points:**
 - Use `\renewcommand` (not `\newcommand`) to override base defaults
 - Only define fields that differ from base - undefined fields use base defaults
@@ -245,7 +259,7 @@ Override only what's different using `\renewcommand`:
 - Experience
 - Education
 
-**Optional (configurable in `config.tex`):**
+**Optional (configurable in `cv.tex`):**
 - Technologies/Skills (set `\renewcommand{\cvtechnologies}{}` to hide)
 - Certificates (with optional clickable links)
 - Open Source Contributions
@@ -268,9 +282,8 @@ Override only what's different using `\renewcommand`:
 - **Impact bullets (paragraph + 2–3 bullets + paragraphs)**: NASA
 
 **How to customize the body:**
-- **Content**: set `\letteraboutme`, `\letterwhycompany`, `\letterwhyme`, or `\lettercontent` in `companies/*/config.tex`
-- **Layout/style**: override `\letterbody` (and optionally `\lettersection`) in `companies/*/cover_letter.tex`
-- **Impact bullets variant**: set `\letterhighlights` (as `\item ...`) in `companies/*/config.tex` and render it inside `\letterbody`
+- **Content and layout**: override `\letterbody` directly in `companies/*/cover_letter.tex` - define your letter content inline (no intermediate variables needed)
+- **Optional style helpers**: override `\lettersection` in `companies/*/cover_letter.tex` if you want to customize section heading appearance
 
 ## Requirements
 
@@ -291,7 +304,7 @@ Paper size is configured globally in `document_settings.tex`.
 - **Colors**: Modify `\textcolor{gray}{}` in templates
 - **Sections**: Add, remove, or reorder in template files
 - **Layout**: Adjust margins/spacing in template preamble
-- **Company-specific**: Customize per company in `config.tex`
+- **Company-specific**: Customize per company in `cv.tex` and `cover_letter.tex`
 
 ## License
 
