@@ -6,7 +6,7 @@
 %
 % Cover letter template matching CV styling.
 % Personal info from personal_info.tex, defaults from base_config.tex,
-% company-specific overrides from config.tex (in company folders).
+% company-specific overrides from this file (in company folders).
 %------------------------
 
 % Global document settings (paper size, etc.)
@@ -148,7 +148,7 @@
 }
 
 %-------------------------------------------
-%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%  COVER LETTER STARTS HERE  %%%%%%%%%%%%%%%%%%%
 
 % Load personal information
 % Handles compilation from root, templates/, or companies/company_name/
@@ -162,34 +162,52 @@
 \IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
 
 % Load company-specific configuration (optional)
-% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
+% When compiling from companies/nasa/, companies/google/, etc., this loads this file
 % Company config can override any field from base_config.tex using \renewcommand
-% If a field is not defined in config.tex, the base default will be used
-\IfFileExists{config.tex}{\input{config}}{}
+% If a field is not defined in this file, the base default will be used
+\IfFileExists{this file}{\input{config}}{}
 
-%-----------LETTER BODY STYLE (COMPANY-SPECIFIC)------------
+%-----------COMPANY DETAILS (COVER LETTER SPECIFIC)------------
+\renewcommand{\companyrecipient}{NASA Recruitment Team}
+\renewcommand{\companyname}{NASA}
+\renewcommand{\companyaddress}{300 E Street SW}
+\renewcommand{\companycity}{Washington, DC 20546}
+
+%-----------COVER LETTER SETTINGS (COMPANY-SPECIFIC)------------
+\renewcommand{\letterdatelanguage}{english}
+\renewcommand{\letterdate}{auto}
+\renewcommand{\letterclosing}{Sincerely}
+\renewcommand{\letteropening}{Dear Hiring Manager,}
+\renewcommand{\lettertitle}{Job Application for Distinguished Engineer}
+\renewcommand{\letterattachment}{Attached: Curriculum Vitae}
+
+%-----------LETTER BODY (COMPANY-SPECIFIC)------------
 % Style 4: "Impact bullets" (intro + highlights + close paragraphs).
+% Content is defined directly here - no intermediate variables needed.
+\providecommand{\letterbody}{}%
 \renewcommand{\letterbody}{%
-  \noindent\letteraboutme
+  \noindent I'm applying for the Distinguished Engineer role because I enjoy building and operating systems where correctness, traceability, and reliability matter. I've led large-scale platform work across distributed services and data pipelines, and I'm comfortable translating ambiguous mission goals into concrete technical plans, measurable risk reduction, and steady delivery.
 
   \vspace{10pt}
 
   \noindent\textbf{Selected impact:}
   \vspace{-2pt}
   \begin{itemize}[leftmargin=*]
-    \letterhighlights
+    \item Reduced mission-critical processing time by 42\% by redesigning scheduling, telemetry ingestion, and backpressure handling.
+    \item Led cross-team incident response and blameless postmortems; cut repeat incidents by 30\% through systematic remediation.
+    \item Built automated validation for configuration and deployment artifacts, catching regressions pre-release and improving launch confidence.
   \end{itemize}
 
-  \noindent\letterwhycompany
+  \noindent NASA's missions demand engineering discipline: clear interfaces, robust verification, and thoughtful operational readiness. I'm especially motivated by work that spans flight and ground software, where telemetry, automation, and incident response directly improve mission safety and outcomes.
 
   \vspace{10pt}
 
-  \noindent\letterwhyme
+  \noindent I bring a systems approach and a strong bias for operational excellence: designing for observability, validating assumptions with data, and treating reliability as a product feature. I'm effective in cross-functional environments—aligning stakeholders, setting engineering standards, and mentoring teams to deliver high-assurance software at scale.
 }
 
 \begin{document}
 
-% Set date language (from base_config.tex or config.tex override)
+% Set date language (from base_config.tex or this file override)
 \edef\templang{\letterdatelanguage}%
 \def\tempfinnish{finnish}%
 \ifx\templang\tempfinnish
@@ -246,7 +264,7 @@
 \vspace{12pt}
 
 %-----------LETTER CONTENT------------
-% Content from base_config.tex or config.tex override
+% Content from base_config.tex or this file override
 % Company configs can override \letterbody to reorder/add/remove sections.
 \letterbody
 

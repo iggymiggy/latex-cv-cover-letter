@@ -5,8 +5,8 @@
 % License : MIT
 %
 % Cover letter template matching CV styling.
-% Personal info from personal_info.tex, defaults from base_config.tex,
-% company-specific overrides from config.tex (in company folders).
+% Personal info from personal_info.tex, defaults from base_config.tex.
+% Company-specific customizations are defined directly in this file.
 %------------------------
 
 % Global document settings (paper size, etc.)
@@ -148,7 +148,7 @@
 }
 
 %-------------------------------------------
-%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%  COVER LETTER STARTS HERE  %%%%%%%%%%%%%%%%%%%
 
 % Load personal information
 % Handles compilation from root, templates/, or companies/company_name/
@@ -156,34 +156,43 @@
 \IfFileExists{../personal_info.tex}{\input{../personal_info}}{\input{personal_info}}}
 
 % Load base/default configuration first
-% This provides default values for all CV and cover letter fields
+% This provides default values for all cover letter fields
 \IfFileExists{../../templates/base_config.tex}{\input{../../templates/base_config}}{%
 \IfFileExists{../templates/base_config.tex}{\input{../templates/base_config}}{%
 \IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
 
-% Load company-specific configuration (optional)
-% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
-% Company config can override any field from base_config.tex using \renewcommand
-% If a field is not defined in config.tex, the base default will be used
-\IfFileExists{config.tex}{\input{config}}{}
+%-----------COMPANY DETAILS (COVER LETTER SPECIFIC)------------
+\renewcommand{\companyrecipient}{Google Hiring Team}
+\renewcommand{\companyname}{Google}
+\renewcommand{\companyaddress}{1600 Amphitheatre Parkway}
+\renewcommand{\companycity}{Mountain View, CA 94043}
 
-%-----------LETTER BODY STYLE (COMPANY-SPECIFIC)------------
+%-----------COVER LETTER SETTINGS (COMPANY-SPECIFIC)------------
+\renewcommand{\letterdatelanguage}{english}
+\renewcommand{\letterdate}{auto}
+\renewcommand{\letterclosing}{Sincerely}
+\renewcommand{\letteropening}{Dear Hiring Manager,}
+\renewcommand{\lettertitle}{Job Application for Staff Software Engineer}
+\renewcommand{\letterattachment}{Attached: Curriculum Vitae}
+
+%-----------LETTER BODY (COMPANY-SPECIFIC)------------
 % Style 1: Headed sections with horizontal rule (default \lettersection).
-% Content blocks (\letteraboutme/\letterwhycompany/\letterwhyme) live in config.tex.
+% Content is defined directly here - no intermediate variables needed.
+\providecommand{\letterbody}{}%
 \renewcommand{\letterbody}{%
   \lettersection{About Me}
-  \letteraboutme
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
   \lettersection{Why \companyname?}
-  \letterwhycompany
+  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
 
   \lettersection{Why Me?}
-  \letterwhyme
+  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
 }
 
 \begin{document}
 
-% Set date language (from base_config.tex or config.tex override)
+% Set date language (from base_config.tex default or override below)
 \edef\templang{\letterdatelanguage}%
 \def\tempfinnish{finnish}%
 \ifx\templang\tempfinnish
@@ -240,7 +249,7 @@
 \vspace{12pt}
 
 %-----------LETTER CONTENT------------
-% Content from base_config.tex or config.tex override
+% Content from base_config.tex default or company cover_letter.tex override
 % Company configs can override \letterbody to reorder/add/remove sections.
 \letterbody
 
