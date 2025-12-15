@@ -6,7 +6,7 @@
 %
 % One-page CV template, ATS-friendly and easy to customize.
 % Personal info from personal_info.tex, defaults from base_config.tex,
-% company-specific overrides from config.tex (in company folders).
+% company-specific overrides from this file (in company folders).
 %------------------------
 
 % Global document settings (paper size, etc.)
@@ -152,10 +152,47 @@
 \IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
 
 % Load company-specific configuration (optional)
-% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
+% When compiling from companies/nasa/, companies/google/, etc., this loads this file
 % Company config can override any field from base_config.tex using \renewcommand
-% If a field is not defined in config.tex, the base default will be used
-\IfFileExists{config.tex}{\input{config}}{}
+% If a field is not defined in this file, the base default will be used
+\IfFileExists{this file}{\input{config}}{}
+
+%-----------CV CUSTOMIZATIONS (COMPANY-SPECIFIC)------------
+\renewcommand{\cvtitle}{Principal Systems Safety Engineer | Safety Case \& Reliability}
+
+% Hide Technologies/Skills section for this example (basic CV)
+\renewcommand{\cvtechnologies}{}
+
+% Certificates (keep short to fit on one page; optional links supported)
+\renewcommand{\cvcertificates}{%
+  \textbf{ISO 14971: Risk Management} & \textcolor{gray}{\textit{2023}} \\
+  \textbf{Incident Command System (ICS-100)} & \textcolor{gray}{\textit{2022}} \\
+}
+
+% Open Source Contributions (none - keep empty to fit one page)
+\renewcommand{\cvopensource}{%
+}
+
+% Volunteer Work
+\renewcommand{\cvvolunteer}{%
+  \cvSubheading
+    {Crisis Text Line}{\textcolor{gray}{Remote}}
+    {Volunteer Systems Advisor}{\textcolor{gray}{2021 -- Present}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Helping improve on-call readiness, incident review practices, and operational metrics for volunteer-run support systems.}
+  \cvItemListEnd
+}
+
+% Languages (single line)
+\renewcommand{\cvlanguages}{%
+  \item{\textbf{English}{:} Native, \textbf{German}{:} Conversational}
+}
+
+% Awards & Honors (single item)
+\renewcommand{\cvawards}{%
+  \textbf{Reliability Leadership Award}{:} Internal engineering recognition & \textcolor{gray}{\textit{2022}} \\
+}
 
 \begin{document}
 
@@ -174,7 +211,7 @@
 
 
 %-----------TECHNOLOGIES/SKILLS------------
-% Layout is defined in base_config.tex or company config.tex
+% Layout is defined in base_config.tex or company cv.tex
 % Companies can override with single column, two columns, or skills format
 % Section header is included in the \cvtechnologies command
 % If empty, section is hidden
@@ -245,7 +282,7 @@
 
 
 %-----------CERTIFICATES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 % 
 % Certificate links: To make a certificate name clickable, wrap it in \href{url}{\textbf{Name}}
@@ -264,7 +301,7 @@
 \fi
 
 %-----------OPEN SOURCE CONTRIBUTIONS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckos\expandafter{\cvopensource}
 \def\tempemptyos{}
@@ -277,7 +314,7 @@
 \fi
 
 %-----------VOLUNTEER WORK------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckvol\expandafter{\cvvolunteer}
 \def\tempemptyvol{}
@@ -290,7 +327,7 @@
 \fi
 
 %-----------LANGUAGES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempchecklang\expandafter{\cvlanguages}
 \def\tempemptylang{}
@@ -303,7 +340,7 @@
 \fi
 
 %-----------AWARDS/HONORS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckawards\expandafter{\cvawards}
 \def\tempemptyawards{}

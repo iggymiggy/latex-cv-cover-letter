@@ -6,7 +6,7 @@
 %
 % One-page CV template, ATS-friendly and easy to customize.
 % Personal info from personal_info.tex, defaults from base_config.tex,
-% company-specific overrides from config.tex (in company folders).
+% company-specific overrides from this file (in company folders).
 %------------------------
 
 % Global document settings (paper size, etc.)
@@ -152,10 +152,53 @@
 \IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
 
 % Load company-specific configuration (optional)
-% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
+% When compiling from companies/nasa/, companies/google/, etc., this loads this file
 % Company config can override any field from base_config.tex using \renewcommand
-% If a field is not defined in config.tex, the base default will be used
-\IfFileExists{config.tex}{\input{config}}{}
+% If a field is not defined in this file, the base default will be used
+\IfFileExists{this file}{\input{config}}{}
+
+%-----------CV CUSTOMIZATIONS (COMPANY-SPECIFIC)------------
+\renewcommand{\cvtitle}{Space Systems Engineer | Flight Software Specialist}
+
+% Technologies section - Skills format (Technical and Soft Skills)
+\renewcommand{\cvtechnologies}{%
+  \section{Skills}
+  \cvSubHeadingListStart
+    \item{\textbf{Technical Skills}{:} Space Systems, Satellite Operations, Mission Control, Ground Systems, AWS, Azure, Docker, Kubernetes, Python, C++, Rust, Go, MATLAB, Real-time Systems, Embedded Systems, Flight Software} \vspace{-8pt}
+    \item{\textbf{Soft Skills}{:} Problem-solving, Critical thinking, Strategic planning, Continuous learning, Communication, Attention to detail, Safety-first mindset}
+  \cvSubHeadingListEnd
+}
+
+% Certificates (reduced to 5 to fit on one page with both degrees)
+% Example: some with links, some without
+% Replace YOUR_BADGE_ID with your actual Credly badge ID from your Credly profile
+\renewcommand{\cvcertificates}{%
+  \href{https://www.credly.com/badges/YOUR_AWS_SA_PRO_BADGE_ID}{\textbf{AWS Certified Solutions Architect – Professional}} & \textcolor{gray}{\textit{May 2022 - May 2025}} \\
+  \href{https://www.credly.com/badges/YOUR_AWS_DEVOPS_PRO_BADGE_ID}{\textbf{AWS Certified DevOps Engineer – Professional}} & \textcolor{gray}{\textit{May 2019 - May 2022}} \\
+  \textbf{CKA: Certified Kubernetes Administrator} & \textcolor{gray}{\textit{Aug 2024 - Aug 2026}} \\
+  \href{https://www.credly.com/badges/YOUR_MS_DEVOPS_BADGE_ID}{\textbf{Microsoft Certified: DevOps Engineer Expert}} & \textcolor{gray}{\textit{Jan 2021 - Jan 2026}} \\
+  \textbf{Microsoft Certified: Azure Administrator Associate} & \textcolor{gray}{\textit{Jan 2021 - Jan 2026}}
+}
+
+% Open Source Contributions (none - explicitly set to empty)
+\renewcommand{\cvopensource}{}
+
+% Volunteer Work (NASA example: space education outreach)
+\renewcommand{\cvvolunteer}{%
+  \cvSubheading
+    {Space Education Foundation}{\textcolor{gray}{Remote}}
+    {Volunteer Mentor}{\textcolor{gray}{2020 -- Present}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Mentoring students in space systems engineering. Conducting workshops on satellite operations.}
+  \cvItemListEnd
+}
+
+% Languages (none - leave empty to save space)
+\renewcommand{\cvlanguages}{}
+
+% Awards (none - leave empty)
+\renewcommand{\cvawards}{}
 
 \begin{document}
 
@@ -174,7 +217,7 @@
 
 
 %-----------TECHNOLOGIES/SKILLS------------
-% Layout is defined in base_config.tex or company config.tex
+% Layout is defined in base_config.tex or company cv.tex
 % Companies can override with single column, two columns, or skills format
 % Section header is included in the \cvtechnologies command
 \cvtechnologies
@@ -239,7 +282,7 @@
 
 
 %-----------CERTIFICATES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 % 
 % Certificate links: To make a certificate name clickable, wrap it in \href{url}{\textbf{Name}}
@@ -258,7 +301,7 @@
 \fi
 
 %-----------OPEN SOURCE CONTRIBUTIONS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckos\expandafter{\cvopensource}
 \def\tempemptyos{}
@@ -271,7 +314,7 @@
 \fi
 
 %-----------VOLUNTEER WORK------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckvol\expandafter{\cvvolunteer}
 \def\tempemptyvol{}
@@ -284,7 +327,7 @@
 \fi
 
 %-----------LANGUAGES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempchecklang\expandafter{\cvlanguages}
 \def\tempemptylang{}
@@ -297,7 +340,7 @@
 \fi
 
 %-----------AWARDS/HONORS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckawards\expandafter{\cvawards}
 \def\tempemptyawards{}

@@ -6,7 +6,7 @@
 %
 % One-page CV template, ATS-friendly and easy to customize.
 % Personal info from personal_info.tex, defaults from base_config.tex,
-% company-specific overrides from config.tex (in company folders).
+% company-specific overrides from this file (in company folders).
 %------------------------
 
 % Global document settings (paper size, etc.)
@@ -152,10 +152,64 @@
 \IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
 
 % Load company-specific configuration (optional)
-% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
+% When compiling from companies/nasa/, companies/google/, etc., this loads this file
 % Company config can override any field from base_config.tex using \renewcommand
-% If a field is not defined in config.tex, the base default will be used
-\IfFileExists{config.tex}{\input{config}}{}
+% If a field is not defined in this file, the base default will be used
+\IfFileExists{this file}{\input{config}}{}
+
+%-----------CV CUSTOMIZATIONS (COMPANY-SPECIFIC)------------
+\renewcommand{\cvtitle}{Senior Software Engineer | Full-Stack Infrastructure}
+
+% Technologies section - Two column layout
+\renewcommand{\cvtechnologies}{%
+  \section*{Technologies}
+  \noindent
+  \begin{minipage}[t]{0.48\textwidth}
+    \textbf{Social Platforms:} React, React Native, GraphQL, Relay \\
+    \textbf{Backend:} PHP (Hack), Python, C++, Java \\
+    \textbf{Cloud \& Scale:} AWS, Azure, Facebook Infrastructure
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.48\textwidth}
+    \textbf{Containerization:} Docker, Kubernetes, Tupperware \\
+    \textbf{CI/CD \& IaaC:} Buck, Terraform, Ansible \\
+    \textbf{Languages:} Python, JavaScript, TypeScript, Hack, C++ \\
+    \textbf{Specialized:} Real-time Systems, Graph Databases
+  \end{minipage}
+}
+
+% Certificates (removed to fit awards section)
+\renewcommand{\cvcertificates}{}
+
+% Open Source Contributions (multiple projects - shortened to fit)
+\renewcommand{\cvopensource}{%
+  \cvSubheading
+    {React}{\textcolor{gray}{GitHub}}
+    {Core Maintainer}{\textcolor{gray}{2021 -- Present}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Maintaining React core library, implementing features, and reviewing contributions.}
+  \cvItemListEnd
+
+  \cvSubheading
+    {GraphQL}{\textcolor{gray}{GitHub}}
+    {Active Contributor}{\textcolor{gray}{2020 -- Present}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Contributing to GraphQL specification and reference implementation.}
+  \cvItemListEnd
+}
+
+% Volunteer Work (none - leave empty to save space)
+\renewcommand{\cvvolunteer}{}
+
+% Languages (none - leave empty to save space)
+\renewcommand{\cvlanguages}{}
+
+% Awards
+\renewcommand{\cvawards}{%
+  \item{\textbf{Outstanding Open Source Contributor}{:} React Foundation, 2023}
+}
 
 \begin{document}
 
@@ -174,7 +228,7 @@
 
 
 %-----------TECHNOLOGIES/SKILLS------------
-% Layout is defined in base_config.tex or company config.tex
+% Layout is defined in base_config.tex or company cv.tex
 % Companies can override with single column, two columns, or skills format
 % Section header is included in the \cvtechnologies command
 \cvtechnologies
@@ -239,7 +293,7 @@
 
 
 %-----------CERTIFICATES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 % 
 % Certificate links: To make a certificate name clickable, wrap it in \href{url}{\textbf{Name}}
@@ -258,7 +312,7 @@
 \fi
 
 %-----------OPEN SOURCE CONTRIBUTIONS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckos\expandafter{\cvopensource}
 \def\tempemptyos{}
@@ -271,7 +325,7 @@
 \fi
 
 %-----------VOLUNTEER WORK------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckvol\expandafter{\cvvolunteer}
 \def\tempemptyvol{}
@@ -284,7 +338,7 @@
 \fi
 
 %-----------LANGUAGES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempchecklang\expandafter{\cvlanguages}
 \def\tempemptylang{}
@@ -297,7 +351,7 @@
 \fi
 
 %-----------AWARDS/HONORS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckawards\expandafter{\cvawards}
 \def\tempemptyawards{}

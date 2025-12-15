@@ -5,8 +5,8 @@
 % License : MIT
 %
 % One-page CV template, ATS-friendly and easy to customize.
-% Personal info from personal_info.tex, defaults from base_config.tex,
-% company-specific overrides from config.tex (in company folders).
+% Personal info from personal_info.tex, defaults from base_config.tex.
+% Company-specific customizations are defined directly in this file.
 %------------------------
 
 % Global document settings (paper size, etc.)
@@ -146,16 +146,54 @@
 \IfFileExists{../personal_info.tex}{\input{../personal_info}}{\input{personal_info}}}
 
 % Load base/default configuration first
-% This provides default values for all CV and cover letter fields
+% This provides default values for all CV fields
 \IfFileExists{../../templates/base_config.tex}{\input{../../templates/base_config}}{%
 \IfFileExists{../templates/base_config.tex}{\input{../templates/base_config}}{%
 \IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
 
-% Load company-specific configuration (optional)
-% When compiling from companies/nasa/, companies/google/, etc., this loads config.tex
-% Company config can override any field from base_config.tex using \renewcommand
-% If a field is not defined in config.tex, the base default will be used
-\IfFileExists{config.tex}{\input{config}}{}
+%-----------CV CUSTOMIZATIONS (COMPANY-SPECIFIC)------------
+\renewcommand{\cvtitle}{Staff Software Engineer | Cloud Infrastructure}
+
+% Technologies section - Single column layout (shortened)
+\renewcommand{\cvtechnologies}{%
+  \section*{Technologies}
+  \noindent
+  \textbf{Cloud:} Google Cloud Platform (GCP), AWS, Azure \\
+  \textbf{Big Data \& ML:} TensorFlow, PyTorch, BigQuery, Dataflow \\
+  \textbf{Containerization:} Kubernetes, Docker, Borg \\
+  \textbf{CI/CD \& IaaC:} Terraform, Pulumi, Jenkins, Bazel \\
+  \textbf{Languages:} Python, Go, Java, C++, TypeScript
+}
+
+% Certificates (reduced to 2 to fit languages section)
+% Example: both with links
+% Replace YOUR_BADGE_ID with your actual Credly badge ID from your Credly profile
+\renewcommand{\cvcertificates}{%
+  \href{https://www.credly.com/badges/YOUR_GCP_ARCHITECT_BADGE_ID}{\textbf{Google Cloud Professional Cloud Architect}} & \textcolor{gray}{\textit{Jan 2023 - Jan 2026}} \\
+  \href{https://www.credly.com/badges/YOUR_CKA_BADGE_ID}{\textbf{CKA: Certified Kubernetes Administrator}} & \textcolor{gray}{\textit{Aug 2024 - Aug 2026}} \\
+}
+
+% Open Source Contributions (balanced: some open source - shortened)
+\renewcommand{\cvopensource}{%
+  \cvSubheading
+    {Kubernetes}{\textcolor{gray}{GitHub}}
+    {Core Contributor}{\textcolor{gray}{2022 -- Present}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Contributing to Kubernetes core infrastructure, focusing on container orchestration improvements and performance optimizations.}
+  \cvItemListEnd
+}
+
+% Volunteer Work (none - leave empty)
+\renewcommand{\cvvolunteer}{}
+
+% Languages
+\renewcommand{\cvlanguages}{%
+  \item{\textbf{English}{:} Native, \textbf{Mandarin}{:} Conversational}
+}
+
+% Awards (none - leave empty)
+\renewcommand{\cvawards}{}
 
 \begin{document}
 
@@ -174,7 +212,7 @@
 
 
 %-----------TECHNOLOGIES/SKILLS------------
-% Layout is defined in base_config.tex or company config.tex
+% Layout is defined in base_config.tex or company cv.tex
 % Companies can override with single column, two columns, or skills format
 % Section header is included in the \cvtechnologies command
 \cvtechnologies
@@ -239,7 +277,7 @@
 
 
 %-----------CERTIFICATES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 % 
 % Certificate links: To make a certificate name clickable, wrap it in \href{url}{\textbf{Name}}
@@ -258,7 +296,7 @@
 \fi
 
 %-----------OPEN SOURCE CONTRIBUTIONS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckos\expandafter{\cvopensource}
 \def\tempemptyos{}
@@ -271,7 +309,7 @@
 \fi
 
 %-----------VOLUNTEER WORK------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckvol\expandafter{\cvvolunteer}
 \def\tempemptyvol{}
@@ -284,7 +322,7 @@
 \fi
 
 %-----------LANGUAGES------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempchecklang\expandafter{\cvlanguages}
 \def\tempemptylang{}
@@ -297,7 +335,7 @@
 \fi
 
 %-----------AWARDS/HONORS------------
-% Uses content from base_config.tex or company config.tex override
+% Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
 \expandafter\def\expandafter\tempcheckawards\expandafter{\cvawards}
 \def\tempemptyawards{}
