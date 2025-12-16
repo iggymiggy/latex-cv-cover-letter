@@ -49,27 +49,35 @@ validate_file() {
     # Change to the directory containing the file
     local dir=$(dirname "$file")
     local filename=$(basename "$file")
-    cd "$dir"
+    local output_name="${filename%.tex}"
+    
+    # Create temporary directory for build artifacts (within workspace)
+    local temp_dir="$PROJECT_ROOT/.validate_temp_$$"
+    mkdir -p "$temp_dir" 2>/dev/null || true
     
     # Try to compile (run twice for cross-references)
-    if $LATEX $LATEX_FLAGS "$filename" > /dev/null 2>&1 && \
-       $LATEX $LATEX_FLAGS "$filename" > /dev/null 2>&1; then
+    # Use -output-directory to write build artifacts to temp directory
+    if (cd "$PROJECT_ROOT/$dir" && \
+        $LATEX $LATEX_FLAGS -output-directory="$temp_dir" "$filename" > "$temp_dir/${output_name}_pass1.log" 2>&1 && \
+        $LATEX $LATEX_FLAGS -output-directory="$temp_dir" "$filename" > "$temp_dir/${output_name}_pass2.log" 2>&1); then
         echo -e "${GREEN}✓ PASSED${NC}"
         PASSED=$((PASSED + 1))
-        # Clean up build artifacts
-        rm -f *.aux *.log *.out *.synctex.gz 2>/dev/null || true
     else
         echo -e "${RED}✗ FAILED${NC}"
         FAILED=$((FAILED + 1))
         FAILED_FILES+=("$file")
-        # Show error log
-        if [ -f "${filename%.tex}.log" ]; then
+        # Show error log from temp directory
+        if [ -f "$temp_dir/${output_name}_pass2.log" ]; then
             echo "  Error log:"
-            grep -A 5 "Error\|Fatal" "${filename%.tex}.log" 2>/dev/null | head -10 || true
+            grep -A 5 "Error\|Fatal" "$temp_dir/${output_name}_pass2.log" 2>/dev/null | head -10 || true
+        elif [ -f "$temp_dir/${output_name}_pass1.log" ]; then
+            echo "  Error log:"
+            grep -A 5 "Error\|Fatal" "$temp_dir/${output_name}_pass1.log" 2>/dev/null | head -10 || true
         fi
     fi
     
-    cd "$PROJECT_ROOT"
+    # Clean up temp directory
+    rm -rf "$temp_dir" 2>/dev/null || true
 }
 
 # Validate templates
