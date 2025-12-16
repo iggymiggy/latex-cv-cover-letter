@@ -4,40 +4,55 @@
 
 # LaTeX compiler
 LATEX = pdflatex
-LATEX_FLAGS = -interaction=nonstopmode
+# Optimized flags: nonstopmode, draftmode for first pass (faster), halt on error
+LATEX_FLAGS = -interaction=nonstopmode -halt-on-error
+LATEX_FLAGS_FIRST = $(LATEX_FLAGS) -draftmode
+LATEX_FLAGS_FINAL = $(LATEX_FLAGS)
 
 # Auto-detect company directories
 COMPANIES = $(shell find companies -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
 
-# Default target
-.PHONY: all clean help validate lint $(COMPANIES)
+# Number of parallel jobs (use all CPU cores by default)
+PARALLEL_JOBS = $(shell sysctl -n hw.ncpu 2>/dev/null || echo 4)
 
-# Build all companies
-all: $(COMPANIES)
+# Default target
+.PHONY: all clean help validate lint examples $(COMPANIES)
+
+# Build all companies (parallel by default for performance)
+all:
+	@echo "Building all companies in parallel (using $(PARALLEL_JOBS) jobs)..."
+	@$(MAKE) -j$(PARALLEL_JOBS) $(COMPANIES)
+	@echo "✓ All companies built successfully"
+
+# Sequential build (if needed for debugging)
+all-sequential:
+	@echo "Building all companies sequentially..."
+	@$(MAKE) $(COMPANIES)
+	@echo "✓ All companies built successfully"
 
 # Build templates
 templates: templates/cv_template.pdf templates/cover_letter_template.pdf
 
-# Build specific company
+# Build specific company (optimized: draftmode for first pass, final for second)
 $(COMPANIES):
 	@echo "Building CV and cover letter for $@..."
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true
+	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true
+	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true
+	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true
+	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true
 	@echo "✓ $@ built successfully: $@_cv.pdf, $@_cover_letter.pdf"
 
-# Build CV template
+# Build CV template (optimized)
 templates/cv_template.pdf: templates/cv_template.tex
 	@echo "Building CV template..."
-	@cd templates && $(LATEX) $(LATEX_FLAGS) cv_template.tex > /dev/null 2>&1 || true
-	@cd templates && $(LATEX) $(LATEX_FLAGS) cv_template.tex > /dev/null 2>&1 || true
+	@cd templates && $(LATEX) $(LATEX_FLAGS_FIRST) cv_template.tex > /dev/null 2>&1 || true
+	@cd templates && $(LATEX) $(LATEX_FLAGS_FINAL) cv_template.tex > /dev/null 2>&1 || true
 
-# Build cover letter template
+# Build cover letter template (optimized)
 templates/cover_letter_template.pdf: templates/cover_letter_template.tex
 	@echo "Building cover letter template..."
-	@cd templates && $(LATEX) $(LATEX_FLAGS) cover_letter_template.tex > /dev/null 2>&1 || true
-	@cd templates && $(LATEX) $(LATEX_FLAGS) cover_letter_template.tex > /dev/null 2>&1 || true
+	@cd templates && $(LATEX) $(LATEX_FLAGS_FIRST) cover_letter_template.tex > /dev/null 2>&1 || true
+	@cd templates && $(LATEX) $(LATEX_FLAGS_FINAL) cover_letter_template.tex > /dev/null 2>&1 || true
 
 # Clean build artifacts (keeps PDFs)
 clean:
@@ -81,19 +96,31 @@ lint:
 	@echo "Linting LaTeX files..."
 	@./scripts/lint.sh
 
+# Generate example files (copy PDFs and regenerate PNGs)
+examples:
+	@echo "Generating example files..."
+	@./scripts/generate-examples.sh
+
+# Build all and generate examples
+all-examples: all examples
+	@echo "✓ All companies built and examples generated"
+
 # Help
 help:
 	@echo "LaTeX CV and Cover Letter Build System"
 	@echo ""
 	@echo "Usage:"
-	@echo "  make              Build all company CVs and cover letters"
-	@echo "  make <company>    Build specific company (auto-detected from companies/)"
-	@echo "  make templates    Build base templates"
-	@echo "  make validate     Validate all templates compile successfully"
-	@echo "  make lint         Lint LaTeX files for common errors"
-	@echo "  make clean        Remove build artifacts (keeps PDFs)"
-	@echo "  make clean-all    Remove everything including PDFs (keeps examples)"
-	@echo "  make help         Show this help message"
+	@echo "  make                      Build all company CVs and cover letters (parallel)"
+	@echo "  make all-sequential       Build all companies sequentially (for debugging)"
+	@echo "  make <company>             Build specific company (auto-detected from companies/)"
+	@echo "  make templates            Build base templates"
+	@echo "  make examples             Generate example PDFs and PNGs from built companies"
+	@echo "  make all-examples         Build all companies and generate examples"
+	@echo "  make validate             Validate all templates compile successfully"
+	@echo "  make lint                 Lint LaTeX files for common errors"
+	@echo "  make clean                Remove build artifacts (keeps PDFs)"
+	@echo "  make clean-all            Remove everything including PDFs (keeps examples)"
+	@echo "  make help                 Show this help message"
 	@echo ""
 	@echo "Output format:"
 	@echo "  Company files:    {company}_cv.pdf, {company}_cover_letter.pdf"
