@@ -182,14 +182,16 @@ cd templates
 pdflatex cv_template.tex  # Builds templates/cv_template.pdf using defaults from base_config.tex
 ```
 
-**Optional: custom output filenames**
+**Output file naming:**
 
-By default, LaTeX names the PDF after the input file (`cv.tex` → `cv.pdf`). If you want `google_cv.pdf` etc., use `-jobname`:
-
-```bash
-pdflatex -jobname="google_cv" cv.tex
-pdflatex -jobname="google_cover_letter" cover_letter.tex
-```
+- **Using Makefile**: Automatically generates `{company}_cv.pdf` and `{company}_cover_letter.pdf`
+  - Example: `make google` → `google_cv.pdf`, `google_cover_letter.pdf`
+- **Manual compilation**: Defaults to `cv.pdf` and `cover_letter.pdf`
+  - To use company-prefixed names manually, use `-jobname`:
+  ```bash
+  pdflatex -jobname="google_cv" cv.tex
+  pdflatex -jobname="google_cover_letter" cover_letter.tex
+  ```
 
 ## Project Structure
 

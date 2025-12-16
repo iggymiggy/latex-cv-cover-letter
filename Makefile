@@ -21,11 +21,11 @@ templates: templates/cv_template.pdf templates/cover_letter_template.pdf
 # Build specific company
 $(COMPANIES):
 	@echo "Building CV and cover letter for $@..."
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) cv.tex > /dev/null 2>&1 || true
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) cv.tex > /dev/null 2>&1 || true
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) cover_letter.tex > /dev/null 2>&1 || true
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) cover_letter.tex > /dev/null 2>&1 || true
-	@echo "✓ $@ built successfully"
+	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true
+	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true
+	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true
+	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true
+	@echo "✓ $@ built successfully: $@_cv.pdf, $@_cover_letter.pdf"
 
 # Build CV template
 templates/cv_template.pdf: templates/cv_template.tex
@@ -83,8 +83,12 @@ help:
 	@echo "  make clean-all    Remove everything including PDFs (keeps examples)"
 	@echo "  make help         Show this help message"
 	@echo ""
+	@echo "Output format:"
+	@echo "  Company files:    {company}_cv.pdf, {company}_cover_letter.pdf"
+	@echo "  Template files:   cv_template.pdf, cover_letter_template.pdf"
+	@echo ""
 	@echo "Examples:"
-	@echo "  make google       Build Google CV and cover letter"
+	@echo "  make google       Builds google_cv.pdf and google_cover_letter.pdf"
 	@echo "  make all          Build all companies"
 	@echo "  make clean        Clean build artifacts"
 
