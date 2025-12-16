@@ -1,0 +1,132 @@
+% !TEX program = pdflatex
+%-------------------------
+% Microsoft Cover Letter Customization
+%-------------------------
+
+% Global document settings (paper size, etc.)
+% Works when compiling from root, templates/, or companies/<name>/
+% Define \loadfile helper before using it
+\newcommand{\loadfile}[2]{%
+  \IfFileExists{../../#1}{\input{../../#1}}{%
+  \IfFileExists{../#1}{\input{../#1}}{%
+  \IfFileExists{#1}{\input{#1}}{#2}}}%
+}
+\loadfile{document_settings.tex}{}
+
+\documentclass{article}
+
+% Load common package (shared packages, commands, and helpers)
+\loadfile{templates/common.sty}{}
+
+% Cover letter-specific packages
+\usepackage{etoolbox}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+%-------------------------------------------
+%%%%%%  COVER LETTER STARTS HERE  %%%%%%%%%%%%%%%%%%%
+
+% Load personal information
+\loadfile{personal_info.tex}{}
+
+% Load base/default configuration first
+\loadfile{templates/base_config.tex}{}
+
+% Load shared company configuration (variables used by both CV and cover letter)
+\loadfile{shared.tex}{}
+
+%-----------COMPANY DETAILS (COVER LETTER SPECIFIC)------------
+\renewcommand{\companyrecipient}{Microsoft Hiring Team}
+\renewcommand{\companyname}{Microsoft}
+\renewcommand{\companyaddress}{One Microsoft Way}
+\renewcommand{\companycity}{Redmond, WA 98052}
+
+%-----------COVER LETTER SETTINGS (COMPANY-SPECIFIC)------------
+\renewcommand{\letterdatelanguage}{english}
+\renewcommand{\letterdate}{auto}
+\renewcommand{\letterclosing}{Sincerely}
+\renewcommand{\letteropening}{Dear Hiring Manager,}
+\renewcommand{\lettertitle}{Job Application for Senior Cloud Engineer}
+\renewcommand{\letterattachment}{Attached: Curriculum Vitae}
+
+%-----------LETTER BODY (COMPANY-SPECIFIC)------------
+% Override lettersection to use date color (primary) for section titles
+\renewcommand{\lettersection}[1]{%
+  \vspace{12pt}%
+  \noindent{\large\bfseries\cvcolor{primary}{#1}} \cvcolor{primary}{\hrulefill} \\%
+  \vspace{6pt}%
+}
+
+\providecommand{\letterbody}{}%
+\renewcommand{\letterbody}{%
+  \lettersection{About Me}
+  I am a Senior Cloud Engineer with over seven years of experience designing and implementing enterprise-scale cloud solutions. My expertise spans Microsoft Azure and AWS, with deep knowledge in containerization, Infrastructure-as-Code, and AI-enhanced development workflows. I have successfully architected multi-region Kubernetes clusters, automated infrastructure provisioning, and integrated modern AI tools like GitHub Copilot and Cursor to increase developer productivity by 35\%.
+
+  \lettersection{Why \companyname?}
+  Microsoft's commitment to empowering every person and organization through innovative cloud solutions aligns perfectly with my passion for building scalable, reliable infrastructure. I am particularly drawn to Azure's cutting-edge capabilities and Microsoft's leadership in AI-enhanced development tools. The opportunity to contribute to Azure's infrastructure while working with technologies I use daily, such as GitHub Copilot, is exactly the kind of challenge I seek.
+
+  \lettersection{Why Me?}
+  My hands-on experience with Azure, including designing AKS clusters and implementing Infrastructure-as-Code with Terraform, directly matches the requirements of this role. I have a proven track record of improving system reliability to 99.95\% uptime and reducing deployment time by 50\%. My multi-cloud expertise, combined with my passion for AI-enhanced development workflows, positions me to make immediate contributions to Microsoft's cloud engineering team.
+}
+
+\validateconfigcoverletter
+\setpdfmetadata
+
+\begin{document}
+
+\setupcoverletterdate
+
+%-----------HEADING------------
+\begin{center}
+  {\Huge \textbf{\textcolor{\cvthemeaccent}{\myname}}} \\
+  \vspace{2pt}
+  {\Large \textcolor{\cvthemetitle}{\cvtitle}} \\
+  \vspace{4pt}
+  \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
+  \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
+  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \quad}{}%
+  \href{mailto:\myemail}{\myemail} \quad
+  \href{tel:\myphone}{\myphone} \\
+\end{center}
+
+\vspace{20pt}
+
+%----------COMPANY DETAILS AND DATE-----------------
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l@{\extracolsep{0pt}}r}
+  \begin{minipage}[t]{0.52\textwidth}
+    \small
+    \raggedright
+    \textbf{\companyrecipient} \\
+    \cvcolor{primary}{\companyname} \\
+    \cvcolor{primary}{\companyaddress} \\
+    \cvcolor{primary}{\companycity} \\
+  \end{minipage} &
+  \begin{minipage}[t]{0.38\textwidth}
+    \small
+    \raggedleft
+    \cvcolor{primary}{\letterdate} \\
+  \end{minipage} \\
+\end{tabular*}
+
+\vspace{36pt}
+
+%-----------LETTER TITLE AND OPENING------------
+\noindent{\large\bfseries\underline{\lettertitle}} \\
+\vspace{8pt}
+\noindent \letteropening \\
+\vspace{12pt}
+
+%-----------LETTER CONTENT------------
+\letterbody
+
+\vspace{12pt}
+
+%-----------LETTER CLOSING------------
+\vspace{8pt}
+\noindent \letterclosing, \\
+\vspace{6pt}
+\noindent\textbf{\myname} \\
+\vspace{20pt}
+\noindent\small\cvcolor{primary}{\textit{\letterattachment}}
+
+\end{document}

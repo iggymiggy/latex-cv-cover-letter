@@ -24,6 +24,12 @@ When updating example files (PDFs/PNGs):
 - Templates: `templates/`
 - Scripts: `scripts/`
 
+### CV Format
+- **CV is designed to be 1-page** - Template is optimized for single-page CVs
+- When helping users, prioritize keeping content concise to fit one page
+- Users can extend beyond one page if needed, but the design intent is single-page
+- Adjust section content and spacing to maintain one-page format when possible
+
 ### Build Output
 - Company builds: `companies/{company_name}/{company}_cv.pdf` and `{company}_cover_letter.pdf`
 - Examples: `examples/companies/{company}_cv.pdf` and `{company}_cover_letter.pdf`

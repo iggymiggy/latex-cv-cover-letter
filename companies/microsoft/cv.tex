@@ -1,0 +1,126 @@
+% !TEX program = pdflatex
+%-------------------------
+% Microsoft CV Customization
+%-------------------------
+
+% Global document settings (paper size, etc.)
+% Works when compiling from root, templates/, or companies/<name>/
+% Define \loadfile helper before using it
+\newcommand{\loadfile}[2]{%
+  \IfFileExists{../../#1}{\input{../../#1}}{%
+  \IfFileExists{../#1}{\input{../#1}}{%
+  \IfFileExists{#1}{\input{#1}}{#2}}}%
+}
+\loadfile{document_settings.tex}{}
+
+\documentclass{article}
+
+% Load common package (shared packages, commands, and helpers)
+\loadfile{templates/common.sty}{}
+
+% CV-specific packages
+\usepackage[english]{babel}
+\input{glyphtounicode}
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Load personal information
+\loadfile{personal_info.tex}{}
+
+% Load base/default configuration first
+\loadfile{templates/base_config.tex}{}
+
+% Load shared company configuration (variables used by both CV and cover letter)
+\loadfile{shared.tex}{}
+
+% CV customizations
+\renewcommand{\cvtechnologies}{%
+  \section*{Technologies}
+  \noindent
+  \begin{minipage}[t]{0.48\textwidth}
+    \textbf{Cloud:} AWS, Azure \\
+    \textbf{Containerization:} Docker, Kubernetes, EKS \\
+    \textbf{AI Tools:} Claude Code, GitHub Copilot, Cursor
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.48\textwidth}
+   \textbf{CI/CD \& IaaC:} Terraform, Pulumi, Ansible, Azure DevOps, Jenkins, GitLab \\ 
+    \textbf{Languages:} Python, React, Bash
+  \end{minipage}
+}
+
+\renewcommand{\cvexperience}{%
+  \cvSubheading
+  {Amazon Web Services}{\cvcolor{primary}{Seattle, WA}}
+  {Senior Cloud Solutions Architect}{\cvcolor{primary}{Jan 2022 -- Present}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Designing and implementing enterprise-scale cloud architectures on AWS, serving millions of users. Leading multi-region Kubernetes deployments using EKS, reducing deployment time by 45\% and improving system reliability to 99.9\% uptime.}
+    \cvItemSimple{}
+      {Implementing Infrastructure-as-Code practices with Terraform and Pulumi across 20+ teams, reducing manual provisioning time from days to minutes.}
+    \cvItemSimple{}
+      {Integrating AI-powered development tools including GitHub Copilot and Cursor into CI/CD pipelines, increasing developer productivity by 30\%.}
+  \cvItemListEnd
+
+  \cvSubheading
+  {Microsoft}{\cvcolor{primary}{Redmond, WA}}
+  {Cloud Engineer | Azure Infrastructure}{\cvcolor{primary}{Mar 2019 -- Dec 2021}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Architected and implemented scalable cloud solutions on Microsoft Azure, serving millions of users. Designed multi-region Kubernetes clusters using AKS, reducing deployment time by 50\% and improving system reliability to 99.95\% uptime.}
+    \cvItemSimple{}
+      {Led infrastructure automation initiatives using Terraform and Azure Resource Manager templates, enabling Infrastructure-as-Code practices across 15+ teams.}
+  \cvItemListEnd
+
+  \cvSubheading
+  {Netflix}{\cvcolor{primary}{Los Gatos, CA}}
+  {DevOps Engineer}{\cvcolor{primary}{Jun 2017 -- Feb 2019}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Managed cloud infrastructure for streaming platform serving 200M+ users. Automated infrastructure provisioning with Terraform and Ansible, reducing manual configuration errors by 80\%.}
+    \cvItemSimple{}
+      {Optimized Kubernetes deployments, improving application startup time by 30\% and reducing infrastructure costs by 25\% through better resource allocation.}
+  \cvItemListEnd
+}
+
+\renewcommand{\cveducation}{%
+  \cvSubheadingWithDetails
+    {University of Washington}{\cvcolor{primary}{Seattle, WA}}
+    {Master of Science in Computer Science}{\cvcolor{primary}{Sep 2015 -- Jun 2017}}
+    {Specialization in Cloud Computing \& Distributed Systems}{Thesis: Scalable Container Orchestration}
+  \cvSubheadingWithDetails
+    {Carnegie Mellon University}{\cvcolor{primary}{Pittsburgh, PA}}
+    {Bachelor of Science in Computer Science}{\cvcolor{primary}{Sep 2011 -- May 2015}}
+    {Major in Computer Science}{Minor in Software Engineering}
+}
+
+\renewcommand{\cvcertificates}{%
+  \textbf{Microsoft Certified: Azure Solutions Architect Expert} & \cvcolor{primary}{\textit{Jan 2023 - Jan 2026}} \\
+  \textbf{Microsoft Certified: DevOps Engineer Expert} & \cvcolor{primary}{\textit{Mar 2022 - Mar 2025}} \\
+  \textbf{AWS Certified Solutions Architect – Professional} & \cvcolor{primary}{\textit{May 2020 - May 2023}} \\
+  \textbf{CKA: Certified Kubernetes Administrator} & \cvcolor{primary}{\textit{Aug 2021 - Aug 2024}}
+}
+
+\renewcommand{\cvsectionorder}{technologies,experience,education,certificates}
+
+\validateconfigcv
+\setpdfmetadata
+
+\begin{document}
+
+\begin{center}
+  {\Huge \textbf{\textcolor{\cvthemeaccent}{\myname}}} \\
+  \vspace{2pt}
+  {\Large \textcolor{\cvthemetitle}{\cvtitle}} \\
+  \vspace{4pt}
+  \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
+  \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
+  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \quad}{}%
+  \href{mailto:\myemail}{\myemail} \quad
+  \href{tel:\myphone}{\myphone} \\
+\end{center}
+
+\rendercvsections
+
+\end{document}

@@ -6,8 +6,8 @@
 LATEX = pdflatex
 LATEX_FLAGS = -interaction=nonstopmode
 
-# Company directories
-COMPANIES = google hyperion meta nasa
+# Auto-detect company directories
+COMPANIES = $(shell find companies -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
 
 # Default target
 .PHONY: all clean help validate lint $(COMPANIES)
@@ -87,7 +87,7 @@ help:
 	@echo ""
 	@echo "Usage:"
 	@echo "  make              Build all company CVs and cover letters"
-	@echo "  make <company>    Build specific company (google, hyperion, meta, nasa)"
+	@echo "  make <company>    Build specific company (auto-detected from companies/)"
 	@echo "  make templates    Build base templates"
 	@echo "  make validate     Validate all templates compile successfully"
 	@echo "  make lint         Lint LaTeX files for common errors"

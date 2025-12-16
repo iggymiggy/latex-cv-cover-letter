@@ -6,7 +6,7 @@ A clean, modern LaTeX template for a professional **CV** (also called a **resume
 
 ## Features
 
-- Professional one-page CV layout
+- **One-page CV layout** - All CVs are designed to fit on a single page
 - Matching cover letter template
 - **Company-specific customization** - Tailor CV and cover letter for each application
 - **Shared code architecture** - Common packages and commands in `templates/common.sty`
@@ -121,6 +121,31 @@ Each company folder generates customized PDFs with company-specific CV skills an
   </tr>
 </table>
 
+### Microsoft
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>CV</strong><br>
+        <a href="examples/companies/microsoft_cv.pdf">
+          <img src="examples/companies/microsoft_cv.png" alt="Microsoft CV" width="100%">
+        </a><br>
+        <a href="examples/companies/microsoft_cv.pdf">View PDF</a>
+      </p>
+    </td>
+    <td width="50%" valign="top">
+      <p align="center">
+        <strong>Cover Letter</strong><br>
+        <a href="examples/companies/microsoft_cover_letter.pdf">
+          <img src="examples/companies/microsoft_cover_letter.png" alt="Microsoft Cover Letter" width="100%">
+        </a><br>
+        <a href="examples/companies/microsoft_cover_letter.pdf">View PDF</a>
+      </p>
+    </td>
+  </tr>
+</table>
+
 ## Quick Start
 
 ### 1. Set Up Personal Information
@@ -151,11 +176,11 @@ Pick one of these workflows. In all cases, you run `pdflatex` to **compile a `.t
 
 *Using Makefile (recommended):*
 ```bash
-# Build all companies
+# Build all companies (auto-detected from companies/ directory)
 make
 
-# Build specific company
-make google  # or hyperion, meta, nasa
+# Build specific company (auto-detected)
+make google  # or hyperion, meta, nasa, microsoft, etc.
 
 # Build base templates
 make templates
@@ -199,6 +224,7 @@ pdflatex cv_template.tex  # Builds templates/cv_template.pdf using defaults from
 
 - **Using Makefile**: Automatically generates `{company}_cv.pdf` and `{company}_cover_letter.pdf`
   - Example: `make google` → `google_cv.pdf`, `google_cover_letter.pdf`
+  - Companies are auto-detected from `companies/` directory - no need to manually update Makefile
 - **Manual compilation**: Defaults to `cv.pdf` and `cover_letter.pdf`
   - To use company-prefixed names manually, use `-jobname`:
   ```bash
@@ -431,6 +457,8 @@ make google      # Builds Google CV and cover letter
 make hyperion    # Builds Hyperion CV and cover letter
 make meta        # Builds Meta CV and cover letter
 make nasa        # Builds NASA CV and cover letter
+make microsoft   # Builds Microsoft CV and cover letter
+# ... and any other company directories in companies/
 
 # Build base templates
 make templates

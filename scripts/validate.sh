@@ -22,8 +22,8 @@ cd "$PROJECT_ROOT"
 LATEX="pdflatex"
 LATEX_FLAGS="-interaction=nonstopmode -halt-on-error"
 
-# Company directories
-COMPANIES=(google hyperion meta nasa)
+# Auto-detect company directories
+COMPANIES=($(find "$PROJECT_ROOT/companies" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort))
 
 # Counters
 TOTAL=0

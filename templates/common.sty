@@ -168,12 +168,14 @@
 %   @note: Sections not in the order list are skipped
 \newcommand{\rendercvsections}{%
   % Process each section name in \cvsectionorder using \forcsvlist from etoolbox
-  \forcsvlist{\rendersectionbyname}{\cvsectionorder}%
+  % Expand \cvsectionorder first to get the actual comma-separated list
+  \expandafter\forcsvlist\expandafter{\expandafter\rendersectionbyname\expandafter}\expandafter{\cvsectionorder}%
 }
 
 %-------------------------
 % Packages (shared by CV and Cover Letter)
 %-------------------------
+\RequirePackage{etoolbox}  % Required for \forcsvlist in \rendercvsections
 \RequirePackage{latexsym}
 \RequirePackage[empty]{fullpage}
 \RequirePackage{titlesec}
@@ -187,9 +189,8 @@
 \RequirePackage{tabularx}
 \RequirePackage{fontawesome5}  % Font awesome icons (LinkedIn and GitHub icons)
 
-% Note: babel, inputenc, etoolbox, and glyphtounicode are loaded in templates
+% Note: babel, inputenc, and glyphtounicode are loaded in templates
 % as they may differ between CV and cover letter (e.g., cover letter uses finnish,english)
-% etoolbox is required for section ordering (\@ifinlist)
 
 %-------------------------
 % Color Theme System
@@ -201,24 +202,28 @@
 % Primary color: Used for dates, locations, and secondary text
 \newcommand{\cvthemeprimary}{gray}
 
-% Accent color: Used for section headers and emphasis
+% Accent color: Used for emphasis (name in header)
 \newcommand{\cvthemeaccent}{black}
+
+% Title color: Used for professional title (cvtitle) - slightly different from accent
+\newcommand{\cvthemetitle}{black}
 
 % Link color: Used for hyperlinks (email, phone, URLs)
 \newcommand{\cvthemelink}{blue}
 
-% Section color: Used for section headers (can be same as accent)
+% Section color: Used for section headers (should be distinct from primary)
 \newcommand{\cvthemesection}{black}
 
 % Helper macro to apply theme colors
 % \cvcolor{type}{content} - Applies theme color based on type
-% @param #1: Color type (primary, accent, link, section)
+% @param #1: Color type (primary, accent, title, link, section)
 % @param #2: Content to color
 % @usage: \cvcolor{primary}{San Francisco, CA}
 \newcommand{\cvcolor}[2]{%
   \def\tempcolortype{#1}%
   \def\tempprimary{primary}%
   \def\tempaccent{accent}%
+  \def\temptitle{title}%
   \def\templink{link}%
   \def\tempsection{section}%
   \ifx\tempcolortype\tempprimary
@@ -227,13 +232,17 @@
     \ifx\tempcolortype\tempaccent
       \textcolor{\cvthemeaccent}{#2}%
     \else
-      \ifx\tempcolortype\templink
-        \textcolor{\cvthemelink}{#2}%
+      \ifx\tempcolortype\temptitle
+        \textcolor{\cvthemetitle}{#2}%
       \else
-        \ifx\tempcolortype\tempsection
-          \textcolor{\cvthemesection}{#2}%
+        \ifx\tempcolortype\templink
+          \textcolor{\cvthemelink}{#2}%
         \else
-          \textcolor{\cvthemeprimary}{#2}% Default to primary
+          \ifx\tempcolortype\tempsection
+            \textcolor{\cvthemesection}{#2}%
+          \else
+            \textcolor{\cvthemeprimary}{#2}% Default to primary
+          \fi
         \fi
       \fi
     \fi
