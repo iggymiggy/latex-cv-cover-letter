@@ -64,6 +64,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Provides clear error messages
   - Helps maintain code quality and catch errors early
 
+- **Section Reordering Helper** (#24)
+  - `\cvsectionorder` command to define custom section order per company
+  - `\rendercvsections` macro processes the order list and renders sections accordingly
+  - Flexible section ordering: reorder, hide, or prioritize sections per application
+  - Default order: technologies,experience,education,certificates,opensource,volunteer,languages,awards
+  - Companies can override with `\renewcommand{\cvsectionorder}{...}` in their `cv.tex` file
+
+- **Color Theme Customization** (#19)
+  - Color theme system with customizable variables: `\cvthemeprimary`, `\cvthemeaccent`, `\cvthemelink`, `\cvthemesection`
+  - `\cvcolor{type}{content}` helper macro for applying theme colors
+  - Company-specific color themes: Google (blue), Meta (blue), NASA (red/blue), Hyperion (teal)
+  - Default theme maintains current gray appearance (backward compatible)
+  - Easy per-company customization via `shared.tex` or individual document files
+  - Supports any LaTeX color syntax (named, mixed, RGB, custom)
+
 ### Changed
 - **Date Handling Refactoring** (#6)
   - Refactored `\setupcoverletterdate` to use `\selectlanguage{\letterdatelanguage}` directly

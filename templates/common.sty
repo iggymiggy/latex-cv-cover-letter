@@ -56,6 +56,122 @@
 }
 
 %-------------------------
+% Section Reordering Helper
+%-------------------------
+% Section rendering macros (defined per section, called in order)
+% These macros are defined to render each section type
+% The \rendercvsections macro processes \cvsectionorder and calls these
+
+% Define section rendering macros (can be overridden in company files)
+\newcommand{\rendersectiontechnologies}{%
+  \ifnotempty{\cvtechnologies}{\cvtechnologies}{}%
+}
+
+\newcommand{\rendersectionexperience}{%
+  \section{Experience}%
+  \cvSubHeadingListStart%
+  % Experience content is defined inline in cv_template.tex or company cv.tex
+  \cvexperience%
+  \cvSubHeadingListEnd%
+}
+
+\newcommand{\rendersectioneducation}{%
+  \section{Education}%
+  \cvSubHeadingListStart%
+  % Education content is defined inline in cv_template.tex or company cv.tex
+  \cveducation%
+  \cvSubHeadingListEnd%
+}
+
+\newcommand{\rendersectioncertificates}{%
+  \ifnotempty{\cvcertificates}{\cvCertificates{\cvcertificates}}{}%
+}
+
+\newcommand{\rendersectionopensource}{%
+  \ifnotempty{\cvopensource}{%
+    \section{Open Source Contributions}%
+    \cvSubHeadingListStart%
+    \cvopensource%
+    \cvSubHeadingListEnd%
+  }{}%
+}
+
+\newcommand{\rendersectionvolunteer}{%
+  \ifnotempty{\cvvolunteer}{%
+    \section{Volunteer Work}%
+    \cvSubHeadingListStart%
+    \cvvolunteer%
+    \cvSubHeadingListEnd%
+  }{}%
+}
+
+\newcommand{\rendersectionlanguages}{%
+  \ifnotempty{\cvlanguages}{%
+    \section{Languages}%
+    \cvSubHeadingListStart%
+    \cvlanguages%
+    \cvSubHeadingListEnd%
+  }{}%
+}
+
+\newcommand{\rendersectionawards}{%
+  \ifnotempty{\cvawards}{%
+    \section{Awards \& Honors}%
+    \cvSubHeadingListStart%
+    \cvawards%
+    \cvSubHeadingListEnd%
+  }{}%
+}
+
+% Helper macro to render a section by name
+% Uses string comparison to match section names
+\newcommand{\rendersectionbyname}[1]{%
+  \def\tempsectionname{#1}%
+  \def\tempcheck{technologies}%
+  \ifx\tempsectionname\tempcheck
+    \rendersectiontechnologies
+  \fi
+  \def\tempcheck{experience}%
+  \ifx\tempsectionname\tempcheck
+    \rendersectionexperience
+  \fi
+  \def\tempcheck{education}%
+  \ifx\tempsectionname\tempcheck
+    \rendersectioneducation
+  \fi
+  \def\tempcheck{certificates}%
+  \ifx\tempsectionname\tempcheck
+    \rendersectioncertificates
+  \fi
+  \def\tempcheck{opensource}%
+  \ifx\tempsectionname\tempcheck
+    \rendersectionopensource
+  \fi
+  \def\tempcheck{volunteer}%
+  \ifx\tempsectionname\tempcheck
+    \rendersectionvolunteer
+  \fi
+  \def\tempcheck{languages}%
+  \ifx\tempsectionname\tempcheck
+    \rendersectionlanguages
+  \fi
+  \def\tempcheck{awards}%
+  \ifx\tempsectionname\tempcheck
+    \rendersectionawards
+  \fi
+}
+
+% \rendercvsections
+%   Renders CV sections in the order specified by \cvsectionorder.
+%   Processes the comma-separated list and calls the appropriate section renderers.
+%   @usage: Call this in CV template instead of hardcoding section order
+%   @note: Sections not in the order list are skipped
+\newcommand{\rendercvsections}{%
+  % Process each section name in \cvsectionorder using \forcsvlist from etoolbox
+  \forcsvlist{\rendersectionbyname}{\cvsectionorder}%
+}
+
+%-------------------------
 % Packages (shared by CV and Cover Letter)
 %-------------------------
 \RequirePackage{latexsym}
@@ -73,6 +189,56 @@
 
 % Note: babel, inputenc, etoolbox, and glyphtounicode are loaded in templates
 % as they may differ between CV and cover letter (e.g., cover letter uses finnish,english)
+% etoolbox is required for section ordering (\@ifinlist)
+
+%-------------------------
+% Color Theme System
+%-------------------------
+% Color theme variables allow easy customization of document colors
+% Companies can override these to create brand-aligned CVs
+% Default theme: Professional gray (maintains current appearance)
+
+% Primary color: Used for dates, locations, and secondary text
+\newcommand{\cvthemeprimary}{gray}
+
+% Accent color: Used for section headers and emphasis
+\newcommand{\cvthemeaccent}{black}
+
+% Link color: Used for hyperlinks (email, phone, URLs)
+\newcommand{\cvthemelink}{blue}
+
+% Section color: Used for section headers (can be same as accent)
+\newcommand{\cvthemesection}{black}
+
+% Helper macro to apply theme colors
+% \cvcolor{type}{content} - Applies theme color based on type
+% @param #1: Color type (primary, accent, link, section)
+% @param #2: Content to color
+% @usage: \cvcolor{primary}{San Francisco, CA}
+\newcommand{\cvcolor}[2]{%
+  \def\tempcolortype{#1}%
+  \def\tempprimary{primary}%
+  \def\tempaccent{accent}%
+  \def\templink{link}%
+  \def\tempsection{section}%
+  \ifx\tempcolortype\tempprimary
+    \textcolor{\cvthemeprimary}{#2}%
+  \else
+    \ifx\tempcolortype\tempaccent
+      \textcolor{\cvthemeaccent}{#2}%
+    \else
+      \ifx\tempcolortype\templink
+        \textcolor{\cvthemelink}{#2}%
+      \else
+        \ifx\tempcolortype\tempsection
+          \textcolor{\cvthemesection}{#2}%
+        \else
+          \textcolor{\cvthemeprimary}{#2}% Default to primary
+        \fi
+      \fi
+    \fi
+  \fi
+}
 %
 % Standardized glyphtounicode usage:
 % - CV files: MUST use \input{glyphtounicode} (needed for ATS parsing of CVs)
@@ -104,8 +270,8 @@
 % Section Formatting
 %-------------------------
 \titleformat{\section}{
-  \vspace{-4pt}\scshape\raggedright\large
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+  \vspace{-4pt}\scshape\raggedright\large\color{\cvthemesection}
+}{}{0em}{}[\color{\cvthemesection}\titlerule \vspace{-5pt}]
 
 % Ensure that generate PDF is machine readable/ATS parsable
 \pdfgentounicode=1
@@ -360,7 +526,7 @@
 %   @note: Can be overridden in company cover_letter.tex for custom styling
 \newcommand{\lettersection}[1]{%
   \vspace{12pt}%
-  \noindent{\large\bfseries #1} \textcolor{gray}{\hrulefill} \\%
+  \noindent{\large\bfseries #1} \cvcolor{primary}{\hrulefill} \\%
   \vspace{6pt}%
 }
 

@@ -351,6 +351,44 @@ Each company folder contains three files:
 - Languages
 - Awards & Honors
 
+### Section Ordering
+
+You can customize the order of CV sections per company using `\cvsectionorder`. This allows you to prioritize different sections for different applications.
+
+**Default order:**
+```latex
+technologies,experience,education,certificates,opensource,volunteer,languages,awards
+```
+
+**To reorder sections**, override `\cvsectionorder` in your company's `cv.tex` file:
+
+```latex
+% Example: Put experience first, then education, then technologies
+\renewcommand{\cvsectionorder}{experience,education,technologies,certificates}
+
+% Example: Hide some sections and reorder
+\renewcommand{\cvsectionorder}{experience,education,certificates,awards}
+
+% Example: Put technologies at the end
+\renewcommand{\cvsectionorder}{experience,education,certificates,technologies}
+```
+
+**Available section names:**
+- `technologies` - Technologies/Skills section
+- `experience` - Work experience
+- `education` - Education
+- `certificates` - Certifications
+- `opensource` - Open Source Contributions
+- `volunteer` - Volunteer Work
+- `languages` - Languages
+- `awards` - Awards & Honors
+
+**Notes:**
+- Sections not listed in `\cvsectionorder` are skipped (hidden)
+- Sections are rendered in the exact order specified
+- Empty optional sections are automatically hidden (even if in the order list)
+- Experience and Education are always available (but can be excluded from the order list to hide them)
+
 ## Cover Letter Sections
 
 - Header (same as CV)
@@ -668,6 +706,13 @@ Central package containing:
   - `\ifnotempty{cmd}{if-not-empty}{if-empty}` - Conditional content execution
   - `\conditionalsection{cmd}{content}` - Conditional section visibility
   - `\setupcoverletterdate` - Date language and auto-date handling
+  - `\rendercvsections` - Renders CV sections in custom order (uses `\cvsectionorder`)
+  - `\cvcolor{type}{content}` - Applies theme color (primary, accent, link, section)
+- **Color theme system**:
+  - `\cvthemeprimary` - Primary color for dates/locations
+  - `\cvthemeaccent` - Accent color for emphasis
+  - `\cvthemelink` - Link color for hyperlinks
+  - `\cvthemesection` - Section header color
 - **Custom CV commands**: `\cvItem`, `\cvSubheading`, `\cvProjectItem`, etc.
 - **Cover letter commands**: `\lettersection`
 
@@ -726,9 +771,126 @@ Paper size is configured globally in `document_settings.tex`.
 - **Default**: `\papersize` = `a4paper`
 - **US/Canada**: set `\papersize` = `letterpaper`
 
+## Color Theme Customization
+
+The template includes a flexible color theme system that allows you to customize colors per company or application. This enables brand-aligned CVs and professional color schemes.
+
+### Available Theme Variables
+
+The color theme system provides four customizable color variables:
+
+- **`\cvthemeprimary`** - Primary color for dates, locations, and secondary text (default: `gray`)
+- **`\cvthemeaccent`** - Accent color for emphasis and highlights (default: `black`)
+- **`\cvthemelink`** - Link color for hyperlinks (default: `blue`)
+- **`\cvthemesection`** - Section header color (default: `black`)
+
+### Default Theme
+
+The default theme uses professional gray colors, maintaining the current appearance:
+- Primary: `gray` (for dates, locations)
+- Accent: `black` (for emphasis)
+- Link: `blue` (for hyperlinks)
+- Section: `black` (for section headers)
+
+### Company-Specific Themes
+
+Each company example includes a custom color theme defined in `shared.tex`:
+
+**Google** - Blue theme:
+```latex
+\renewcommand{\cvthemeprimary}{blue!50!gray}
+\renewcommand{\cvthemeaccent}{blue!80!black}
+\renewcommand{\cvthemelink}{blue}
+\renewcommand{\cvthemesection}{blue!80!black}
+```
+
+**Meta** - Blue theme:
+```latex
+\renewcommand{\cvthemeprimary}{blue!40!gray}
+\renewcommand{\cvthemeaccent}{blue!70!black}
+\renewcommand{\cvthemelink}{blue!75!black}
+\renewcommand{\cvthemesection}{blue!70!black}
+```
+
+**NASA** - Red and blue theme:
+```latex
+\renewcommand{\cvthemeprimary}{red!50!gray}
+\renewcommand{\cvthemeaccent}{red!70!black}
+\renewcommand{\cvthemelink}{blue!70!black}
+\renewcommand{\cvthemesection}{red!70!black}
+```
+
+**Hyperion** - Green/teal theme:
+```latex
+\renewcommand{\cvthemeprimary}{teal!50!gray}
+\renewcommand{\cvthemeaccent}{teal!70!black}
+\renewcommand{\cvthemelink}{teal!75!black}
+\renewcommand{\cvthemesection}{teal!70!black}
+```
+
+### How to Customize Colors
+
+**Option 1: Override in `shared.tex` (affects both CV and cover letter)**
+```latex
+% In companies/your_company/shared.tex
+\renewcommand{\cvthemeprimary}{blue!50!gray}  % Custom primary color
+\renewcommand{\cvthemeaccent}{blue!80!black} % Custom accent color
+\renewcommand{\cvthemelink}{blue}             % Custom link color
+\renewcommand{\cvthemesection}{blue!80!black} % Custom section color
+```
+
+**Option 2: Override in `cv.tex` or `cover_letter.tex` (document-specific)**
+```latex
+% In companies/your_company/cv.tex (CV only)
+\renewcommand{\cvthemeprimary}{green!50!gray}
+\renewcommand{\cvthemeaccent}{green!70!black}
+```
+
+### Color Syntax
+
+You can use any valid LaTeX color:
+- **Named colors**: `blue`, `red`, `green`, `gray`, `black`
+- **Mixed colors**: `blue!50!gray` (50% blue, 50% gray)
+- **RGB colors**: `{rgb}{0.2,0.4,0.8}` (requires `\usepackage{xcolor}`)
+- **Custom colors**: Define with `\definecolor{mycolor}{RGB}{100,150,200}`
+
+### Examples
+
+**Professional blue theme:**
+```latex
+\renewcommand{\cvthemeprimary}{blue!50!gray}
+\renewcommand{\cvthemeaccent}{blue!80!black}
+\renewcommand{\cvthemelink}{blue}
+\renewcommand{\cvthemesection}{blue!80!black}
+```
+
+**Modern green theme:**
+```latex
+\renewcommand{\cvthemeprimary}{green!40!gray}
+\renewcommand{\cvthemeaccent}{green!70!black}
+\renewcommand{\cvthemelink}{green!75!black}
+\renewcommand{\cvthemesection}{green!70!black}
+```
+
+**Classic black and gray:**
+```latex
+\renewcommand{\cvthemeprimary}{gray}
+\renewcommand{\cvthemeaccent}{black}
+\renewcommand{\cvthemelink}{black}
+\renewcommand{\cvthemesection}{black}
+```
+
+### Benefits
+
+- **Brand alignment**: Match company colors for targeted applications
+- **Professional appearance**: Consistent color usage throughout documents
+- **Easy customization**: Change colors in one place (`shared.tex`)
+- **Flexibility**: Different themes per company or application
+- **Backward compatible**: Default theme maintains current appearance
+
 ## Customization
 
-- **Colors**: Modify `\textcolor{gray}{}` in templates
+- **Colors**: Use the color theme system (see above)
 - **Sections**: Add, remove, or reorder in template files
 - **Layout**: Adjust margins/spacing in template preamble
 - **Company-specific**: Customize per company in `cv.tex` and `cover_letter.tex`
