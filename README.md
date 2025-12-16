@@ -338,6 +338,7 @@ Each company folder contains three files:
 - LaTeX distribution (TeX Live, MiKTeX, or MacTeX)
 - Packages: `xcolor`, `hyperref`, `fontawesome5`, `babel`, `tabularx`, `titlesec`, `fancyhdr`, `enumitem`, `etoolbox`
 - Make (optional, for automated builds)
+- chktex (optional, for advanced linting - install via `brew install chktex` on macOS or `sudo apt-get install chktex` on Linux)
 
 Most packages are included in standard LaTeX distributions.
 
@@ -359,6 +360,12 @@ make nasa        # Builds NASA CV and cover letter
 
 # Build base templates
 make templates
+
+# Validate all templates compile successfully
+make validate
+
+# Lint LaTeX files for common errors
+make lint
 
 # Clean build artifacts (keeps PDFs)
 make clean
@@ -382,18 +389,168 @@ pdflatex cover_letter.tex
 
 Note: LaTeX typically requires two passes to resolve cross-references and generate correct page numbers.
 
+## Validation and Linting
+
+The project includes validation and linting scripts to help catch errors before building:
+
+### Validation (`scripts/validate.sh`)
+
+Validates that all company CVs and cover letters compile successfully:
+
+```bash
+# Using Makefile
+make validate
+
+# Or directly
+./scripts/validate.sh
+```
+
+This script:
+- Compiles all template files
+- Compiles all company-specific CVs and cover letters
+- Reports which files passed or failed
+- Shows error logs for failed compilations
+
+### Linting (`scripts/lint.sh`)
+
+Checks LaTeX files for common errors and issues:
+
+```bash
+# Using Makefile
+make lint
+
+# Or directly
+./scripts/lint.sh
+```
+
+This script checks for:
+- Mismatched braces
+- Undefined command references
+- Common LaTeX typos
+- Missing required file loads
+- Hardcoded paths (should use `\loadfile`)
+
+If `chktex` is installed, it also runs advanced linting checks.
+
 ## Architecture
 
-The template uses a modular architecture:
+The template uses a modular architecture that separates shared code, defaults, and company-specific customizations. This design reduces code duplication and makes maintenance easier.
 
-- **`templates/common.sty`**: Shared LaTeX packages, custom commands, and helper macros
-  - Helper macros: `\loadfile` (flexible file path resolution), `\ifnotempty` (empty section checking), `\conditionalsection` (conditional section visibility), `\setupcoverletterdate` (date handling)
-- **`templates/base_config.tex`**: Default values for all CV and cover letter fields
-- **`companies/*/shared.tex`**: Company-specific variables used by both CV and cover letter (e.g., `\cvtitle`)
-- **`companies/*/cv.tex`**: CV-specific customizations (technologies, certificates, etc.)
-- **`companies/*/cover_letter.tex`**: Cover letter-specific customizations (company details, letter body, etc.)
+### File Structure and Loading Order
 
-This architecture reduces code duplication and makes maintenance easier.
+When compiling a company CV or cover letter, files are loaded in the following order:
+
+1. **`document_settings.tex`** (root) - Global settings (paper size, font size)
+2. **`templates/common.sty`** - Shared packages, custom commands, and helper macros
+3. **Company-specific packages** (e.g., `babel`, `glyphtounicode`) - Loaded in `cv.tex` or `cover_letter.tex`
+4. **`personal_info.tex`** (root) - Personal information (name, email, etc.)
+5. **`templates/base_config.tex`** - Default values for all fields
+6. **`companies/*/shared.tex`** - Company-specific shared variables (e.g., `\cvtitle`)
+7. **`companies/*/cv.tex` or `cover_letter.tex`** - Company-specific customizations (overrides defaults)
+
+### File Path Resolution (`\loadfile`)
+
+The `\loadfile` helper macro provides flexible file path resolution, allowing templates to be compiled from different directories:
+
+```latex
+\newcommand{\loadfile}[2]{%
+  \IfFileExists{../../#1}{\input{../../#1}}{%
+  \IfFileExists{../#1}{\input{../#1}}{%
+  \IfFileExists{#1}{\input{#1}}{#2}}}%
+}
+```
+
+**How it works:**
+- Checks paths in order: `../../file.tex` → `../file.tex` → `file.tex`
+- Falls back to optional second argument if file not found
+- Allows compilation from root, `templates/`, or `companies/<name>/` directories
+
+**Example usage:**
+```latex
+\loadfile{personal_info.tex}{}  % Loads from root, regardless of compilation directory
+\loadfile{templates/common.sty}{}  % Loads common package
+```
+
+### Variable Override Chain
+
+Variables follow a hierarchy where later definitions override earlier ones:
+
+```
+base_config.tex (defaults)
+    ↓
+shared.tex (company-specific shared variables)
+    ↓
+cv.tex / cover_letter.tex (company-specific customizations)
+```
+
+**Example:**
+- `base_config.tex` defines: `\newcommand{\cvtitle}{Cloud Evangelist | AI Whisperer}`
+- `companies/nasa/shared.tex` overrides: `\renewcommand{\cvtitle}{Space Systems Engineer}`
+- `companies/nasa/cv.tex` can further override if needed
+
+**Key principle:** Use `\renewcommand` (not `\newcommand`) in company files to override base defaults.
+
+### Modular Components
+
+#### `templates/common.sty`
+Central package containing:
+- **Shared LaTeX packages**: `hyperref`, `xcolor`, `fontawesome5`, `tabularx`, etc.
+- **Page setup**: Margins, headers, footers, section formatting
+- **Helper macros**:
+  - `\loadfile{file}{fallback}` - Flexible file path resolution
+  - `\ifnotempty{cmd}{if-not-empty}{if-empty}` - Conditional content execution
+  - `\conditionalsection{cmd}{content}` - Conditional section visibility
+  - `\setupcoverletterdate` - Date language and auto-date handling
+- **Custom CV commands**: `\cvItem`, `\cvSubheading`, `\cvProjectItem`, etc.
+- **Cover letter commands**: `\lettersection`
+
+#### `templates/base_config.tex`
+Default values for all CV and cover letter fields:
+- CV: `\cvtitle`, `\cvtechnologies`, `\cvcertificates`, optional sections
+- Cover letter: `\letterdate`, `\letterdatelanguage`, `\letterbody`, company details
+
+#### `companies/*/shared.tex`
+Company-specific variables used by both CV and cover letter:
+- `\cvtitle` - Professional title/tagline
+- Any other shared variables
+
+#### `companies/*/cv.tex` and `cover_letter.tex`
+Company-specific customizations:
+- Override defaults from `base_config.tex`
+- Define company-specific content (technologies, letter body, etc.)
+- Load `shared.tex` for shared variables
+
+### Compilation Flow
+
+```
+Company CV/Cover Letter Compilation:
+┌─────────────────────────────────────┐
+│ 1. Load document_settings.tex       │ (paper size, global settings)
+│ 2. Load templates/common.sty         │ (packages, commands, helpers)
+│ 3. Load company-specific packages    │ (babel, glyphtounicode)
+│ 4. Load personal_info.tex            │ (name, email, contact)
+│ 5. Load templates/base_config.tex    │ (default field values)
+│ 6. Load companies/*/shared.tex       │ (company shared variables)
+│ 7. Load companies/*/cv.tex          │ (company customizations)
+│ 8. Render document                   │ (combine all loaded content)
+└─────────────────────────────────────┘
+```
+
+### Design Principles
+
+1. **DRY (Don't Repeat Yourself)**: Shared code lives in `common.sty`, not duplicated
+2. **Separation of Concerns**: Personal info, defaults, and customizations are separate
+3. **Flexibility**: Company files only override what's needed, inherit the rest
+4. **Maintainability**: Changes to shared code propagate to all templates
+5. **Portability**: `\loadfile` allows compilation from any directory
+
+### Benefits
+
+- **Reduced duplication**: ~200 lines of shared code centralized in `common.sty`
+- **Easier maintenance**: Update packages/commands in one place
+- **Consistent styling**: All CVs and cover letters use the same base styles
+- **Flexible customization**: Companies can override any default
+- **Clear structure**: Easy to understand what goes where
 
 ## Paper size (A4 vs Letter)
 

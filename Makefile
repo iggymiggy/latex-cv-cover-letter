@@ -10,7 +10,7 @@ LATEX_FLAGS = -interaction=nonstopmode
 COMPANIES = google hyperion meta nasa
 
 # Default target
-.PHONY: all clean help $(COMPANIES)
+.PHONY: all clean help validate lint $(COMPANIES)
 
 # Build all companies
 all: $(COMPANIES)
@@ -71,6 +71,16 @@ clean-all: clean
 	@find . -maxdepth 1 -name "*.pdf" -delete
 	@echo "✓ All files cleaned (examples preserved)"
 
+# Validate all templates (compile check)
+validate:
+	@echo "Validating all templates..."
+	@./scripts/validate.sh
+
+# Lint LaTeX files
+lint:
+	@echo "Linting LaTeX files..."
+	@./scripts/lint.sh
+
 # Help
 help:
 	@echo "LaTeX CV and Cover Letter Build System"
@@ -79,6 +89,8 @@ help:
 	@echo "  make              Build all company CVs and cover letters"
 	@echo "  make <company>    Build specific company (google, hyperion, meta, nasa)"
 	@echo "  make templates    Build base templates"
+	@echo "  make validate     Validate all templates compile successfully"
+	@echo "  make lint         Lint LaTeX files for common errors"
 	@echo "  make clean        Remove build artifacts (keeps PDFs)"
 	@echo "  make clean-all    Remove everything including PDFs (keeps examples)"
 	@echo "  make help         Show this help message"
@@ -90,5 +102,7 @@ help:
 	@echo "Examples:"
 	@echo "  make google       Builds google_cv.pdf and google_cover_letter.pdf"
 	@echo "  make all          Build all companies"
+	@echo "  make validate     Check all files compile"
+	@echo "  make lint         Check for LaTeX errors"
 	@echo "  make clean        Clean build artifacts"
 

@@ -11,8 +11,13 @@
 %-------------------------
 % Helper Macro for Empty Section Checking
 %-------------------------
-% Checks if a command expands to empty, and conditionally executes content
-% Usage: \ifnotempty{\command}{\content if not empty}{\content if empty}
+% \ifnotempty{command}{content if not empty}{content if empty}
+%   Checks if a command expands to empty, and conditionally executes content.
+%   @param #1: Command to check (e.g., \cvopensource)
+%   @param #2: Content to display if command is not empty
+%   @param #3: Content to display if command is empty
+%   @example: \ifnotempty{\cvopensource}{\section{Open Source}\cvopensource}{}
+%   @usage: Use to conditionally show/hide sections based on content
 \newcommand{\ifnotempty}[3]{%
   \expandafter\def\expandafter\tempcheck\expandafter{#1}%
   \def\tempempty{}%
@@ -22,9 +27,14 @@
 %-------------------------
 % Helper Macro for Conditional Section Visibility
 %-------------------------
-% Shows a section only if the command is not empty
-% Usage: \conditionalsection{\command}{\section content}
-% Example: \conditionalsection{\cvopensource}{\section{Open Source}\cvopensource}
+% \conditionalsection{command}{section content}
+%   Shows a section only if the command is not empty.
+%   Convenience wrapper around \ifnotempty that hides section when empty.
+%   @param #1: Command to check (e.g., \cvopensource, \cvvolunteer)
+%   @param #2: Section content to display if command is not empty
+%   @example: \conditionalsection{\cvopensource}{\section{Open Source}\cvopensource}
+%   @usage: Use to conditionally show optional CV sections
+%   @note: If command is empty, nothing is displayed (no empty section)
 \newcommand{\conditionalsection}[2]{%
   \ifnotempty{#1}{#2}{}%
 }
@@ -88,21 +98,39 @@
 % Custom CV/Resume Commands
 %-------------------------
 
-% Basic item with label
+% \cvItem{label}{content}
+%   Creates a list item with a bold label followed by content.
+%   @param #1: Label text (displayed in bold)
+%   @param #2: Content text (displayed after colon)
+%   @example: \cvItem{Programming Languages}{Python, Java, C++}
+%   @usage: Use inside \cvItemListStart ... \cvItemListEnd
 \newcommand{\cvItem}[2]{%
   \item\small{%
     \textbf{#1}{: #2 \vspace{-2pt}}%
   }%
 }
 
-% Simple item without label
+% \cvItemSimple{label}{content}
+%   Creates a simple list item without a label (just content).
+%   @param #1: Unused (kept for consistency with \cvItem)
+%   @param #2: Content text
+%   @example: \cvItemSimple{}{Implemented REST API with Flask}
+%   @usage: Use inside \cvItemListStart ... \cvItemListEnd
 \newcommand{\cvItemSimple}[2]{%
   \item\small{%
     #2 \vspace{-2pt}%
   }%
 }
 
-% Heading that does not need to be in a list
+% \cvHeading{name}{right-align}{title}{right-align}
+%   Creates a heading that does not need to be in a list.
+%   Typically used for the main header section.
+%   @param #1: Name or main text (left-aligned, bold)
+%   @param #2: Right-aligned text (e.g., location, date)
+%   @param #3: Title or subtitle (left-aligned, italic, small)
+%   @param #4: Right-aligned subtitle (italic, small)
+%   @example: \cvHeading{John Doe}{San Francisco, CA}{Software Engineer}{2020-Present}
+%   @usage: Can be used standalone (not in a list)
 \newcommand{\cvHeading}[4]{%
     \begin{tabular*}{0.99\textwidth}[t]{l@{\extracolsep{\fill}}r}%
       \textbf{#1} & #2 \\%
@@ -110,7 +138,14 @@
     \end{tabular*}\vspace{-5pt}%
 }
 
-% Subheading (used in lists)
+% \cvSubheading{title}{date}{company}{location}
+%   Creates a subheading used within lists (e.g., Experience, Education).
+%   @param #1: Job title or degree name (bold)
+%   @param #2: Date range (right-aligned)
+%   @param #3: Company or institution name (italic, small, left-aligned)
+%   @param #4: Location (italic, small, right-aligned)
+%   @example: \cvSubheading{Senior Software Engineer}{2020-2023}{Google}{Mountain View, CA}
+%   @usage: Use inside \cvSubHeadingListStart ... \cvSubHeadingListEnd
 \newcommand{\cvSubheading}[4]{%
   \vspace{-1pt}\item%
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}%
@@ -119,14 +154,30 @@
     \end{tabular*}\vspace{-5pt}%
 }
 
-% Sub-subheading (for multiple positions at same company)
+% \cvSubSubheading{position}{date}
+%   Creates a sub-subheading for multiple positions at the same company.
+%   Used when you have multiple roles at one company.
+%   @param #1: Position title (italic, small, left-aligned)
+%   @param #2: Date range (italic, small, right-aligned)
+%   @example: \cvSubSubheading{Junior Software Engineer}{2018-2020}
+%   @usage: Use after \cvSubheading for the same company
 \newcommand{\cvSubSubheading}[2]{%
     \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}%
       \textit{\small#1} & \textit{\small #2} \\%
     \end{tabular*}\vspace{-5pt}%
 }
 
-% Subheading with education details (major/minor)
+% \cvSubheadingWithDetails{title}{date}{institution}{location}{major}{minor}
+%   Creates a subheading with education details (major and minor).
+%   Similar to \cvSubheading but includes major/minor fields.
+%   @param #1: Degree name (bold)
+%   @param #2: Date (right-aligned)
+%   @param #3: Institution name (italic, small, left-aligned)
+%   @param #4: Location (italic, small, right-aligned)
+%   @param #5: Major field of study
+%   @param #6: Minor field of study (can be empty)
+%   @example: \cvSubheadingWithDetails{Bachelor of Science}{2014-2018}{MIT}{Cambridge, MA}{Computer Science}{Mathematics}
+%   @usage: Use inside \cvSubHeadingListStart ... \cvSubHeadingListEnd for Education section
 \newcommand{\cvSubheadingWithDetails}[6]{%
   \vspace{-1pt}\item%
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}%
@@ -140,19 +191,47 @@
     \vspace{-5pt} % Adjust spacing after details
 }
 
-% Sub-item (nested item)
+% \cvSubItem{label}{content}
+%   Creates a nested sub-item (used for bullet points under a main item).
+%   @param #1: Label text (bold)
+%   @param #2: Content text
+%   @example: \cvSubItem{Technologies}{Python, Docker, Kubernetes}
+%   @usage: Use inside \cvItemListStart ... \cvItemListEnd (nested within a main item)
 \newcommand{\cvSubItem}[2]{\cvItem{#1}{#2}\vspace{-4pt}}
 
-% List item marker
+% List item marker (circular bullet for nested lists)
 \renewcommand{\labelitemii}{$\circ$}
 
-% List start/end commands
+% \cvSubHeadingListStart ... \cvSubHeadingListEnd
+%   Wrapper for itemize environment used for main sections (Experience, Education).
+%   Uses leftmargin=* to remove left margin.
+%   @usage: Wrap \cvSubheading commands
+%   @example:
+%     \cvSubHeadingListStart
+%       \cvSubheading{Engineer}{2020-2023}{Company}{Location}
+%     \cvSubHeadingListEnd
 \newcommand{\cvSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
 \newcommand{\cvSubHeadingListEnd}{\end{itemize}}
+
+% \cvItemListStart ... \cvItemListEnd
+%   Wrapper for standard itemize environment used for bullet points.
+%   @usage: Wrap \cvItem or \cvItemSimple commands
+%   @example:
+%     \cvItemListStart
+%       \cvItem{Language}{Python}
+%       \cvItem{Framework}{Django}
+%     \cvItemListEnd
 \newcommand{\cvItemListStart}{\begin{itemize}}
 \newcommand{\cvItemListEnd}{\end{itemize}\vspace{-5pt}}
 
-% Project item
+% \cvProjectItem{name}{type}{date}{description}
+%   Creates a formatted project entry with name, type, date, and description.
+%   @param #1: Project name (bold)
+%   @param #2: Project type or category (italic)
+%   @param #3: Date (right-aligned, italic, small)
+%   @param #4: Project description (displayed as nested bullet)
+%   @example: \cvProjectItem{Web App}{Personal Project}{2023}{Built with React and Node.js}
+%   @usage: Use inside \cvItemListStart ... \cvItemListEnd
 \newcommand{\cvProjectItem}[4]{%
   \item\small{%
     \textbf{#1} — \textit{#2} \hfill \textit{\small #3}%
@@ -166,6 +245,16 @@
 %-------------------------
 % Certificates Section
 %-------------------------
+% \cvCertificates{content}
+%   Creates a formatted certificates section with two-column layout.
+%   @param #1: Certificate entries (each entry should end with \\)
+%   @example:
+%     \cvCertificates{%
+%       \textbf{AWS Certified} & \textcolor{gray}{\textit{2023}} \\
+%       \textbf{Kubernetes Admin} & \textcolor{gray}{\textit{2022}} \\
+%     }
+%   @note: Use \href{url}{\textbf{Name}} for clickable certificate links
+%   @usage: Call directly in CV body (not inside a list)
 \newcommand{\cvCertificates}[1]{%
   \vspace{-4pt}%
   \section*{Certificates}%
@@ -179,7 +268,13 @@
 %-------------------------
 % Cover Letter Section Command
 %-------------------------
-% Letter section command with full page line (emphasized)
+% \lettersection{title}
+%   Creates a section heading for cover letter with a horizontal rule.
+%   Used to separate different parts of the cover letter body.
+%   @param #1: Section title (displayed in large, bold)
+%   @example: \lettersection{Why I'm a Great Fit}
+%   @usage: Use in cover letter body to create section breaks
+%   @note: Can be overridden in company cover_letter.tex for custom styling
 \newcommand{\lettersection}[1]{%
   \vspace{12pt}%
   \noindent{\large\bfseries #1} \textcolor{gray}{\hrulefill} \\%
