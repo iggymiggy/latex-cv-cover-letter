@@ -75,21 +75,9 @@
 
 \begin{document}
 
-% Set date language (from base_config.tex or this file override)
-\edef\templang{\letterdatelanguage}%
-\def\tempfinnish{finnish}%
-\ifx\templang\tempfinnish
-  \selectlanguage{finnish}%
-\else
-  \selectlanguage{english}%
-\fi
-
-% Set date (auto uses \today, respects language setting)
-\def\checkdateauto{auto}%
-\edef\letterdateexpanded{\letterdate}%
-\ifx\letterdateexpanded\checkdateauto
-  \renewcommand{\letterdate}{\today}%
-\fi
+% Set up cover letter date (language selection and auto-date handling)
+% Uses \letterdatelanguage and \letterdate (defined in base_config.tex or this file)
+\setupcoverletterdate
 
 %-----------HEADING------------
 \begin{center}

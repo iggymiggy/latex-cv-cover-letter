@@ -20,6 +20,16 @@
 }
 
 %-------------------------
+% Helper Macro for Conditional Section Visibility
+%-------------------------
+% Shows a section only if the command is not empty
+% Usage: \conditionalsection{\command}{\section content}
+% Example: \conditionalsection{\cvopensource}{\section{Open Source}\cvopensource}
+\newcommand{\conditionalsection}[2]{%
+  \ifnotempty{#1}{#2}{}%
+}
+
+%-------------------------
 % Packages (shared by CV and Cover Letter)
 %-------------------------
 \RequirePackage{latexsym}
@@ -37,6 +47,10 @@
 
 % Note: babel, inputenc, etoolbox, and glyphtounicode are loaded in templates
 % as they may differ between CV and cover letter (e.g., cover letter uses finnish,english)
+%
+% Standardized glyphtounicode usage:
+% - CV files: MUST use \input{glyphtounicode} (needed for ATS parsing of CVs)
+% - Cover letter files: DO NOT use glyphtounicode - \pdfgentounicode=1 (set below) already handles Unicode
 
 %-------------------------
 % Page Setup
@@ -170,5 +184,26 @@
   \vspace{12pt}%
   \noindent{\large\bfseries #1} \textcolor{gray}{\hrulefill} \\%
   \vspace{6pt}%
+}
+
+%-------------------------
+% Cover Letter Date Setup Helper
+%-------------------------
+% Sets up date language and handles auto-date conversion
+% Uses \letterdatelanguage and \letterdate commands (should be defined in cover_letter.tex)
+% This centralizes the date handling logic while keeping values company-specific
+%
+% Note: babel package must be loaded with the desired languages (e.g., [finnish,english])
+% The language name in \letterdatelanguage must match a language loaded in babel
+\newcommand{\setupcoverletterdate}{%
+  % Set date language (from \letterdatelanguage, company-specific)
+  % Uses babel's \selectlanguage directly - works with any language loaded in babel
+  \selectlanguage{\letterdatelanguage}%
+  % Set date (auto uses \today, respects language setting)
+  \def\checkdateauto{auto}%
+  \edef\letterdateexpanded{\letterdate}%
+  \ifx\letterdateexpanded\checkdateauto
+    \renewcommand{\letterdate}{\today}%
+  \fi
 }
 
