@@ -135,6 +135,20 @@ Pick one of these workflows. In all cases, you run `pdflatex` to **compile a `.t
 - `pdflatex cover_letter.tex` → creates `cover_letter.pdf` (your cover letter)
 
 **Option A: Use an existing example (Google, Hyperion, Meta, NASA)**
+
+*Using Makefile (recommended):*
+```bash
+# Build all companies
+make
+
+# Build specific company
+make google  # or hyperion, meta, nasa
+
+# Build base templates
+make templates
+```
+
+*Manual compilation:*
 ```bash
 cd companies/nasa  # or google, hyperion, meta
 # Edit shared.tex (cvtitle), cv.tex, and cover_letter.tex (company-specific fields)
@@ -149,12 +163,21 @@ cp -R companies/nasa companies/your_company  # or copy google/meta
 cd companies/your_company
 # Edit shared.tex (cvtitle), cv.tex, and cover_letter.tex (company-specific fields)
 # Also edit personal_info.tex (your personal details)
+
+# Build using Makefile (from project root)
+make your_company
+
+# Or build manually
 pdflatex cv.tex
 pdflatex cover_letter.tex
 ```
 
 **Option C: Compile the base CV (generic)**
 ```bash
+# Using Makefile
+make templates
+
+# Or manually
 cd templates
 pdflatex cv_template.tex  # Builds templates/cv_template.pdf using defaults from base_config.tex
 ```
@@ -312,8 +335,50 @@ Each company folder contains three files:
 
 - LaTeX distribution (TeX Live, MiKTeX, or MacTeX)
 - Packages: `xcolor`, `hyperref`, `fontawesome5`, `babel`, `tabularx`, `titlesec`, `fancyhdr`, `enumitem`, `etoolbox`
+- Make (optional, for automated builds)
 
 Most packages are included in standard LaTeX distributions.
+
+## Building
+
+### Using Makefile (Recommended)
+
+A `Makefile` is provided for easy building:
+
+```bash
+# Build all company CVs and cover letters
+make
+
+# Build specific company
+make google      # Builds Google CV and cover letter
+make hyperion    # Builds Hyperion CV and cover letter
+make meta        # Builds Meta CV and cover letter
+make nasa        # Builds NASA CV and cover letter
+
+# Build base templates
+make templates
+
+# Clean build artifacts (keeps PDFs)
+make clean
+
+# Clean everything including PDFs (keeps examples)
+make clean-all
+
+# Show help
+make help
+```
+
+### Manual Building
+
+You can also compile manually using `pdflatex`:
+
+```bash
+cd companies/google
+pdflatex cv.tex
+pdflatex cover_letter.tex
+```
+
+Note: LaTeX typically requires two passes to resolve cross-references and generate correct page numbers.
 
 ## Architecture
 
