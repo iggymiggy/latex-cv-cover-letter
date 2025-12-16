@@ -468,6 +468,44 @@ This script checks for:
 
 If `chktex` is installed, it also runs advanced linting checks.
 
+### Pre-commit Hooks
+
+A Git pre-commit hook is included to automatically validate and lint your LaTeX files before committing:
+
+**What it does:**
+- Runs `make lint` to check for LaTeX errors
+- Runs `make validate` to ensure all templates compile
+- Blocks commits if errors are found
+- Provides clear error messages
+
+**Installation:**
+```bash
+# Copy the hook template to Git hooks directory
+cp scripts/pre-commit .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+**How it works:**
+- The hook is located at `.git/hooks/pre-commit` (not tracked in Git)
+- Automatically runs on `git commit`
+- You can bypass it with `git commit --no-verify` (not recommended)
+
+**To disable temporarily:**
+```bash
+# Skip pre-commit hook for one commit
+git commit --no-verify -m "Your message"
+```
+
+**To re-enable:**
+```bash
+chmod +x .git/hooks/pre-commit
+```
+
+**Note:** 
+- The hook template is in `scripts/pre-commit` (tracked in Git)
+- Each developer needs to copy it to `.git/hooks/pre-commit` (not tracked)
+- Requires the Makefile and validation/linting scripts to be present
+
 ### Configuration Validation
 
 The templates automatically validate configuration during compilation:

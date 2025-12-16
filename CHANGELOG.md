@@ -58,6 +58,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Per-company customization support
   - Better SEO for online CVs and improved file organization
 
+- **Pre-commit Hooks** (#21)
+  - Git pre-commit hook automatically runs `make lint` and `make validate`
+  - Blocks commits if linting or validation fails
+  - Provides clear error messages
+  - Helps maintain code quality and catch errors early
+
 ### Changed
 - **Date Handling Refactoring** (#6)
   - Refactored `\setupcoverletterdate` to use `\selectlanguage{\letterdatelanguage}` directly
