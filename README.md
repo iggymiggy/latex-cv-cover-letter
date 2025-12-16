@@ -165,72 +165,35 @@ cp personal_info.example.tex personal_info.tex
 
 **Note:** `personal_info.tex` is ignored by Git (see `.gitignore`) to keep your personal data private. The `personal_info.example.tex` file serves as a template and is tracked in the repository.
 
-### 2. Use Existing Example or Create New Company
+### 2. Build Your CV and Cover Letter
 
-Pick one of these workflows. In all cases, you run `pdflatex` to **compile a `.tex` file into a `.pdf`**.
-
-- `pdflatex cv.tex` → creates `cv.pdf` (your CV)
-- `pdflatex cover_letter.tex` → creates `cover_letter.pdf` (your cover letter)
-
-**Option A: Use an existing example (Google, Hyperion, Meta, NASA)**
-
-*Using Makefile (recommended):*
+**Using Makefile (recommended):**
 ```bash
 # Build all companies (auto-detected from companies/ directory)
 make
 
-# Build specific company (auto-detected)
-make google  # or hyperion, meta, nasa, microsoft, etc.
+# Build specific company
+make <company>  # Any company directory in companies/
 
 # Build base templates
 make templates
 ```
 
-*Manual compilation:*
+**Manual compilation:**
 ```bash
-cd companies/nasa  # or google, hyperion, meta
-# Edit shared.tex (cvtitle), cv.tex, and cover_letter.tex (company-specific fields)
-# Also edit personal_info.tex (your personal details)
+cd companies/google  # or any company directory
 pdflatex cv.tex
 pdflatex cover_letter.tex
+# Or use -jobname for company-prefixed output:
+pdflatex -jobname="google_cv" cv.tex
 ```
 
-**Option B: Create a new company folder (recommended: copy an existing one)**
+**Create a new company:**
 ```bash
-cp -R companies/nasa companies/your_company  # or copy google/meta
-cd companies/your_company
-# Edit shared.tex (cvtitle), cv.tex, and cover_letter.tex (company-specific fields)
-# Also edit personal_info.tex (your personal details)
-
-# Build using Makefile (from project root)
-make your_company
-
-# Or build manually
-pdflatex cv.tex
-pdflatex cover_letter.tex
+cp -R companies/nasa companies/your_company
+# Edit companies/your_company/shared.tex, cv.tex, and cover_letter.tex
+make your_company  # Auto-detected, no Makefile update needed
 ```
-
-**Option C: Compile the base CV (generic)**
-```bash
-# Using Makefile
-make templates
-
-# Or manually
-cd templates
-pdflatex cv_template.tex  # Builds templates/cv_template.pdf using defaults from base_config.tex
-```
-
-**Output file naming:**
-
-- **Using Makefile**: Automatically generates `{company}_cv.pdf` and `{company}_cover_letter.pdf`
-  - Example: `make google` → `google_cv.pdf`, `google_cover_letter.pdf`
-  - Companies are auto-detected from `companies/` directory - no need to manually update Makefile
-- **Manual compilation**: Defaults to `cv.pdf` and `cover_letter.pdf`
-  - To use company-prefixed names manually, use `-jobname`:
-  ```bash
-  pdflatex -jobname="google_cv" cv.tex
-  pdflatex -jobname="google_cover_letter" cover_letter.tex
-  ```
 
 ## Project Structure
 
@@ -263,15 +226,11 @@ project/
 
 ### Personal Information
 
-**Setup:**
-1. Copy the example template: `cp personal_info.example.tex personal_info.tex`
-2. Edit `personal_info.tex` with your real information
-
-**Fields to edit:**
+Copy `personal_info.example.tex` to `personal_info.tex` and edit with your information:
 - **Required**: Name, email, phone
 - **Optional**: LinkedIn, GitHub, portfolio URLs (leave empty if not applicable)
 
-**Note:** `personal_info.tex` is ignored by Git to protect your personal data. The `personal_info.example.tex` file is a template tracked in the repository.
+**Note:** `personal_info.tex` is ignored by Git to protect your personal data.
 
 ### Base Configuration (`templates/base_config.tex`)
 
@@ -296,10 +255,9 @@ Each company folder contains three files:
 
 % CV customizations
 \renewcommand{\cvtechnologies}{%
-  \section{Skills}
-  \cvSubHeadingListStart
-    \item{\textbf{Technical Skills}{:} Space Systems, Satellite Operations...}
-  \cvSubHeadingListEnd
+  \section{Technologies}
+  \noindent
+  \textbf{Category:} Skills, tools, technologies...
 }
 
 % Certificates with optional links
@@ -321,16 +279,16 @@ Each company folder contains three files:
 \loadfile{shared.tex}{}
 
 % Company details
-\renewcommand{\companyname}{NASA}
-\renewcommand{\companyaddress}{300 E Street SW}
-\renewcommand{\companyrecipient}{NASA Hiring Team}
-\renewcommand{\companycity}{Washington, DC 20546}
+\renewcommand{\companyname}{Company Name}
+\renewcommand{\companyaddress}{Company Address}
+\renewcommand{\companyrecipient}{Hiring Manager}
+\renewcommand{\companycity}{City, State ZIP}
 
 % Letter settings
 \renewcommand{\letterdatelanguage}{english}  % or "finnish" (must match babel languages)
 \renewcommand{\letterdate}{auto}             % or specific date like "January 15, 2024"
-\renewcommand{\lettertitle}{Application for Space Systems Engineer Position}
-\renewcommand{\letteropening}{Dear NASA Hiring Team,}
+\renewcommand{\lettertitle}{Application for Position Title}
+\renewcommand{\letteropening}{Dear Hiring Manager,}
 \renewcommand{\letterclosing}{Sincerely,}
 
 % Letter body
@@ -343,16 +301,16 @@ Each company folder contains three files:
 ```latex
 % In companies/*/cv.tex or cover_letter.tex, customize PDF metadata:
 % You can use either \newcommand or \renewcommand (both work)
-\renewcommand{\pdfmetatitle}{John Doe - Software Engineer CV}  % PDF title
-\renewcommand{\pdfmetaauthor}{John Doe}  % PDF author (default: \myname)
-\renewcommand{\pdfmetasubject}{Software Engineer CV for Google}  % PDF subject
-\renewcommand{\pdfmetakeywords}{Software Engineer, Python, Google, CV}  % PDF keywords
+\renewcommand{\pdfmetatitle}{Your Name - Your Title CV}  % PDF title
+\renewcommand{\pdfmetaauthor}{Your Name}  % PDF author (default: \myname)
+\renewcommand{\pdfmetasubject}{Your Title CV for Company}  % PDF subject
+\renewcommand{\pdfmetakeywords}{Your, Keywords, Here, CV}  % PDF keywords
 
 % If not set, defaults are auto-generated from your personal info:
-% - Title: "\myname - \cvtitle" (e.g., "John Doe - Software Engineer")
+% - Title: "\myname - \cvtitle"
 % - Author: "\myname" (your name from personal_info.tex)
-% - Subject: "CV Template v1.1.0 (2025-12-16)"
-% - Keywords: "CV, Resume, LaTeX, Template v1.1.0"
+% - Subject: "CV Template vX.Y.Z (YYYY-MM-DD)"
+% - Keywords: "CV, Resume, LaTeX, Template vX.Y.Z"
 ```
 
 **Key points:**
@@ -444,95 +402,59 @@ Most packages are included in standard LaTeX distributions.
 
 ## Building
 
-### Using Makefile (Recommended)
-
-A `Makefile` is provided for easy building:
-
+**Using Makefile (recommended):**
 ```bash
-# Build all company CVs and cover letters
-make
-
-# Build specific company
-make google      # Builds Google CV and cover letter
-make hyperion    # Builds Hyperion CV and cover letter
-make meta        # Builds Meta CV and cover letter
-make nasa        # Builds NASA CV and cover letter
-make microsoft   # Builds Microsoft CV and cover letter
-# ... and any other company directories in companies/
-
-# Build base templates
-make templates
-
-# Validate all templates compile successfully
-make validate
-
-# Lint LaTeX files for common errors
-make lint
-
-# Clean build artifacts (keeps PDFs)
-make clean
-
-# Clean everything including PDFs (keeps examples)
-make clean-all
-
-# Show help
-make help
+make                      # Build all companies (parallel by default)
+make all-sequential       # Build all companies sequentially (for debugging)
+make <company>            # Build specific company (auto-detected)
+make templates            # Build base templates
+make examples             # Generate example PDFs and PNGs
+make all-examples         # Build all and generate examples
+make validate             # Validate all templates compile
+make lint                 # Lint LaTeX files
+make clean                # Clean build artifacts
+make help                 # Show all commands
 ```
 
-### Manual Building
-
-You can also compile manually using `pdflatex`:
-
+**Manual compilation:**
 ```bash
 cd companies/google
 pdflatex cv.tex
-pdflatex cover_letter.tex
+pdflatex cover_letter.tex  # LaTeX requires two passes for cross-references
 ```
 
-Note: LaTeX typically requires two passes to resolve cross-references and generate correct page numbers.
+**Output:** Makefile generates `{company}_cv.pdf` and `{company}_cover_letter.pdf`. Companies are auto-detected from `companies/` directory.
+
+**Performance:** `make` builds all companies in parallel by default (uses all CPU cores). The Makefile uses optimized LaTeX flags (`-draftmode` for first pass) for faster compilation. Use `make all-sequential` for sequential builds (useful for debugging).
+
+## Example Generation
+
+The project includes an automated script to generate example files for the README:
+
+```bash
+# Generate example PDFs and PNGs from built companies
+make examples
+
+# Or build all companies and generate examples in one command
+make all-examples
+make all-examples-parallel  # Faster: parallel build + examples
+```
+
+**What it does:**
+- Copies PDFs from `companies/*/` to `examples/companies/`
+- Regenerates PNG images using `pdftoppm` (150 DPI)
+- Ensures examples stay in sync with template changes
+- Validates that source PDFs exist before copying
+
+**Requirements:** `pdftoppm` (install via `brew install poppler` on macOS or `sudo apt-get install poppler-utils` on Linux)
 
 ## Validation and Linting
 
-The project includes validation and linting scripts to help catch errors before building:
+**Validation** (`make validate`): Compiles all templates and company files to check for errors.
 
-### Validation (`scripts/validate.sh`)
+**Linting** (`make lint`): Checks for mismatched braces, undefined commands, typos, and hardcoded paths.
 
-Validates that all company CVs and cover letters compile successfully:
-
-```bash
-# Using Makefile
-make validate
-
-# Or directly
-./scripts/validate.sh
-```
-
-This script:
-- Compiles all template files
-- Compiles all company-specific CVs and cover letters
-- Reports which files passed or failed
-- Shows error logs for failed compilations
-
-### Linting (`scripts/lint.sh`)
-
-Checks LaTeX files for common errors and issues:
-
-```bash
-# Using Makefile
-make lint
-
-# Or directly
-./scripts/lint.sh
-```
-
-This script checks for:
-- Mismatched braces
-- Undefined command references
-- Common LaTeX typos
-- Missing required file loads
-- Hardcoded paths (should use `\loadfile`)
-
-If `chktex` is installed, it also runs advanced linting checks.
+Both are also available via pre-commit hooks (see below).
 
 ### Pre-commit Hooks
 
@@ -578,7 +500,7 @@ The templates automatically validate configuration during compilation:
 
 **CV Validation (`\validateconfigcv`):**
 - Checks for required personal information fields (`\myname`, `\myemail`, `\myphone`)
-- Warns if required fields contain placeholder values (e.g., "John Doe", "example@example.com")
+- Warns if required fields contain placeholder values
 - Warns if optional fields (`\mylinkedin`, `\mygithub`, `\myportfolio`) contain placeholder values (empty is fine)
 - Warns if CV title is using default value
 
@@ -717,9 +639,9 @@ cv.tex / cover_letter.tex (company-specific customizations)
 ```
 
 **Example:**
-- `base_config.tex` defines: `\newcommand{\cvtitle}{Cloud Evangelist | AI Whisperer}`
-- `companies/nasa/shared.tex` overrides: `\renewcommand{\cvtitle}{Space Systems Engineer}`
-- `companies/nasa/cv.tex` can further override if needed
+- `base_config.tex` defines default `\cvtitle`
+- `companies/*/shared.tex` overrides with company-specific title
+- `companies/*/cv.tex` can further override if needed
 
 **Key principle:** Use `\renewcommand` (not `\newcommand`) in company files to override base defaults.
 
@@ -820,108 +742,22 @@ The default theme uses professional gray colors, maintaining the current appeara
 - Link: `blue` (for hyperlinks)
 - Section: `black` (for section headers)
 
-### Company-Specific Themes
-
-Each company example includes a custom color theme defined in `shared.tex`:
-
-**Google** - Blue theme:
-```latex
-\renewcommand{\cvthemeprimary}{blue!50!gray}
-\renewcommand{\cvthemeaccent}{blue!80!black}
-\renewcommand{\cvthemelink}{blue}
-\renewcommand{\cvthemesection}{blue!80!black}
-```
-
-**Meta** - Blue theme:
-```latex
-\renewcommand{\cvthemeprimary}{blue!40!gray}
-\renewcommand{\cvthemeaccent}{blue!70!black}
-\renewcommand{\cvthemelink}{blue!75!black}
-\renewcommand{\cvthemesection}{blue!70!black}
-```
-
-**NASA** - Red and blue theme:
-```latex
-\renewcommand{\cvthemeprimary}{red!50!gray}
-\renewcommand{\cvthemeaccent}{red!70!black}
-\renewcommand{\cvthemelink}{blue!70!black}
-\renewcommand{\cvthemesection}{red!70!black}
-```
-
-**Hyperion** - Green/teal theme:
-```latex
-\renewcommand{\cvthemeprimary}{teal!50!gray}
-\renewcommand{\cvthemeaccent}{teal!70!black}
-\renewcommand{\cvthemelink}{teal!75!black}
-\renewcommand{\cvthemesection}{teal!70!black}
-```
-
 ### How to Customize Colors
 
-**Option 1: Override in `shared.tex` (affects both CV and cover letter)**
+Override color variables in `shared.tex` (affects both CV and cover letter):
 ```latex
 % In companies/your_company/shared.tex
-\renewcommand{\cvthemeprimary}{blue!50!gray}  % Custom primary color
-\renewcommand{\cvthemeaccent}{blue!80!black} % Custom accent color
-\renewcommand{\cvthemelink}{blue}             % Custom link color
-\renewcommand{\cvthemesection}{blue!80!black} % Custom section color
+\renewcommand{\cvthemeprimary}{<color>}   % Dates, locations
+\renewcommand{\cvthemeaccent}{<color>}    % Name, emphasis
+\renewcommand{\cvthemetitle}{<color>}     % Title (optional, defaults to accent)
+\renewcommand{\cvthemelink}{<color>}      % Links
+\renewcommand{\cvthemesection}{<color>}   % Section headers
 ```
 
-**Option 2: Override in `cv.tex` or `cover_letter.tex` (document-specific)**
-```latex
-% In companies/your_company/cv.tex (CV only)
-\renewcommand{\cvthemeprimary}{green!50!gray}
-\renewcommand{\cvthemeaccent}{green!70!black}
-```
+**Color syntax:** Named colors (`blue`, `red`), mixed colors (`blue!50!gray`), RGB, or custom `\definecolor{name}{RGB}{r,g,b}`.
 
-### Color Syntax
+**Examples:** See `companies/*/shared.tex` files for real-world color theme examples.
 
-You can use any valid LaTeX color:
-- **Named colors**: `blue`, `red`, `green`, `gray`, `black`
-- **Mixed colors**: `blue!50!gray` (50% blue, 50% gray)
-- **RGB colors**: `{rgb}{0.2,0.4,0.8}` (requires `\usepackage{xcolor}`)
-- **Custom colors**: Define with `\definecolor{mycolor}{RGB}{100,150,200}`
-
-### Examples
-
-**Professional blue theme:**
-```latex
-\renewcommand{\cvthemeprimary}{blue!50!gray}
-\renewcommand{\cvthemeaccent}{blue!80!black}
-\renewcommand{\cvthemelink}{blue}
-\renewcommand{\cvthemesection}{blue!80!black}
-```
-
-**Modern green theme:**
-```latex
-\renewcommand{\cvthemeprimary}{green!40!gray}
-\renewcommand{\cvthemeaccent}{green!70!black}
-\renewcommand{\cvthemelink}{green!75!black}
-\renewcommand{\cvthemesection}{green!70!black}
-```
-
-**Classic black and gray:**
-```latex
-\renewcommand{\cvthemeprimary}{gray}
-\renewcommand{\cvthemeaccent}{black}
-\renewcommand{\cvthemelink}{black}
-\renewcommand{\cvthemesection}{black}
-```
-
-### Benefits
-
-- **Brand alignment**: Match company colors for targeted applications
-- **Professional appearance**: Consistent color usage throughout documents
-- **Easy customization**: Change colors in one place (`shared.tex`)
-- **Flexibility**: Different themes per company or application
-- **Backward compatible**: Default theme maintains current appearance
-
-## Customization
-
-- **Colors**: Use the color theme system (see above)
-- **Sections**: Add, remove, or reorder in template files
-- **Layout**: Adjust margins/spacing in template preamble
-- **Company-specific**: Customize per company in `cv.tex` and `cover_letter.tex`
 
 ## License
 

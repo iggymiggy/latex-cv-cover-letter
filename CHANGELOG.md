@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Automated Example Generation** (#5)
+  - `scripts/generate-examples.sh`: Automated script to copy PDFs and regenerate PNG images
+  - `make examples`: Generate example files from built companies
+  - `make all-examples`: Build all companies and generate examples in one command
+  - Ensures examples stay in sync with template changes
+  - Uses `pdftoppm` for reliable PNG generation (150 DPI)
+  - Validates source PDFs exist before processing
+
+- **Performance Optimizations** (#10)
+  - Parallel build support: `make all-parallel` uses all CPU cores
+  - Optimized LaTeX compilation flags: `-draftmode` for first pass (faster)
+  - `-halt-on-error` flag for faster failure detection
+  - Automatic CPU core detection for optimal parallel job count
+  - Combined targets: `make all-examples-parallel` for fastest workflow
 - **Validation and Linting Scripts** (#9, #10)
   - `scripts/validate.sh`: Validates that all templates and company files compile successfully
   - `scripts/lint.sh`: Checks LaTeX files for common errors and issues
