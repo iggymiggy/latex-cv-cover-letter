@@ -1,0 +1,50 @@
+# Cursor AI Context Rules for LaTeX CV Template Project
+
+## Critical Rules - DO NOT REPEAT THESE MISTAKES
+
+### PDF to PNG Conversion
+**ALWAYS use `pdftoppm` for converting PDFs to PNG images, NEVER use `sips`**
+- `sips` produces black/incorrect images when converting PDFs
+- Correct command: `pdftoppm -png -r 150 input.pdf output_temp && mv output_temp-1.png output.png`
+- This applies to ALL example image generation in `examples/companies/`
+- When updating example images, BOTH PDFs and PNGs in `examples/companies/` must be updated
+
+### Example Files Update Process
+When updating example files (PDFs/PNGs):
+1. **First**: Update/copy PDFs from `companies/*/` to `examples/companies/`
+2. **Then**: Regenerate PNG images from those updated PDFs using `pdftoppm`
+3. **Verify**: Check that both PDFs and PNGs have current timestamps
+4. **Never**: Generate PNGs from old PDFs or skip updating the PDFs first
+
+## Project Structure
+
+### File Locations
+- Company-specific files: `companies/{company_name}/`
+- Example files (for README): `examples/companies/`
+- Templates: `templates/`
+- Scripts: `scripts/`
+
+### Build Output
+- Company builds: `companies/{company_name}/{company}_cv.pdf` and `{company}_cover_letter.pdf`
+- Examples: `examples/companies/{company}_cv.pdf` and `{company}_cover_letter.pdf`
+- When updating examples, copy from company builds to examples directory
+
+## Color Theme System
+- Color themes are defined in `companies/*/shared.tex`
+- Colors are applied via `\cvcolor{type}{content}` macro
+- Theme variables: `\cvthemeprimary`, `\cvthemeaccent`, `\cvthemelink`, `\cvthemesection`
+- When updating colors, regenerate ALL example images to show changes
+
+## Validation
+- Always run `make validate` after making changes
+- All templates must compile successfully
+- Use `make` to build all companies
+- Pre-commit hooks run validation automatically
+
+## Documentation Updates
+- When adding features, update:
+  1. `README.md` - User documentation
+  2. `CHANGELOG.md` - Change log
+  3. Inline comments in code files
+- Keep examples in sync with actual functionality
+
