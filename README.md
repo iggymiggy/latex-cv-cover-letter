@@ -9,10 +9,12 @@ A clean, modern LaTeX template for a professional **CV** (also called a **resume
 - Professional one-page CV layout
 - Matching cover letter template
 - **Company-specific customization** - Tailor CV and cover letter for each application
+- **Shared code architecture** - Common packages and commands in `templates/common.sty`
+- **Shared company variables** - Variables used by both CV and cover letter in `shared.tex`
 - Centralized personal information
 - Optional sections: Certificates, Open Source, Volunteer Work, Languages, Awards
 - Optional certificate links (Credly badges)
-- Bilingual date formatting (configurable)
+- Multi-language date formatting (configurable via babel)
 - Paper size is configurable (A4 by default)
 
 ## Examples
@@ -135,7 +137,8 @@ Pick one of these workflows. In all cases, you run `pdflatex` to **compile a `.t
 **Option A: Use an existing example (Google, Hyperion, Meta, NASA)**
 ```bash
 cd companies/nasa  # or google, hyperion, meta
-# Edit cv.tex and cover_letter.tex (company-specific fields) and personal_info.tex (your personal details)
+# Edit shared.tex (cvtitle), cv.tex, and cover_letter.tex (company-specific fields)
+# Also edit personal_info.tex (your personal details)
 pdflatex cv.tex
 pdflatex cover_letter.tex
 ```
@@ -144,7 +147,8 @@ pdflatex cover_letter.tex
 ```bash
 cp -R companies/nasa companies/your_company  # or copy google/meta
 cd companies/your_company
-# Edit cv.tex and cover_letter.tex (company-specific fields) and personal_info.tex (your personal details)
+# Edit shared.tex (cvtitle), cv.tex, and cover_letter.tex (company-specific fields)
+# Also edit personal_info.tex (your personal details)
 pdflatex cv.tex
 pdflatex cover_letter.tex
 ```
@@ -169,15 +173,19 @@ pdflatex -jobname="google_cover_letter" cover_letter.tex
 ```
 project/
 ├── personal_info.tex          # Shared personal info
-├── templates/                 # Base templates
-│   ├── cv_template.tex
-│   ├── cover_letter_template.tex
-│   └── base_config.tex       # Default values
+├── document_settings.tex      # Global settings (paper size, font size)
+├── templates/                 # Base templates and shared code
+│   ├── cv_template.tex       # Base CV template
+│   ├── cover_letter_template.tex # Base cover letter template
+│   ├── base_config.tex       # Default values for all fields
+│   └── common.sty            # Shared packages, commands, and helper macros
 └── companies/                 # Company-specific folders
     ├── google/
+    │   ├── shared.tex        # Shared variables (cvtitle, etc.)
     │   ├── cv.tex            # CV customizations
     │   └── cover_letter.tex  # Cover letter customizations
     ├── hyperion/
+    │   ├── shared.tex
     │   ├── cv.tex
     │   └── cover_letter.tex
     ├── meta/
@@ -200,14 +208,22 @@ Contains default values for all fields:
 - CV: title, technologies, certificates (4), open source (empty), volunteer (empty), languages (empty), awards (empty)
 - Cover letter: company details, letter content, date settings
 
-### Company Files (`companies/*/cv.tex` and `companies/*/cover_letter.tex`)
+### Company Files
 
-Define company-specific customizations directly in these files using `\renewcommand`:
+Each company folder contains three files:
 
-**In `cv.tex`:**
+**1. `shared.tex` - Shared variables (used by both CV and cover letter)**
 ```latex
-% CV customizations
+% Professional title (used in headers of both CV and cover letter)
 \renewcommand{\cvtitle}{Space Systems Engineer | Flight Software Specialist}
+```
+
+**2. `cv.tex` - CV-specific customizations**
+```latex
+% Load shared company configuration (variables used by both CV and cover letter)
+\loadfile{shared.tex}{}
+
+% CV customizations
 \renewcommand{\cvtechnologies}{%
   \section{Skills}
   \cvSubHeadingListStart
@@ -228,8 +244,11 @@ Define company-specific customizations directly in these files using `\renewcomm
 \renewcommand{\cvawards}{...}         % Awards & Honors
 ```
 
-**In `cover_letter.tex`:**
+**3. `cover_letter.tex` - Cover letter-specific customizations**
 ```latex
+% Load shared company configuration (variables used by both CV and cover letter)
+\loadfile{shared.tex}{}
+
 % Company details
 \renewcommand{\companyname}{NASA}
 \renewcommand{\companyaddress}{300 E Street SW}
@@ -237,6 +256,8 @@ Define company-specific customizations directly in these files using `\renewcomm
 \renewcommand{\companycity}{Washington, DC 20546}
 
 % Letter settings
+\renewcommand{\letterdatelanguage}{english}  % or "finnish" (must match babel languages)
+\renewcommand{\letterdate}{auto}             % or specific date like "January 15, 2024"
 \renewcommand{\lettertitle}{Application for Space Systems Engineer Position}
 \renewcommand{\letteropening}{Dear NASA Hiring Team,}
 \renewcommand{\letterclosing}{Sincerely,}
@@ -249,8 +270,10 @@ Define company-specific customizations directly in these files using `\renewcomm
 
 **Key points:**
 - Use `\renewcommand` (not `\newcommand`) to override base defaults
+- `shared.tex` contains variables used by both CV and cover letter (like `\cvtitle`)
 - Only define fields that differ from base - undefined fields use base defaults
 - Optional sections are hidden if empty
+- Date language must match a language loaded in babel (e.g., `[finnish,english]`)
 
 ## CV Sections
 
@@ -291,6 +314,19 @@ Define company-specific customizations directly in these files using `\renewcomm
 - Packages: `xcolor`, `hyperref`, `fontawesome5`, `babel`, `tabularx`, `titlesec`, `fancyhdr`, `enumitem`, `etoolbox`
 
 Most packages are included in standard LaTeX distributions.
+
+## Architecture
+
+The template uses a modular architecture:
+
+- **`templates/common.sty`**: Shared LaTeX packages, custom commands, and helper macros
+  - Helper macros: `\loadfile` (flexible file path resolution), `\ifnotempty` (empty section checking), `\conditionalsection` (conditional section visibility), `\setupcoverletterdate` (date handling)
+- **`templates/base_config.tex`**: Default values for all CV and cover letter fields
+- **`companies/*/shared.tex`**: Company-specific variables used by both CV and cover letter (e.g., `\cvtitle`)
+- **`companies/*/cv.tex`**: CV-specific customizations (technologies, certificates, etc.)
+- **`companies/*/cover_letter.tex`**: Cover letter-specific customizations (company details, letter body, etc.)
+
+This architecture reduces code duplication and makes maintenance easier.
 
 ## Paper size (A4 vs Letter)
 
