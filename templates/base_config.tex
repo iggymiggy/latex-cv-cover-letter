@@ -62,3 +62,12 @@
 \newcommand{\companyaddress}{Address}
 \newcommand{\companycity}{City, State ZIP}
 
+%-----------PDF METADATA DEFAULTS------------
+% PDF metadata customization (can be overridden in company files)
+% These control the PDF properties visible in PDF readers
+% Using \providecommand allows users to use either \newcommand or \renewcommand
+\providecommand{\pdfmetatitle}{}  % Empty = auto-generated from name and title
+\providecommand{\pdfmetaauthor}{}  % Empty = uses \myname
+\providecommand{\pdfmetasubject}{}  % Empty = uses template version
+\providecommand{\pdfmetakeywords}{}  % Empty = uses default keywords with version
+

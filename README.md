@@ -123,9 +123,22 @@ Each company folder generates customized PDFs with company-specific CV skills an
 
 ## Quick Start
 
-### 1. Edit Personal Information
+### 1. Set Up Personal Information
 
-Edit `personal_info.tex` with your name, contact info, and online presence.
+**First time setup:**
+```bash
+# Copy the example template to create your personal info file
+cp personal_info.example.tex personal_info.tex
+```
+
+**Then edit `personal_info.tex`** with your name, contact info, and online presence:
+- Replace `John Doe` with your name
+- Replace `example@example.com` with your email
+- Replace `+1 (555) 000-0000` with your phone number
+- Replace `exampleusername` with your LinkedIn/GitHub usernames
+- Replace `example.github.io` with your portfolio URL
+
+**Note:** `personal_info.tex` is ignored by Git (see `.gitignore`) to keep your personal data private. The `personal_info.example.tex` file serves as a template and is tracked in the repository.
 
 ### 2. Use Existing Example or Create New Company
 
@@ -197,7 +210,8 @@ pdflatex cv_template.tex  # Builds templates/cv_template.pdf using defaults from
 
 ```
 project/
-├── personal_info.tex          # Shared personal info
+├── personal_info.example.tex  # Template for personal info (tracked in Git)
+├── personal_info.tex          # Your personal info (ignored by Git, create from example)
 ├── document_settings.tex      # Global settings (paper size, font size)
 ├── templates/                 # Base templates and shared code
 │   ├── cv_template.tex       # Base CV template
@@ -221,11 +235,17 @@ project/
 
 ## Configuration
 
-### Personal Information (`personal_info.tex`)
+### Personal Information
 
-Edit once, used across all CVs and cover letters:
-- Name, email, phone
-- LinkedIn, GitHub, portfolio URLs
+**Setup:**
+1. Copy the example template: `cp personal_info.example.tex personal_info.tex`
+2. Edit `personal_info.tex` with your real information
+
+**Fields to edit:**
+- **Required**: Name, email, phone
+- **Optional**: LinkedIn, GitHub, portfolio URLs (leave empty if not applicable)
+
+**Note:** `personal_info.tex` is ignored by Git to protect your personal data. The `personal_info.example.tex` file is a template tracked in the repository.
 
 ### Base Configuration (`templates/base_config.tex`)
 
@@ -291,6 +311,22 @@ Each company folder contains three files:
 \renewcommand{\letterbody}{%
   Your letter content here...
 }
+```
+
+**4. PDF Metadata Customization (Optional)**
+```latex
+% In companies/*/cv.tex or cover_letter.tex, customize PDF metadata:
+% You can use either \newcommand or \renewcommand (both work)
+\renewcommand{\pdfmetatitle}{John Doe - Software Engineer CV}  % PDF title
+\renewcommand{\pdfmetaauthor}{John Doe}  % PDF author (default: \myname)
+\renewcommand{\pdfmetasubject}{Software Engineer CV for Google}  % PDF subject
+\renewcommand{\pdfmetakeywords}{Software Engineer, Python, Google, CV}  % PDF keywords
+
+% If not set, defaults are auto-generated from your personal info:
+% - Title: "\myname - \cvtitle" (e.g., "John Doe - Software Engineer")
+% - Author: "\myname" (your name from personal_info.tex)
+% - Subject: "CV Template v1.1.0 (2025-12-16)"
+% - Keywords: "CV, Resume, LaTeX, Template v1.1.0"
 ```
 
 **Key points:**
@@ -431,6 +467,99 @@ This script checks for:
 - Hardcoded paths (should use `\loadfile`)
 
 If `chktex` is installed, it also runs advanced linting checks.
+
+### Configuration Validation
+
+The templates automatically validate configuration during compilation:
+
+**CV Validation (`\validateconfigcv`):**
+- Checks for required personal information fields (`\myname`, `\myemail`, `\myphone`)
+- Warns if required fields contain placeholder values (e.g., "John Doe", "example@example.com")
+- Warns if optional fields (`\mylinkedin`, `\mygithub`, `\myportfolio`) contain placeholder values (empty is fine)
+- Warns if CV title is using default value
+
+**Cover Letter Validation (`\validateconfigcoverletter`):**
+- Checks for required personal information fields
+- Warns if company details are using default values (`\companyname`, `\companyaddress`, `\companycity`, `\companyrecipient`)
+- Warns if letter body appears to be placeholder text
+
+**How it works:**
+- Validation runs automatically during compilation
+- Uses LaTeX warnings (compilation continues, but you're notified)
+- Warnings appear in the compilation log
+- Check the `.log` file for detailed validation messages
+
+**For company files:**
+Company-specific files (`companies/*/cv.tex` and `companies/*/cover_letter.tex`) should call validation **after** their customizations:
+
+```latex
+% In companies/*/cv.tex, after loading shared.tex and defining customizations:
+\validateconfigcv
+
+% In companies/*/cover_letter.tex, after defining company details and letter body:
+\validateconfigcoverletter
+```
+
+**Note:** Base templates already include validation calls, so you only need to add them in company files if you want validation after your overrides.
+
+## Version Tracking
+
+The template system includes version tracking following LaTeX best practices:
+
+- **Package Version Declaration**: Uses standard `\ProvidesPackage` declaration (LaTeX standard)
+- **Template Version**: User-friendly `\templateversion` command (currently `1.1.0`)
+- **Version Date**: `\templateversiondate` tracks when the version was set
+- **PDF Metadata**: Version information embedded in standard PDF metadata fields:
+  - **Subject**: Contains version and date (visible in all PDF readers)
+  - **Keywords**: Includes version for searchability
+  - **Creator**: Includes version in creator field
+  - Custom fields: Also stored for advanced tools
+
+**To check the version:**
+- View PDF properties → Subject field (standard, works in all PDF readers)
+- Or check `templates/common.sty` for the `\ProvidesPackage` declaration
+
+**To update the version:**
+- Edit `\ProvidesPackage{common}[YYYY/MM/DD vX.Y.Z ...]` in `templates/common.sty`
+- Also update `\templateversion` and `\templateversiondate` for consistency
+- Follow semantic versioning: `MAJOR.MINOR.PATCH`
+  - MAJOR: Breaking changes
+  - MINOR: New features, backward compatible
+  - PATCH: Bug fixes, backward compatible
+
+**Why this approach:**
+- Uses `\ProvidesPackage` (LaTeX standard for package versioning)
+- Uses standard PDF metadata fields (Subject, Keywords) for universal compatibility
+- Custom fields included for advanced tools that support them
+
+## PDF Metadata Customization
+
+The template system allows you to customize PDF metadata (visible in PDF properties):
+
+**Available fields:**
+- `\pdfmetatitle` - PDF title (default: auto-generated from name and CV title)
+- `\pdfmetaauthor` - PDF author (default: your name from `\myname`)
+- `\pdfmetasubject` - PDF subject (default: template version)
+- `\pdfmetakeywords` - PDF keywords (default: CV, Resume, LaTeX, version)
+
+**Usage:**
+Override these commands in your company files (`companies/*/cv.tex` or `cover_letter.tex`):
+
+```latex
+% Customize PDF metadata for better SEO and organization
+\renewcommand{\pdfmetatitle}{John Doe - Software Engineer CV}
+\renewcommand{\pdfmetaauthor}{John Doe}
+\renewcommand{\pdfmetasubject}{Software Engineer CV for Google Application}
+\renewcommand{\pdfmetakeywords}{Software Engineer, Python, Google, CV, Resume}
+```
+
+**Benefits:**
+- Better SEO for online CVs
+- Easier file organization and search
+- Professional PDF properties
+- Customizable per company/application
+
+**Note:** If fields are left empty, sensible defaults are auto-generated from your personal information and template version.
 
 ## Architecture
 

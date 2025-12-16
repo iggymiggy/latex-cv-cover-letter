@@ -39,6 +39,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `CHANGELOG.md`: Track all changes and improvements
   - Expanded architecture documentation in README.md with detailed explanations
 
+- **Configuration Validation** (#17)
+  - `\validateconfigcv`: Validates required CV fields (personal info, CV title)
+  - `\validateconfigcoverletter`: Validates required cover letter fields (personal info, company details, letter body)
+  - Automatic validation during compilation with LaTeX warnings
+  - Detects placeholder/example values and missing required fields
+  - Integrated into base templates; can be called in company files after customizations
+
+- **Version Tracking** (#20)
+  - `\templateversion` and `\templateversiondate` commands for version tracking
+  - Version information embedded in PDF metadata (visible in PDF properties)
+  - Easy to check template version from generated PDFs
+  - Follows semantic versioning (MAJOR.MINOR.PATCH)
+
+- **PDF Metadata Customization** (#23)
+  - Customizable PDF metadata fields: `\pdfmetatitle`, `\pdfmetaauthor`, `\pdfmetasubject`, `\pdfmetakeywords`
+  - Auto-generated defaults from personal information and template version
+  - Per-company customization support
+  - Better SEO for online CVs and improved file organization
+
 ### Changed
 - **Date Handling Refactoring** (#6)
   - Refactored `\setupcoverletterdate` to use `\selectlanguage{\letterdatelanguage}` directly
