@@ -10,155 +10,38 @@
 %------------------------
 
 % Global document settings (paper size, etc.)
-\IfFileExists{../../document_settings.tex}{\input{../../document_settings}}{%
-\IfFileExists{../document_settings.tex}{\input{../document_settings}}{%
-\IfFileExists{document_settings.tex}{\input{document_settings}}{}}}
+% Define \loadfile helper before using it
+\newcommand{\loadfile}[2]{%
+  \IfFileExists{../../#1}{\input{../../#1}}{%
+  \IfFileExists{../#1}{\input{../#1}}{%
+  \IfFileExists{#1}{\input{#1}}{#2}}}%
+}
+\loadfile{document_settings.tex}{}
 
 \documentclass{article}
 
-\usepackage{latexsym}
-\usepackage[empty]{fullpage}
-\usepackage{titlesec}
-\usepackage{marvosym}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{xcolor}
-\usepackage{verbatim}
-\usepackage{enumitem}
-\usepackage[hidelinks]{hyperref}
-\usepackage{fancyhdr}
+% Load common package (shared packages, commands, and helpers)
+\loadfile{templates/common.sty}{}
+
+% CV-specific packages
 \usepackage[english]{babel}
-\usepackage{tabularx}
-\usepackage{fontawesome5}  % Added for font awesome icons (LinkedIn and GitHub icons)
 \input{glyphtounicode}
-
-\pagestyle{fancy}
-\fancyhf{} % Clear all header and footer fields
-\fancyfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
-
-% Adjust margins
-\addtolength{\oddsidemargin}{-0.5in}
-\addtolength{\evensidemargin}{-0.5in}
-\addtolength{\textwidth}{1in}
-\addtolength{\topmargin}{-.5in}
-\addtolength{\textheight}{1.0in}
-
-\urlstyle{same}
-
-\raggedbottom
-\raggedright
-\setlength{\tabcolsep}{0in}
-
-% Sections formatting
-\titleformat{\section}{
-  \vspace{-4pt}\scshape\raggedright\large
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
-
-% Ensure that generate PDF is machine readable/ATS parsable
-\pdfgentounicode=1
-
-%-------------------------
-% Custom commands
-\newcommand{\cvItem}[2]{
-  \item\small{
-    \textbf{#1}{: #2 \vspace{-2pt}}
-  }
-}
-
-\newcommand{\cvItemSimple}[2]{
-  \item\small{
-    #2 \vspace{-2pt}
-  }
-}
-
-% Just in case someone needs a heading that does not need to be in a list
-\newcommand{\cvHeading}[4]{
-    \begin{tabular*}{0.99\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & #2 \\
-      \textit{\small#3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-5pt}
-}
-
-\newcommand{\cvSubheading}[4]{
-  \vspace{-1pt}\item
-    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & #2 \\
-      \textit{\small#3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-5pt}
-}
-
-\newcommand{\cvSubSubheading}[2]{
-    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
-      \textit{\small#1} & \textit{\small #2} \\
-    \end{tabular*}\vspace{-5pt}
-}
-
-\newcommand{\cvSubheadingWithDetails}[6]{
-  \vspace{-1pt}\item
-    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & #2 \\
-      \textit{\small#3} & \textit{\small#4} \\
-    \end{tabular*}
-    \vspace{-3pt} % Adjust spacing as needed
-    \begin{tabular*}{0.97\textwidth}[t]{l}
-      \textit{\small Major: #5 \hspace{20pt} Minor: #6} \\
-    \end{tabular*}
-    \vspace{-5pt} % Adjust spacing after details
-}
-
-
-\newcommand{\cvSubItem}[2]{\cvItem{#1}{#2}\vspace{-4pt}}
-\renewcommand{\labelitemii}{$\circ$}
-\newcommand{\cvSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
-\newcommand{\cvSubHeadingListEnd}{\end{itemize}}
-\newcommand{\cvItemListStart}{\begin{itemize}}
-\newcommand{\cvItemListEnd}{\end{itemize}\vspace{-5pt}}
-
-
-\newcommand{\cvProjectItem}[4]{
-  \item\small{
-    \textbf{#1} — \textit{#2} \hfill \textit{\small #3}
-  }
-  \vspace{-4pt}
-  \begin{itemize}[leftmargin=1em]
-    \item\small{#4 \vspace{-2pt}}
-  \end{itemize}
-}
-
-%-------------------------
-\newcommand{\cvCertificates}[1]{
-  \vspace{-4pt}
-  \section*{Certificates}  
-  \vspace{-3pt}  
-  \begin{tabularx}{\textwidth}{X r} % Two-column layout
-    #1
-  \end{tabularx}
-  \vspace{-5pt} % Reduce bottom space
-}
 
 %-------------------------------------------
 %%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Load personal information
 % Handles compilation from root, templates/, or companies/company_name/
-\IfFileExists{../../personal_info.tex}{\input{../../personal_info}}{%
-\IfFileExists{../personal_info.tex}{\input{../personal_info}}{\input{personal_info}}}
+\loadfile{personal_info.tex}{}
 
 % Load base/default configuration first
 % This provides default values for all CV and cover letter fields
-\IfFileExists{../../templates/base_config.tex}{\input{../../templates/base_config}}{%
-\IfFileExists{../templates/base_config.tex}{\input{../templates/base_config}}{%
-\IfFileExists{templates/base_config.tex}{\input{templates/base_config}}{}}}
+\loadfile{templates/base_config.tex}{}
 
-% Load company-specific configuration (optional)
-% When compiling from companies/nasa/, companies/google/, etc., this loads this file
-% Company config can override any field from base_config.tex using \renewcommand
-% If a field is not defined in this file, the base default will be used
-\IfFileExists{this file}{\input{config}}{}
+% Load shared company configuration (variables used by both CV and cover letter)
+\loadfile{shared.tex}{}
 
 %-----------CV CUSTOMIZATIONS (COMPANY-SPECIFIC)------------
-\renewcommand{\cvtitle}{Principal Systems Safety Engineer | Safety Case \& Reliability}
 
 % Hide Technologies/Skills section for this example (basic CV)
 \renewcommand{\cvtechnologies}{}
@@ -215,12 +98,7 @@
 % Companies can override with single column, two columns, or skills format
 % Section header is included in the \cvtechnologies command
 % If empty, section is hidden
-\expandafter\def\expandafter\tempchecktech\expandafter{\cvtechnologies}
-\def\tempemptytech{}
-\ifx\tempchecktech\tempemptytech
-\else
-  \cvtechnologies
-\fi
+\ifnotempty{\cvtechnologies}{\cvtechnologies}{}
 
 %-----------EXPERIENCE-----------------
 \section{Experience}
@@ -293,66 +171,49 @@
 % Credly badge URLs follow the format: https://www.credly.com/badges/BADGE_ID
 %
 % Check if command expands to empty by comparing expanded content
-\expandafter\def\expandafter\tempcheckcert\expandafter{\cvcertificates}
-\def\tempemptycert{}
-\ifx\tempcheckcert\tempemptycert
-\else
-  \cvCertificates{\cvcertificates}%
-\fi
+\ifnotempty{\cvcertificates}{\cvCertificates{\cvcertificates}}{}
 
 %-----------OPEN SOURCE CONTRIBUTIONS------------
 % Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
-\expandafter\def\expandafter\tempcheckos\expandafter{\cvopensource}
-\def\tempemptyos{}
-\ifx\tempcheckos\tempemptyos
-\else
+\ifnotempty{\cvopensource}{%
   \section{Open Source Contributions}
   \cvSubHeadingListStart
     \cvopensource
   \cvSubHeadingListEnd
-\fi
+}{}
 
 %-----------VOLUNTEER WORK------------
 % Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
-\expandafter\def\expandafter\tempcheckvol\expandafter{\cvvolunteer}
-\def\tempemptyvol{}
-\ifx\tempcheckvol\tempemptyvol
-\else
+\ifnotempty{\cvvolunteer}{%
   \section{Volunteer Work}
   \cvSubHeadingListStart
     \cvvolunteer
   \cvSubHeadingListEnd
-\fi
+}{}
 
 %-----------LANGUAGES------------
 % Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
-\expandafter\def\expandafter\tempchecklang\expandafter{\cvlanguages}
-\def\tempemptylang{}
-\ifx\tempchecklang\tempemptylang
-\else
+\ifnotempty{\cvlanguages}{%
   \section{Languages}
   \cvSubHeadingListStart
     \cvlanguages
   \cvSubHeadingListEnd
-\fi
+}{}
 
 %-----------AWARDS/HONORS------------
 % Uses content from base_config.tex or company cv.tex override
 % If empty, section is hidden
-\expandafter\def\expandafter\tempcheckawards\expandafter{\cvawards}
-\def\tempemptyawards{}
-\ifx\tempcheckawards\tempemptyawards
-\else
+\ifnotempty{\cvawards}{%
   \section{Awards \& Honors}
   \vspace{-3pt}
   \begin{tabularx}{\textwidth}{X r}
     \cvawards
   \end{tabularx}
   \vspace{-5pt}
-\fi
+}{}
 
 % %-----------PROJECTS-----------------
 % \section{Projects}
