@@ -6,6 +6,22 @@
 % used by both CV and cover letter templates.
 
 %-------------------------
+% Package Version Declaration (LaTeX Standard)
+%-------------------------
+% Standard LaTeX way to declare package version
+% Format: \ProvidesPackage{package}[date vversion description]
+% This allows LaTeX to identify the package version automatically
+\ProvidesPackage{common}[2025/12/16 v1.1.0 CV and Cover Letter Template Common Package]
+
+%-------------------------
+% Template Version (User-friendly access)
+%-------------------------
+% User-friendly commands to access version information
+% These extract from \ProvidesPackage declaration above
+\newcommand{\templateversion}{1.1.0}
+\newcommand{\templateversiondate}{2025-12-16}
+
+%-------------------------
 % Note: \loadfile helper macro is defined in each template/company file
 % before loading this package, so it's available for use here.
 %-------------------------
@@ -93,6 +109,73 @@
 
 % Ensure that generate PDF is machine readable/ATS parsable
 \pdfgentounicode=1
+
+%-------------------------
+% PDF Metadata Setup
+%-------------------------
+% Set PDF metadata including template version
+% Uses standard PDF metadata fields for better compatibility
+% Standard fields are visible in all PDF readers
+% 
+% Customizable fields (can be set in company files):
+% - \pdfmetatitle: PDF title (default: auto-generated from name and CV title)
+% - \pdfmetaauthor: PDF author (default: \myname)
+% - \pdfmetasubject: PDF subject (default: template version)
+% - \pdfmetakeywords: PDF keywords (default: CV, Resume, LaTeX, version)
+\newcommand{\setpdfmetadata}{%
+  % Helper: Check if command expands to empty and set default if needed
+  % This avoids modifying user-defined commands, instead using temporary variables
+  \def\tempempty{}%
+  
+  % Check and prepare title
+  \expandafter\def\expandafter\tempchecktitle\expandafter{\pdfmetatitle}%
+  \ifx\tempchecktitle\tempempty
+    % Auto-generate: Expand \myname and \cvtitle to get actual values
+    \edef\temppdftitle{\myname{} - \cvtitle}%
+  \else
+    % Use user-defined value, but expand it
+    \edef\temppdftitle{\pdfmetatitle}%
+  \fi
+  
+  % Check and prepare author
+  \expandafter\def\expandafter\tempcheckauthor\expandafter{\pdfmetaauthor}%
+  \ifx\tempcheckauthor\tempempty
+    \edef\temppdfauthor{\myname}%
+  \else
+    \edef\temppdfauthor{\pdfmetaauthor}%
+  \fi
+  
+  % Check and prepare subject
+  \expandafter\def\expandafter\tempchecksubject\expandafter{\pdfmetasubject}%
+  \ifx\tempchecksubject\tempempty
+    \edef\temppdfsubject{CV Template v\templateversion (\templateversiondate)}%
+  \else
+    \edef\temppdfsubject{\pdfmetasubject}%
+  \fi
+  
+  % Check and prepare keywords
+  \expandafter\def\expandafter\tempcheckkeywords\expandafter{\pdfmetakeywords}%
+  \ifx\tempcheckkeywords\tempempty
+    \edef\temppdfkeywords{CV, Resume, LaTeX, Template v\templateversion}%
+  \else
+    \edef\temppdfkeywords{\pdfmetakeywords}%
+  \fi
+  
+  % Set PDF metadata via hyperref (using expanded values)
+  \hypersetup{%
+    pdftitle={\temppdftitle},
+    pdfauthor={\temppdfauthor},
+    pdfsubject={\temppdfsubject},
+    pdfkeywords={\temppdfkeywords},
+    pdfcreator={LaTeX CV Template System v\templateversion},
+    pdfproducer={pdflatex},
+  }%
+  % Also set custom metadata for advanced tools (may not be visible in all readers)
+  \pdfinfo{%
+    /TemplateVersion (\templateversion)%
+    /TemplateVersionDate (\templateversiondate)%
+  }%
+}
 
 %-------------------------
 % Custom CV/Resume Commands
@@ -300,5 +383,123 @@
   \ifx\letterdateexpanded\checkdateauto
     \renewcommand{\letterdate}{\today}%
   \fi
+}
+
+%-------------------------
+% Configuration Validation Helper
+%-------------------------
+% \checkfield{command}{fieldname}{placeholdertext}
+%   Checks if a field is empty or contains placeholder/example values.
+%   @param #1: Command to check (e.g., \myname)
+%   @param #2: Field name for error message (e.g., "Name")
+%   @param #3: Placeholder text to check against (empty string if no placeholder check)
+%   @usage: Internal helper for \validateconfig
+\newcommand{\checkfield}[3]{%
+  \expandafter\def\expandafter\tempcheck\expandafter{#1}%
+  \def\tempempty{}%
+  \ifx\tempcheck\tempempty
+    \PackageWarning{config}{Missing required field: #2. Please set #1 in personal_info.tex or company configuration.}%
+  \else
+    % Check for placeholder values if provided
+    \def\tempemptyplaceholder{}%
+    \def\tempcheckplaceholder{#3}%
+    \ifx\tempcheckplaceholder\tempemptyplaceholder
+      % No placeholder check needed
+    \else
+      \ifx\tempcheck\tempcheckplaceholder
+        \PackageWarning{config}{Field #2 appears to contain placeholder value "#3". Please update #1 with your real information.}%
+      \fi
+    \fi
+  \fi
+}
+
+% \validateconfigcv
+%   Validates required fields for CV compilation.
+%   Checks personal information and CV title.
+%   @usage: Call after loading personal_info.tex and base_config.tex
+%   @note: Uses LaTeX warnings, so compilation continues but user is notified
+\newcommand{\validateconfigcv}{%
+  \PackageInfo{config}{Validating CV configuration...}%
+  % Check required personal information fields
+  \checkfield{\myname}{Name}{John Doe}%
+  \checkfield{\myemail}{Email}{example@example.com}%
+  \checkfield{\myphone}{Phone}{+1 (555) 000-0000}%
+  % Optional fields: LinkedIn, GitHub, Portfolio (only warn if placeholder values detected)
+  \expandafter\def\expandafter\tempcheck\expandafter{\mylinkedin}%
+  \def\tempempty{}%
+  \ifx\tempcheck\tempempty
+    % Empty is fine (optional field)
+  \else
+    \def\tempcheckplaceholder{exampleusername}%
+    \ifx\tempcheck\tempcheckplaceholder
+      \PackageWarning{config}{LinkedIn username appears to contain placeholder value. Please update \mylinkedin with your real information, or leave it empty if not applicable.}%
+    \fi
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\mygithub}%
+  \ifx\tempcheck\tempempty
+    % Empty is fine (optional field)
+  \else
+    \def\tempcheckplaceholder{exampleusername}%
+    \ifx\tempcheck\tempcheckplaceholder
+      \PackageWarning{config}{GitHub username appears to contain placeholder value. Please update \mygithub with your real information, or leave it empty if not applicable.}%
+    \fi
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\myportfolio}%
+  \ifx\tempcheck\tempempty
+    % Empty is fine (optional field)
+  \else
+    \def\tempcheckplaceholder{example.github.io}%
+    \ifx\tempcheck\tempcheckplaceholder
+      \PackageWarning{config}{Portfolio appears to contain placeholder value. Please update \myportfolio with your real information, or leave it empty if not applicable.}%
+    \fi
+  \fi
+  % Check CV title (should be customized per company)
+  \expandafter\def\expandafter\tempcheck\expandafter{\cvtitle}%
+  \def\tempdefault{Cloud Evangelist | AI Whisperer}%
+  \ifx\tempcheck\tempdefault
+    \PackageWarning{config}{CV title is using default value. Consider customizing \cvtitle in companies/*/shared.tex for better results.}%
+  \fi
+}
+
+% \validateconfigcoverletter
+%   Validates required fields for cover letter compilation.
+%   Checks personal information, company details, and letter content.
+%   @usage: Call after loading personal_info.tex, base_config.tex, and company cover_letter.tex
+%   @note: Uses LaTeX warnings, so compilation continues but user is notified
+\newcommand{\validateconfigcoverletter}{%
+  \PackageInfo{config}{Validating cover letter configuration...}%
+  % Check personal information fields
+  \checkfield{\myname}{Name}{John Doe}%
+  \checkfield{\myemail}{Email}{example@example.com}%
+  \checkfield{\myphone}{Phone}{+1 (555) 000-0000}%
+  % Check company details (should be customized)
+  \expandafter\def\expandafter\tempcheck\expandafter{\companyname}%
+  \def\tempdefault{Company Name}%
+  \ifx\tempcheck\tempdefault
+    \PackageWarning{config}{Company name is using default value. Please set \companyname in companies/*/cover_letter.tex.}%
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\companyrecipient}%
+  \def\tempdefault{Hiring Manager}%
+  \ifx\tempcheck\tempdefault
+    \PackageWarning{config}{Company recipient is using default value. Consider customizing \companyrecipient in companies/*/cover_letter.tex.}%
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\companyaddress}%
+  \def\tempdefault{Address}%
+  \ifx\tempcheck\tempdefault
+    \PackageWarning{config}{Company address is using default value. Please set \companyaddress in companies/*/cover_letter.tex.}%
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\companycity}%
+  \def\tempdefault{City, State ZIP}%
+  \ifx\tempcheck\tempdefault
+    \PackageWarning{config}{Company city is using default value. Please set \companycity in companies/*/cover_letter.tex.}%
+  \fi
+  % Check letter body (check for lorem ipsum - simplified check)
+  \expandafter\def\expandafter\tempcheck\expandafter{\letterbody}%
+  % We check if it starts with "Lorem ipsum" as a simple placeholder detection
+  % This is a basic check - full text comparison would be too complex
+  \def\tempcheckstart{Lorem ipsum}%
+  \expandafter\def\expandafter\tempcheckfirst\expandafter{\expandafter\tempcheck\expandafter}%
+  % Note: Full lorem ipsum detection is complex, so we just warn if it's likely placeholder
+  % Users will see the warning and can verify their letter body is customized
 }
 

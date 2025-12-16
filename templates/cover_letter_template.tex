@@ -55,6 +55,14 @@
   At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
 }
 
+% Validate configuration (checks for required fields and placeholder values)
+% Note: This should be called after company-specific overrides in cover_letter.tex
+% For base template, we validate here; company files should call it after their overrides
+\validateconfigcoverletter
+
+% Set PDF metadata including template version
+\setpdfmetadata
+
 \begin{document}
 
 % Set up cover letter date (language selection and auto-date handling)

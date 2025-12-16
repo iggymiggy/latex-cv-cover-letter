@@ -39,6 +39,12 @@
 % This provides default values for all CV fields
 \loadfile{templates/base_config.tex}{}
 
+% Validate configuration (checks for required fields and placeholder values)
+\validateconfigcv
+
+% Set PDF metadata including template version
+\setpdfmetadata
+
 \begin{document}
 
 % %----------HEADING-----------------
@@ -47,9 +53,11 @@
   \vspace{2pt}
   {\Large \cvtitle} \\
   \vspace{4pt}
-  \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
-  \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
-  \href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\
+  % Optional: LinkedIn, GitHub, Portfolio (only show if not empty)
+  \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
+  \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
+  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \quad}{}%
+  % Required: Email and Phone
   \href{mailto:\myemail}{\myemail} \quad
   \href{tel:\myphone}{\myphone} \\
 \end{center}
