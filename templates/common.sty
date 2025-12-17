@@ -569,20 +569,28 @@
 %   @param #2: Field name for error message (e.g., "Name")
 %   @param #3: Placeholder text to check against (empty string if no placeholder check)
 %   @usage: Internal helper for \validateconfig
+% Flag to skip validation warnings (useful for example/template files)
+\newif\ifskipvalidationwarnings
+\skipvalidationwarningsfalse
+
 \newcommand{\checkfield}[3]{%
-  \expandafter\def\expandafter\tempcheck\expandafter{#1}%
-  \def\tempempty{}%
-  \ifx\tempcheck\tempempty
-    \PackageWarning{config}{Missing required field: #2. Please set #1 in personal_info.tex or company configuration.}%
+  \ifskipvalidationwarnings
+    % Skip validation warnings if flag is set
   \else
-    % Check for placeholder values if provided
-    \def\tempemptyplaceholder{}%
-    \def\tempcheckplaceholder{#3}%
-    \ifx\tempcheckplaceholder\tempemptyplaceholder
-      % No placeholder check needed
+    \expandafter\def\expandafter\tempcheck\expandafter{#1}%
+    \def\tempempty{}%
+    \ifx\tempcheck\tempempty
+      \PackageWarning{config}{Missing required field: #2. Please set #1 in personal_info.tex or company configuration.}%
     \else
-      \ifx\tempcheck\tempcheckplaceholder
-        \PackageWarning{config}{Field #2 appears to contain placeholder value "#3". Please update #1 with your real information.}%
+      % Check for placeholder values if provided
+      \def\tempemptyplaceholder{}%
+      \def\tempcheckplaceholder{#3}%
+      \ifx\tempcheckplaceholder\tempemptyplaceholder
+        % No placeholder check needed
+      \else
+        \ifx\tempcheck\tempcheckplaceholder
+          \PackageWarning{config}{Field #2 appears to contain placeholder value "#3". Please update #1 with your real information.}%
+        \fi
       \fi
     \fi
   \fi
@@ -600,39 +608,43 @@
   \checkfield{\myemail}{Email}{example@example.com}%
   \checkfield{\myphone}{Phone}{+1 (555) 000-0000}%
   % Optional fields: LinkedIn, GitHub, Portfolio (only warn if placeholder values detected)
-  \expandafter\def\expandafter\tempcheck\expandafter{\mylinkedin}%
-  \def\tempempty{}%
-  \ifx\tempcheck\tempempty
-    % Empty is fine (optional field)
+  \ifskipvalidationwarnings
+    % Skip validation warnings if flag is set
   \else
-    \def\tempcheckplaceholder{exampleusername}%
-    \ifx\tempcheck\tempcheckplaceholder
-      \PackageWarning{config}{LinkedIn username appears to contain placeholder value. Please update \mylinkedin with your real information, or leave it empty if not applicable.}%
+    \expandafter\def\expandafter\tempcheck\expandafter{\mylinkedin}%
+    \def\tempempty{}%
+    \ifx\tempcheck\tempempty
+      % Empty is fine (optional field)
+    \else
+      \def\tempcheckplaceholder{exampleusername}%
+      \ifx\tempcheck\tempcheckplaceholder
+        \PackageWarning{config}{LinkedIn username appears to contain placeholder value. Please update \mylinkedin with your real information, or leave it empty if not applicable.}%
+      \fi
     \fi
-  \fi
-  \expandafter\def\expandafter\tempcheck\expandafter{\mygithub}%
-  \ifx\tempcheck\tempempty
-    % Empty is fine (optional field)
-  \else
-    \def\tempcheckplaceholder{exampleusername}%
-    \ifx\tempcheck\tempcheckplaceholder
-      \PackageWarning{config}{GitHub username appears to contain placeholder value. Please update \mygithub with your real information, or leave it empty if not applicable.}%
+    \expandafter\def\expandafter\tempcheck\expandafter{\mygithub}%
+    \ifx\tempcheck\tempempty
+      % Empty is fine (optional field)
+    \else
+      \def\tempcheckplaceholder{exampleusername}%
+      \ifx\tempcheck\tempcheckplaceholder
+        \PackageWarning{config}{GitHub username appears to contain placeholder value. Please update \mygithub with your real information, or leave it empty if not applicable.}%
+      \fi
     \fi
-  \fi
-  \expandafter\def\expandafter\tempcheck\expandafter{\myportfolio}%
-  \ifx\tempcheck\tempempty
-    % Empty is fine (optional field)
-  \else
-    \def\tempcheckplaceholder{example.github.io}%
-    \ifx\tempcheck\tempcheckplaceholder
-      \PackageWarning{config}{Portfolio appears to contain placeholder value. Please update \myportfolio with your real information, or leave it empty if not applicable.}%
+    \expandafter\def\expandafter\tempcheck\expandafter{\myportfolio}%
+    \ifx\tempcheck\tempempty
+      % Empty is fine (optional field)
+    \else
+      \def\tempcheckplaceholder{example.github.io}%
+      \ifx\tempcheck\tempcheckplaceholder
+        \PackageWarning{config}{Portfolio appears to contain placeholder value. Please update \myportfolio with your real information, or leave it empty if not applicable.}%
+      \fi
     \fi
-  \fi
-  % Check CV title (should be customized per company)
-  \expandafter\def\expandafter\tempcheck\expandafter{\cvtitle}%
-  \def\tempdefault{Cloud Evangelist | AI Whisperer}%
-  \ifx\tempcheck\tempdefault
-    \PackageWarning{config}{CV title is using default value. Consider customizing \cvtitle in companies/*/shared.tex for better results.}%
+    % Check CV title (should be customized per company)
+    \expandafter\def\expandafter\tempcheck\expandafter{\cvtitle}%
+    \def\tempdefault{Cloud Evangelist | AI Whisperer}%
+    \ifx\tempcheck\tempdefault
+      \PackageWarning{config}{CV title is using default value. Consider customizing \cvtitle in companies/*/shared.tex for better results.}%
+    \fi
   \fi
 }
 
