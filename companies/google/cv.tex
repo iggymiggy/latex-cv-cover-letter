@@ -54,19 +54,60 @@
   \textbf{Languages:} Python, Go, Java, C++, TypeScript
 }
 
-% Certificates (reduced to 2 to fit languages section)
-% Example: both with links
-% Replace YOUR_BADGE_ID with your actual Credly badge ID from your Credly profile
-\renewcommand{\cvcertificates}{%
-  \href{https://www.credly.com/badges/YOUR_GCP_ARCHITECT_BADGE_ID}{\textbf{Google Cloud Professional Cloud Architect}} & \textcolor{gray}{\textit{Jan 2023 - Jan 2026}} \\
-  \href{https://www.credly.com/badges/YOUR_CKA_BADGE_ID}{\textbf{CKA: Certified Kubernetes Administrator}} & \textcolor{gray}{\textit{Aug 2024 - Aug 2026}} \\
+% Experience section
+\renewcommand{\cvexperience}{%
+  \cvSubheading
+  {OpenAI}{\cvcolor{primary}{San Francisco, CA}}
+  {AI-Powered Cloud Solutions Architect}{\cvcolor{primary}{Oct 2023 -- Present}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Optimizing AI/ML cloud infrastructure for large-scale GPT models on AWS. Spearheading Kubernetes-based AI inference, cutting latency by 40\%. Automating MLOps with CI/CD for seamless deployments.}
+  \cvItemListEnd
+
+  \cvSubheading
+  {Meta}{\cvcolor{primary}{Menlo Park, CA}}
+  {Lead DevOps Engineer}{\cvcolor{primary}{Oct 2018 -- Sep 2023}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Led design and automation of Meta's global cloud infrastructure, supporting billions of daily requests. Architected highly available Kubernetes clusters, improving uptime to 99.99\%. Implemented Infrastructure-as-Code with Terraform and Ansible, reducing provisioning time by 70\%.
+      }
+  \cvItemListEnd
+
+%--------Multiple Positions Heading------------
+  \cvSubSubheading
+  {Senior Site Reliability Engineer (SRE)}{\cvcolor{primary}{Oct 2016 -- Sep 2018}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Optimized large-scale distributed systems, improving fault tolerance and auto-recovery. Developed monitoring solutions with Prometheus and Grafana, reducing incident resolution time by 60\%.
+      }
+  \cvItemListEnd
+
+  \cvSubheading
+    {Netflix}{\cvcolor{primary}{Los Gatos, CA}}
+    {Junior DevOps Engineer}{\cvcolor{primary}{Oct 2015 -- Sep 2016}}
+  \cvItemListStart
+    \cvItemSimple{}
+      {Managed cloud infrastructure for Netflix's streaming platform. Automated deployment with Terraform and AWS CloudFormation, reducing manual effort by 60\%. Improved CI/CD workflows, speeding up deployments.}
+  \cvItemListEnd
+}
+
+% Education section
+\renewcommand{\cveducation}{%
+  \cvSubheadingWithDetails
+    {Stanford University}{\cvcolor{primary}{Stanford, CA}}
+    {Master of Science in Data Science}{\cvcolor{primary}{Oct 2013 -- Sep 2016}}
+    {Major in Data Analytics}{Minor in Machine Learning and AI Ethics}
+  \cvSubheadingWithDetails
+    {Harvard University}{\cvcolor{primary}{Cambridge, MA}}
+    {Bachelor of Science in Computer Science}{\cvcolor{primary}{Oct 2011 -- Sep 2013}}
+    {Major in Computer Science}{Minor in Cognitive Neuroscience}
 }
 
 % Open Source Contributions (balanced: some open source - shortened)
 \renewcommand{\cvopensource}{%
   \cvSubheading
-    {Kubernetes}{\textcolor{gray}{GitHub}}
-    {Core Contributor}{\textcolor{gray}{2022 -- Present}}
+    {Kubernetes}{\cvcolor{primary}{GitHub}}
+    {Core Contributor}{\cvcolor{primary}{2022 -- Present}}
   \cvItemListStart
     \cvItemSimple{}
       {Contributing to Kubernetes core infrastructure, focusing on container orchestration improvements and performance optimizations.}
@@ -76,168 +117,45 @@
 % Volunteer Work (none - leave empty)
 \renewcommand{\cvvolunteer}{}
 
-% Languages
-\renewcommand{\cvlanguages}{%
-  \item{\textbf{English}{:} Native, \textbf{Mandarin}{:} Conversational}
+% Certificates (reduced to 2 to fit languages section)
+% Example: both with links
+% Replace YOUR_BADGE_ID with your actual Credly badge ID from your Credly profile
+\renewcommand{\cvcertificates}{%
+  \href{https://www.credly.com/badges/YOUR_GCP_ARCHITECT_BADGE_ID}{\textbf{Google Cloud Professional Cloud Architect}} & \cvcolor{primary}{\textit{Jan 2023 - Jan 2026}} \\
+  \href{https://www.credly.com/badges/YOUR_CKA_BADGE_ID}{\textbf{CKA: Certified Kubernetes Administrator}} & \cvcolor{primary}{\textit{Aug 2024 - Aug 2026}} \\
 }
 
 % Awards (none - leave empty)
 \renewcommand{\cvawards}{}
 
+% Languages
+\renewcommand{\cvlanguages}{%
+  \item{\textbf{English}{:} Native, \textbf{Mandarin}{:} Conversational}
+}
+
+% Section order
+\renewcommand{\cvsectionorder}{technologies,experience,education,certificates,opensource,languages}
+
+% Skip validation warnings for example/template files
+\skipvalidationwarningstrue
+\validateconfigcv
+\skipvalidationwarningsfalse
+\setpdfmetadata
+
 \begin{document}
 
-% %----------HEADING-----------------
 \begin{center}
-  {\Huge \textbf{\myname}} \\
+  {\Huge \textbf{\textcolor{\cvthemeaccent}{\myname}}} \\
   \vspace{2pt}
-  {\Large \cvtitle} \\
+  {\Large \textcolor{\cvthemetitle}{\cvtitle}} \\
   \vspace{4pt}
-  \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
-  \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
-  \href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\
+  \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
+  \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
+  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \quad}{}%
   \href{mailto:\myemail}{\myemail} \quad
   \href{tel:\myphone}{\myphone} \\
 \end{center}
 
+\rendercvsections
 
-%-----------TECHNOLOGIES/SKILLS------------
-% Layout is defined in base_config.tex or company cv.tex
-% Companies can override with single column, two columns, or skills format
-% Section header is included in the \cvtechnologies command
-\cvtechnologies
-
-%-----------EXPERIENCE-----------------
-\section{Experience}
-  \cvSubHeadingListStart
-
-  \cvSubheading
-  {OpenAI}{\textcolor{gray}{San Francisco, CA}}
-  {AI-Powered Cloud Solutions Architect}{\textcolor{gray}{Oct 2023 -- Present}}
-  \cvItemListStart
-    \cvItemSimple{}
-      {Optimizing AI/ML cloud infrastructure for large-scale GPT models on AWS. Spearheading Kubernetes-based AI inference, cutting latency by 40\%. Automating MLOps with CI/CD for seamless deployments.}
-  \cvItemListEnd
-
-
-  \cvSubheading
-  {Meta}{\textcolor{gray}{Menlo Park, CA}}
-  {Lead DevOps Engineer}{\textcolor{gray}{Oct 2018 -- Sep 2023}}
-  \cvItemListStart
-    \cvItemSimple{}
-      {Led design and automation of Meta's global cloud infrastructure, supporting billions of daily requests. Architected highly available Kubernetes clusters, improving uptime to 99.99\%. Implemented Infrastructure-as-Code with Terraform and Ansible, reducing provisioning time by 70\%.
-      }
-  \cvItemListEnd
-
-%--------Multiple Positions Heading------------
-  \cvSubSubheading
-  {Senior Site Reliability Engineer (SRE)}{\textcolor{gray}{Oct 2016 -- Sep 2018}}
-  \cvItemListStart
-    \cvItemSimple{}
-      {Optimized large-scale distributed systems, improving fault tolerance and auto-recovery. Developed monitoring solutions with Prometheus and Grafana, reducing incident resolution time by 60\%.
-      }
-  \cvItemListEnd
-
-%-------------------------------------------
-
-  \cvSubheading
-    {Netflix}{\textcolor{gray}{Los Gatos, CA}}
-    {Junior DevOps Engineer}{\textcolor{gray}{Oct 2015 -- Sep 2016}}
-  \cvItemListStart
-    \cvItemSimple{}
-      {Managed cloud infrastructure for Netflix's streaming platform. Automated deployment with Terraform and AWS CloudFormation, reducing manual effort by 60\%. Improved CI/CD workflows, speeding up deployments.}
-  \cvItemListEnd
-
-
-  \cvSubHeadingListEnd
-
-%-----------EDUCATION-----------------
-\section{Education}
-  \cvSubHeadingListStart
-    \cvSubheadingWithDetails
-      {Stanford University}{\textcolor{gray}{Stanford, CA}}
-      {Master of Science in Data Science}{\textcolor{gray}{Oct 2013 -- Sep 2016}}
-      {Major in Data Analytics}{Minor in Machine Learning and AI Ethics}
-    \cvSubheadingWithDetails
-      {Harvard University}{\textcolor{gray}{Cambridge, MA}}
-      {Bachelor of Science in Computer Science}{\textcolor{gray}{Oct 2011 -- Sep 2013}}
-      {Major in Computer Science}{Minor in Cognitive Neuroscience}
-  \cvSubHeadingListEnd
-
-
-
-%-----------CERTIFICATES------------
-% Uses content from base_config.tex or company cv.tex override
-% If empty, section is hidden
-% 
-% Certificate links: To make a certificate name clickable, wrap it in \href{url}{\textbf{Name}}
-% Example with link: \href{https://www.credly.com/badges/YOUR_BADGE_ID}{\textbf{Certificate Name}} & \textcolor{gray}{\textit{Date}}
-% Example without link: \textbf{Certificate Name} & \textcolor{gray}{\textit{Date}}
-% 
-% To get your Credly badge URL: Log into Credly, select your badge, copy the URL from the address bar
-% Credly badge URLs follow the format: https://www.credly.com/badges/BADGE_ID
-%
-% Check if command expands to empty by comparing expanded content
-\ifnotempty{\cvcertificates}{\cvCertificates{\cvcertificates}}{}
-
-%-----------OPEN SOURCE CONTRIBUTIONS------------
-% Uses content from base_config.tex or company cv.tex override
-% If empty, section is hidden
-\ifnotempty{\cvopensource}{%
-  \section{Open Source Contributions}
-  \cvSubHeadingListStart
-    \cvopensource
-  \cvSubHeadingListEnd
-}{}
-
-%-----------VOLUNTEER WORK------------
-% Uses content from base_config.tex or company cv.tex override
-% If empty, section is hidden
-\ifnotempty{\cvvolunteer}{%
-  \section{Volunteer Work}
-  \cvSubHeadingListStart
-    \cvvolunteer
-  \cvSubHeadingListEnd
-}{}
-
-%-----------LANGUAGES------------
-% Uses content from base_config.tex or company cv.tex override
-% If empty, section is hidden
-\ifnotempty{\cvlanguages}{%
-  \section{Languages}
-  \cvSubHeadingListStart
-    \cvlanguages
-  \cvSubHeadingListEnd
-}{}
-
-%-----------AWARDS/HONORS------------
-% Uses content from base_config.tex or company cv.tex override
-% If empty, section is hidden
-\ifnotempty{\cvawards}{%
-  \section{Awards \& Honors}
-  \cvSubHeadingListStart
-    \cvawards
-  \cvSubHeadingListEnd
-}{}
-
-% %-----------PROJECTS-----------------
-% \section{Projects}
-%   \cvSubHeadingListStart
-%     \cvProjectItem{Cloud Infrastructure Automation with AWS}{Cloud Engineer}{Jan 2023 -- Present}{
-%       Developed and automated a scalable cloud infrastructure using AWS CloudFormation and Terraform. Implemented VPCs, EC2 instances, and RDS databases with automated provisioning and scaling, reducing setup time by 50\%.
-%     }
-%     \cvProjectItem{Kubernetes Cluster Deployment and Management}{DevOps Engineer}{Apr 2022 -- Dec 2022}{
-%       Designed and deployed highly available Kubernetes clusters on AWS EKS. Implemented Helm charts for application deployment, improving deployment consistency and reducing application downtime by 40\%.
-%     }
-%     \cvProjectItem{CI/CD Pipeline with Azure DevOps}{DevOps Engineer}{Sep 2021 -- Mar 2022}{
-%       Automated build and deployment processes using Azure DevOps pipelines for a microservices architecture. Integrated automated testing and deployment strategies, cutting release cycle time by 60\%.
-%     }
-%     \cvProjectItem{Dockerized Microservices Architecture}{Cloud Solutions Architect}{Jan 2021 -- Aug 2021}{
-%       Designed and deployed a microservices-based application using Docker containers and Kubernetes. Orchestrated services using AWS EKS, ensuring high availability and fault tolerance in production environments.
-%     }
-%   \cvSubHeadingListEnd
-
-
-% %
-
-%-------------------------------------------
 \end{document}
