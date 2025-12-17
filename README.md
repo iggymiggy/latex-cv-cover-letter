@@ -394,7 +394,7 @@ technologies,experience,education,certificates,opensource,volunteer,languages,aw
 ## Requirements
 
 - LaTeX distribution (TeX Live, MiKTeX, or MacTeX)
-- Packages: `xcolor`, `hyperref`, `fontawesome5`, `babel`, `tabularx`, `titlesec`, `fancyhdr`, `enumitem`, `etoolbox`
+- Packages: `xcolor`, `hyperref`, `bookmark`, `fontawesome5`, `babel`, `tabularx`, `titlesec`, `fancyhdr`, `enumitem`, `etoolbox`
 - Make (optional, for automated builds)
 - chktex (optional, for advanced linting - install via `brew install chktex` on macOS or `sudo apt-get install chktex` on Linux)
 

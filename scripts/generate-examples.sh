@@ -68,16 +68,16 @@ process_company_file() {
     fi
     
     # Generate PNG from PDF using pdftoppm (NOT sips!)
-    # pdftoppm creates {prefix}-1.png for single page PDFs
+    # With -singlefile, pdftoppm creates {prefix}.png directly
     local temp_prefix="${dest_png%.png}_temp"
     if pdftoppm -png -r 150 -singlefile "$dest_pdf" "$temp_prefix" > /dev/null 2>&1; then
-        # pdftoppm creates {prefix}-1.png, rename to desired name
-        if [ -f "${temp_prefix}-1.png" ]; then
-            mv "${temp_prefix}-1.png" "$dest_png"
+        # pdftoppm with -singlefile creates {prefix}.png directly
+        if [ -f "${temp_prefix}.png" ]; then
+            mv "${temp_prefix}.png" "$dest_png"
             echo -e "  ${GREEN}✓${NC} Generated PNG: ${company}_${file_type}.png"
             UPDATED=$((UPDATED + 1))
         else
-            echo -e "  ${RED}✗${NC} PNG generation failed: expected ${temp_prefix}-1.png"
+            echo -e "  ${RED}✗${NC} PNG generation failed: expected ${temp_prefix}.png"
             FAILED=$((FAILED + 1))
             return 1
         fi
