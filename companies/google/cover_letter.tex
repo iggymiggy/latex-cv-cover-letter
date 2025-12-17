@@ -72,6 +72,9 @@
   At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
 }
 
+\validateconfigcoverletter
+\setpdfmetadata
+
 \begin{document}
 
 % Set up cover letter date (language selection and auto-date handling)
@@ -80,9 +83,9 @@
 
 %-----------HEADING------------
 \begin{center}
-  {\Huge \textbf{\myname}} \\
+  {\Huge \textbf{\textcolor{\cvthemeaccent}{\myname}}} \\
   \vspace{2pt}
-  {\Large \cvtitle} \\
+  {\Large \textcolor{\cvthemetitle}{\cvtitle}} \\
   \vspace{4pt}
   \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
   \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
@@ -99,14 +102,14 @@
     \small
     \raggedright
     \textbf{\companyrecipient} \\
-    \textcolor{gray}{\companyname} \\
-    \textcolor{gray}{\companyaddress} \\
-    \textcolor{gray}{\companycity} \\
+    \cvcolor{primary}{\companyname} \\
+    \cvcolor{primary}{\companyaddress} \\
+    \cvcolor{primary}{\companycity} \\
   \end{minipage} &
   \begin{minipage}[t]{0.38\textwidth}
     \small
     \raggedleft
-    \textcolor{gray}{\letterdate} \\
+    \cvcolor{primary}{\letterdate} \\
   \end{minipage} \\
 \end{tabular*}
 
@@ -131,7 +134,7 @@
 \vspace{6pt}
 \noindent\textbf{\myname} \\
 \vspace{20pt}
-\noindent\small\textcolor{gray}{\textit{\letterattachment}}
+\noindent\small\cvcolor{primary}{\textit{\letterattachment}}
 
 %-------------------------------------------
 \end{document}

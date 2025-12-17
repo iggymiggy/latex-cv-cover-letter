@@ -73,6 +73,9 @@
   I'm effective in roles that combine technical depth with operational ownership: defining safety requirements, aligning stakeholders, and building the tooling and processes that keep systems safe at scale. I bring a pragmatic approach—prioritizing high-impact mitigations, instrumenting what matters, and continuously learning from incidents and near-misses.
 }
 
+\validateconfigcoverletter
+\setpdfmetadata
+
 \begin{document}
 
 % Set up cover letter date (language selection and auto-date handling)
@@ -81,9 +84,9 @@
 
 %-----------HEADING------------
 \begin{center}
-  {\Huge \textbf{\myname}} \\
+  {\Huge \textbf{\textcolor{\cvthemeaccent}{\myname}}} \\
   \vspace{2pt}
-  {\Large \cvtitle} \\
+  {\Large \textcolor{\cvthemetitle}{\cvtitle}} \\
   \vspace{4pt}
   \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
   \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
@@ -100,14 +103,14 @@
     \small
     \raggedright
     \textbf{\companyrecipient} \\
-    \textcolor{gray}{\companyname} \\
-    \textcolor{gray}{\companyaddress} \\
-    \textcolor{gray}{\companycity} \\
+    \cvcolor{primary}{\companyname} \\
+    \cvcolor{primary}{\companyaddress} \\
+    \cvcolor{primary}{\companycity} \\
   \end{minipage} &
   \begin{minipage}[t]{0.38\textwidth}
     \small
     \raggedleft
-    \textcolor{gray}{\letterdate} \\
+    \cvcolor{primary}{\letterdate} \\
   \end{minipage} \\
 \end{tabular*}
 
@@ -132,7 +135,7 @@
 \vspace{6pt}
 \noindent\textbf{\myname} \\
 \vspace{20pt}
-\noindent\small\textcolor{gray}{\textit{\letterattachment}}
+\noindent\small\cvcolor{primary}{\textit{\letterattachment}}
 
 %-------------------------------------------
 \end{document}
