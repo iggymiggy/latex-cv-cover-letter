@@ -132,7 +132,9 @@ check_file "templates/common.sty" "config"
 # Check company files
 echo "Checking company files..."
 echo "----------------------------------------"
-for company in google hyperion meta nasa; do
+# Auto-detect company directories
+COMPANIES=($(find "$PROJECT_ROOT/companies" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort))
+for company in "${COMPANIES[@]}"; do
     if [ -f "companies/$company/shared.tex" ]; then
         check_file "companies/$company/shared.tex" "config"
     fi
