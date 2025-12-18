@@ -68,7 +68,7 @@
 }
 
 \newcommand{\rendersectionexperience}{%
-  \section{Experience}%
+  \section{\cvsectiontitleexperience}%
   \cvSubHeadingListStart%
   % Experience content is defined inline in cv_template.tex or company cv.tex
   \cvexperience%
@@ -76,7 +76,7 @@
 }
 
 \newcommand{\rendersectioneducation}{%
-  \section{Education}%
+  \section{\cvsectiontitleeducation}%
   \cvSubHeadingListStart%
   % Education content is defined inline in cv_template.tex or company cv.tex
   \cveducation%
@@ -89,7 +89,7 @@
 
 \newcommand{\rendersectionopensource}{%
   \ifnotempty{\cvopensource}{%
-    \section{Open Source Contributions}%
+    \section{\cvsectiontitleopensource}%
     \cvSubHeadingListStart%
     \cvopensource%
     \cvSubHeadingListEnd%
@@ -98,7 +98,7 @@
 
 \newcommand{\rendersectionvolunteer}{%
   \ifnotempty{\cvvolunteer}{%
-    \section{Volunteer Work}%
+    \section{\cvsectiontitlevolunteer}%
     \cvSubHeadingListStart%
     \cvvolunteer%
     \cvSubHeadingListEnd%
@@ -107,7 +107,7 @@
 
 \newcommand{\rendersectionlanguages}{%
   \ifnotempty{\cvlanguages}{%
-    \section{Languages}%
+    \section{\cvsectiontitlelanguages}%
     \cvSubHeadingListStart%
     \cvlanguages%
     \cvSubHeadingListEnd%
@@ -116,7 +116,7 @@
 
 \newcommand{\rendersectionawards}{%
   \ifnotempty{\cvawards}{%
-    \section{Awards \& Honors}%
+    \section{\cvsectiontitleawards}%
     \cvSubHeadingListStart%
     \cvawards%
     \cvSubHeadingListEnd%
@@ -605,10 +605,33 @@
 %   @note: Uses LaTeX warnings, so compilation continues but user is notified
 \newcommand{\validateconfigcv}{%
   \PackageInfo{config}{Validating CV configuration...}%
-  % Check required personal information fields
-  \checkfield{\myname}{Name}{John Doe}%
+  % Check required personal information fields (only email is required)
   \checkfield{\myemail}{Email}{example@example.com}%
-  \checkfield{\myphone}{Phone}{+1 (555) 000-0000}%
+  % Optional fields: Name, Phone, LinkedIn, GitHub, Portfolio, Location (only warn if placeholder values detected)
+  \ifskipvalidationwarnings
+    % Skip validation warnings if flag is set
+  \else
+    \expandafter\def\expandafter\tempcheck\expandafter{\myname}%
+    \def\tempempty{}%
+    \ifx\tempcheck\tempempty
+      % Empty is fine (optional field)
+    \else
+      \def\tempcheckplaceholder{John Doe}%
+      \ifx\tempcheck\tempcheckplaceholder
+        \PackageWarning{config}{Name appears to contain placeholder value. Please update \myname with your real information, or leave it empty if not applicable.}%
+      \fi
+    \fi
+    \expandafter\def\expandafter\tempcheck\expandafter{\myphone}%
+    \def\tempempty{}%
+    \ifx\tempcheck\tempempty
+      % Empty is fine (optional field)
+    \else
+      \def\tempcheckplaceholder{+1 (555) 000-0000}%
+      \ifx\tempcheck\tempcheckplaceholder
+        \PackageWarning{config}{Phone appears to contain placeholder value. Please update \myphone with your real information, or leave it empty if not applicable.}%
+      \fi
+    \fi
+  \fi
   % Optional fields: LinkedIn, GitHub, Portfolio (only warn if placeholder values detected)
   \ifskipvalidationwarnings
     % Skip validation warnings if flag is set
@@ -657,10 +680,33 @@
 %   @note: Uses LaTeX warnings, so compilation continues but user is notified
 \newcommand{\validateconfigcoverletter}{%
   \PackageInfo{config}{Validating cover letter configuration...}%
-  % Check personal information fields
-  \checkfield{\myname}{Name}{John Doe}%
+  % Check required personal information fields (only email is required)
   \checkfield{\myemail}{Email}{example@example.com}%
-  \checkfield{\myphone}{Phone}{+1 (555) 000-0000}%
+  % Optional fields: Name, Phone (only warn if placeholder values detected)
+  \ifskipvalidationwarnings
+    % Skip validation warnings if flag is set
+  \else
+    \expandafter\def\expandafter\tempcheck\expandafter{\myname}%
+    \def\tempempty{}%
+    \ifx\tempcheck\tempempty
+      % Empty is fine (optional field)
+    \else
+      \def\tempcheckplaceholder{John Doe}%
+      \ifx\tempcheck\tempcheckplaceholder
+        \PackageWarning{config}{Name appears to contain placeholder value. Please update \myname with your real information, or leave it empty if not applicable.}%
+      \fi
+    \fi
+    \expandafter\def\expandafter\tempcheck\expandafter{\myphone}%
+    \def\tempempty{}%
+    \ifx\tempcheck\tempempty
+      % Empty is fine (optional field)
+    \else
+      \def\tempcheckplaceholder{+1 (555) 000-0000}%
+      \ifx\tempcheck\tempcheckplaceholder
+        \PackageWarning{config}{Phone appears to contain placeholder value. Please update \myphone with your real information, or leave it empty if not applicable.}%
+      \fi
+    \fi
+  \fi
   % Check company details (should be customized)
   \expandafter\def\expandafter\tempcheck\expandafter{\companyname}%
   \def\tempdefault{Company Name}%

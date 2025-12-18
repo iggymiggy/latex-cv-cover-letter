@@ -7,6 +7,18 @@
 % Professional title/tagline
 \newcommand{\cvtitle}{Cloud Evangelist | AI Whisperer}
 
+%-----------CV SECTION TITLES (LOCALIZABLE DEFAULTS)------------
+% These control the visible section titles in the CV.
+% Override in company files with \renewcommand to localize (e.g., Finnish, German).
+\providecommand{\cvsectiontitletechnologies}{Skills}
+\providecommand{\cvsectiontitleexperience}{Experience}
+\providecommand{\cvsectiontitleeducation}{Education}
+\providecommand{\cvsectiontitlecertificates}{Certificates}
+\providecommand{\cvsectiontitleopensource}{Open Source Contributions}
+\providecommand{\cvsectiontitlevolunteer}{Volunteer Work}
+\providecommand{\cvsectiontitlelanguages}{Languages}
+\providecommand{\cvsectiontitleawards}{Awards \& Honors}
+
 % Experience and Education content (can be overridden in company cv.tex)
 % These are used by the section ordering system
 \newcommand{\cvexperience}{%
@@ -60,7 +72,7 @@
 % Companies can override with two columns or skills format
 % Include section header in the command
 \newcommand{\cvtechnologies}{%
-  \section*{Technologies}
+  \section*{\cvsectiontitletechnologies}
   \noindent
   \textbf{Cloud:} AWS, Azure \\
   \textbf{Containerization \& Orchestration: } Docker, Kubernetes \\
