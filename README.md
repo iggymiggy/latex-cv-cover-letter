@@ -59,21 +59,23 @@ Edit `personal_info.tex` and fill in:
 - (Optional) Location (city, state/country - e.g., "San Francisco, CA" or "Helsinki, Finland")
 - (Optional) LinkedIn / GitHub / Portfolio / Twitter / Website URLs
 
-**Contact info layout:** The header displays contact information in a configurable 2-line format with FontAwesome icons:
-- **Line 1:** Social links (LinkedIn, GitHub, Portfolio, Twitter, Website) - only shown if provided and included in `\headerorder`
-- **Line 2:** Contact info (Email, Phone, Location) - only shown if provided and included in `\headerorder`
+**Contact info layout:** The header displays contact information with FontAwesome icons. Icons and text are kept together on the same line to prevent wrapping.
 
-**Customizing header fields:** You can control which fields appear and in what order by overriding `\headerorder` in your company-specific `cv.tex` or `cover_letter.tex`:
+**Customizing header fields:** You can control which fields appear, in what order, and where line breaks occur by overriding `\headerorder` in your company-specific `shared.tex`:
 
 ```latex
-% Show only LinkedIn, GitHub, Email, Phone
+% Show only LinkedIn, GitHub, Email, Phone (single line)
 \renewcommand{\headerorder}{linkedin,github,email,phone}
 
-% Show all fields
-\renewcommand{\headerorder}{linkedin,github,portfolio,twitter,website,email,phone,location}
+% Show all fields with custom line breaks
+\renewcommand{\headerorder}{linkedin,github,portfolio,twitter,website,\newline,email,phone,location}
+
+% Custom 3-line layout
+\renewcommand{\headerorder}{linkedin,github,\newline,twitter,website,\newline,email,phone}
 ```
 
-Available fields: `linkedin`, `github`, `portfolio`, `twitter`, `website`, `email`, `phone`, `location`
+Available fields: `linkedin`, `github`, `portfolio`, `twitter`, `website`, `email`, `phone`, `location`  
+Line breaks: Use `\newline` (LaTeX native command) to insert a line break at that position
 
 `personal_info.tex` is **ignored by git** (see `.gitignore`), so your private data will not be committed.
 
@@ -281,15 +283,20 @@ The template is designed around focused, 1‑page CVs, tailored per application.
 Edit `companies/<name>/shared.tex` to set `\cvthemeprimary`, `\cvthemesection`, `\cvthemelink`, etc. Global page setup and fonts are configured in `document_settings.tex`.
 
 **Can I customize which contact fields appear in the header?**  
-Yes. Override `\headerorder` in your company `cv.tex` or `cover_letter.tex` to control which fields appear and in what order:
+Yes. Override `\headerorder` in your company `shared.tex` to control which fields appear, their order, and where line breaks occur:
 
 ```latex
-% Show only LinkedIn, GitHub, Email, Phone
+% Single line
 \renewcommand{\headerorder}{linkedin,github,email,phone}
 
-% Show all fields
-\renewcommand{\headerorder}{linkedin,github,portfolio,twitter,website,email,phone,location}
+% Two lines with custom break
+\renewcommand{\headerorder}{linkedin,github,portfolio,\newline,email,phone,location}
+
+% Three lines
+\renewcommand{\headerorder}{linkedin,github,\newline,twitter,website,\newline,email,phone}
 ```
+
+Use `\newline` (LaTeX native command) to insert line breaks anywhere in the header.
 
 Available fields: `linkedin`, `github`, `portfolio`, `twitter`, `website`, `email`, `phone`, `location`. Fields are automatically placed on line 1 (social) or line 2 (contact) based on their type.
 

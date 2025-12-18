@@ -8,18 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **Configurable Header Order** (#TBD)
-  - New `\headerorder` macro to control which contact fields appear in CV/cover letter headers
-  - Similar to `\cvsectionorder`, allows per-company customization of header fields
+- **Flexible Header System with Custom Line Breaks** (#TBD)
+  - New `\headerorder` macro to control which contact fields appear, their order, and line breaks
+  - Use `\newline` (LaTeX native command) to insert line breaks anywhere in the header
+  - Icons and text are wrapped in `\mbox{}` to prevent wrapping and keep them together
   - Available fields: `linkedin`, `github`, `portfolio`, `twitter`, `website`, `email`, `phone`, `location`
-  - Fields automatically placed on line 1 (social) or line 2 (contact) based on type
-  - Default: all fields in standard order
+  - Default: all fields with one line break (social on line 1, contact on line 2)
   - Example companies demonstrate different configurations:
-    - Google: All fields (full demo)
-    - Microsoft: No Twitter, no Website
-    - Meta: No LinkedIn, Twitter, Website, Location
-    - NASA: Minimal (Email, Phone, Location only)
-    - Hyperion: Standard (LinkedIn, GitHub, Portfolio, Email, Phone)
+    - Google: All fields with custom line break
+    - Microsoft: No Twitter/Website, custom line break
+    - Meta: Minimal fields with line break
+    - NASA: Minimal (Email, Phone, Location only, single line)
+    - Hyperion: Standard fields with line break
 
 - **Twitter and Website Support** (#TBD)
   - Added `\mytwitter` and `\mywebsite` fields to `personal_info.tex`
