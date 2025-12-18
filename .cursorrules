@@ -48,9 +48,11 @@ When updating example files (PDFs/PNGs):
 - Pre-commit hooks run validation automatically
 
 ## Documentation Updates
-- When adding features, update:
-  1. `README.md` - User documentation
-  2. `CHANGELOG.md` - Change log
-  3. Inline comments in code files
+- **ALWAYS update documentation when making changes:**
+  1. `README.md` - User documentation (if user-facing features change)
+  2. `CHANGELOG.md` - Change log (for all notable changes)
+  3. Inline comments in code files (if adding new commands/macros)
 - Keep examples in sync with actual functionality
+- **Before committing:** Verify README.md and CHANGELOG.md are updated if needed
+- If you forget to update documentation, the user will remind you - don't repeat this mistake!
 
