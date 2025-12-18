@@ -44,22 +44,21 @@
 \loadfile{shared.tex}{}
 
 %-----------COMPANY DETAILS (COVER LETTER SPECIFIC)------------
-\renewcommand{\companyrecipient}{Meta Recruiting Team}
+\renewcommand{\companyrecipient}{Metan rekrytointitiimi}
 \renewcommand{\companyname}{Meta}
 \renewcommand{\companyaddress}{1 Hacker Way}
 \renewcommand{\companycity}{Menlo Park, CA 94025}
 
 %-----------COVER LETTER SETTINGS (COMPANY-SPECIFIC)------------
-\renewcommand{\letterdatelanguage}{english}
+\renewcommand{\letterdatelanguage}{finnish}
 \renewcommand{\letterdate}{auto}
-\renewcommand{\letterclosing}{Sincerely}
-\renewcommand{\letteropening}{Dear Hiring Manager,}
-\renewcommand{\lettertitle}{Job Application for Senior Software Engineer}
-\renewcommand{\letterattachment}{Attached: Curriculum Vitae}
+\renewcommand{\letterclosing}{Ystävällisin terveisin}
+\renewcommand{\letteropening}{Hyvä rekrytointitiimi,}
+\renewcommand{\lettertitle}{Hakemus: Senior Software Engineer}
+\renewcommand{\letterattachment}{Liitteenä: ansioluettelo}
 
 %-----------LETTER BODY (COMPANY-SPECIFIC)------------
-% Style 2: Headed sections WITHOUT the horizontal rule line.
-% Content is defined directly here - no intermediate variables needed.
+% Style: headed sections without horizontal rule, content in Finnish.
 \renewcommand{\lettersection}[1]{%
   \vspace{12pt}%
   \noindent{\large\bfseries #1} \\%
@@ -68,14 +67,14 @@
 
 \providecommand{\letterbody}{}%
 \renewcommand{\letterbody}{%
-  \lettersection{About Me}
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  \lettersection{Minusta}
+  Olen kokenut ohjelmisto- ja pilviasiantuntija, joka on työskennellyt useiden globaalien tuotteiden parissa skaalautuvissa ympäristöissä. Nautin monimutkaisten järjestelmien yksinkertaistamisesta, automaation rakentamisesta ja tiimien tukemisesta siten, että he voivat keskittyä arvoa tuottavaan työhön. Yhdistän vahvan teknisen osaamisen käytännönläheiseen asenteeseen ja selkeään viestintään.
 
-  \lettersection{Why \companyname?}
-  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+  \lettersection{Miksi \companyname?}
+  Meta on tunnettu kunnianhimoisista tuotteistaan, massiivisesta mittakaavastaan ja avoimen lähdekoodin yhteisön tukemisesta. Minua motivoi mahdollisuus rakentaa infrastruktuuria ja kehitysympäristöjä, jotka vaikuttavat miljardeihin käyttäjiin ja sadoihin kehittäjätiimeihin. Arvostan myös Metan kulttuuria, jossa dataohjattu päätöksenteko, jatkuva parantaminen ja yhteistyö ovat keskiössä.
 
-  \lettersection{Why Me?}
-  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+  \lettersection{Miksi juuri minä?}
+  Taustani pilviarkkitehtuurissa, DevOps-käytännöissä ja suurten hajautettujen järjestelmien ylläpidossa sopii hyvin \companyname:n tarpeisiin. Olen johtanut tiimejä, toteuttanut laajoja Kubernetes- ja IaC-ratkaisuja sekä vienyt käyttöön kehittäjien tuottavuutta parantavia työkaluja. Uskon, että voin auttaa Metaa rakentamaan entistä luotettavampia, tehokkaampia ja kehittäjäystävällisempiä palveluja.
 }
 
 \validateconfigcoverletter
@@ -93,11 +92,10 @@
   \vspace{2pt}
   {\Large \textcolor{\cvthemetitle}{\cvtitle}} \\
   \vspace{4pt}
-  \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
   \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
   \href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\
-  \href{mailto:\myemail}{\myemail} \quad
-  \href{tel:\myphone}{\myphone} \\
+  \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
+  \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
 \end{center}
 
 \vspace{20pt}

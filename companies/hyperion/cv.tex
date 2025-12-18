@@ -41,6 +41,9 @@
 % Load shared company configuration (variables used by both CV and cover letter)
 \loadfile{shared.tex}{}
 
+% Example location for this CV (override personal_info.tex)
+\renewcommand{\mylocation}{Cambridge, MA}
+
 %-----------CV CUSTOMIZATIONS (COMPANY-SPECIFIC)------------
 
 % Hide Technologies/Skills section for this example (basic CV)
@@ -85,14 +88,14 @@
 
 % Education section
 \renewcommand{\cveducation}{%
-  \cvSubheadingWithDetails
+    \cvSubheadingWithDetails
     {Stanford University}{\cvcolor{primary}{Stanford, CA}}
     {Master of Science in Data Science}{\cvcolor{primary}{Oct 2013 -- Sep 2016}}
-    {Major in Data Analytics}{Minor in Machine Learning and AI Ethics}
-  \cvSubheadingWithDetails
+      {Major in Data Analytics}{Minor in Machine Learning and AI Ethics}
+    \cvSubheadingWithDetails
     {Harvard University}{\cvcolor{primary}{Cambridge, MA}}
     {Bachelor of Science in Computer Science}{\cvcolor{primary}{Oct 2011 -- Sep 2013}}
-    {Major in Computer Science}{Minor in Cognitive Neuroscience}
+      {Major in Computer Science}{Minor in Cognitive Neuroscience}
 }
 
 % Open Source Contributions (none - keep empty to fit one page)
@@ -135,9 +138,10 @@
   \vspace{4pt}
   \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
   \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
-  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \quad}{}%
-  \href{mailto:\myemail}{\myemail} \quad
-  \href{tel:\myphone}{\myphone} \\
+  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\}{}%
+  \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
+  \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
+  \ifnotempty{\mylocation}{\faMapMarker\ \cvcolor{primary}{\mylocation}}{} \\
 \end{center}
 
 \rendercvsections

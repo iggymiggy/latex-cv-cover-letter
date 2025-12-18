@@ -91,8 +91,9 @@
   \href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad
   \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
   \href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\
-  \href{mailto:\myemail}{\myemail} \quad
-  \href{tel:\myphone}{\myphone} \\
+  \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
+  \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
+  \ifnotempty{\mylocation}{\faMapMarker\ \cvcolor{primary}{\mylocation}}{} \\
 \end{center}
 
 \vspace{20pt}

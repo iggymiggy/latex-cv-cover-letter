@@ -34,6 +34,9 @@
 % Load shared company configuration (variables used by both CV and cover letter)
 \loadfile{shared.tex}{}
 
+% Example location for this CV (override personal_info.tex)
+\renewcommand{\mylocation}{Seattle, WA}
+
 % CV customizations
 \renewcommand{\cvtechnologies}{%
   \section*{Technologies}
@@ -131,9 +134,10 @@
   \vspace{4pt}
   \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
   \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
-  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \quad}{}%
-  \href{mailto:\myemail}{\myemail} \quad
-  \href{tel:\myphone}{\myphone} \\
+  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\}{}%
+  \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
+  \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
+  \ifnotempty{\mylocation}{\faMapMarker\ \cvcolor{primary}{\mylocation}}{} \\
 \end{center}
 
 \rendercvsections
