@@ -56,3 +56,12 @@ When updating example files (PDFs/PNGs):
 - **Before committing:** Verify README.md and CHANGELOG.md are updated if needed
 - If you forget to update documentation, the user will remind you - don't repeat this mistake!
 
+## Local-Only Files
+- **CRITICAL: When user asks to create a file "LOCALLY" or "local only":**
+  1. **ALWAYS add it to `.git/info/exclude`** (NOT `.gitignore`)
+  2. `.git/info/exclude` is local-only and never pushed to remote
+  3. `.gitignore` would be committed and pushed (which defeats the purpose)
+  4. Example: `CODE_SMELLS_ANALYSIS.md`, `IMPROVEMENTS.md` are in `.git/info/exclude`
+  5. **NEVER commit local-only files or add them to `.gitignore`**
+  6. If a file was already committed, use `git rm --cached <file>` to remove it, then add to `.git/info/exclude`
+

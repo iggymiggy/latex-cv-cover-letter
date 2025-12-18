@@ -248,8 +248,6 @@ The repo includes pre-built example PDFs and PNG previews under `examples/compan
 - **NASA**
   - CV: `examples/companies/nasa_cv.png`
   - Cover letter: `examples/companies/nasa_cover_letter.png`
-
-You can open these images directly in GitHub or your file browser to quickly see how each layout looks before copying a company folder.
 ```
 
 ---

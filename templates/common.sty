@@ -260,6 +260,18 @@
 %-------------------------
 % Document Header (CV and Cover Letter)
 %-------------------------
+% Field name constants (centralized to avoid magic strings)
+% These constants centralize field names used throughout the header system
+% Makes it easier to maintain and change field names if needed
+\newcommand{\fieldnamelinkedin}{linkedin}
+\newcommand{\fieldnamegithub}{github}
+\newcommand{\fieldnameportfolio}{portfolio}
+\newcommand{\fieldnametwitter}{twitter}
+\newcommand{\fieldnamewebsite}{website}
+\newcommand{\fieldnameemail}{email}
+\newcommand{\fieldnamephone}{phone}
+\newcommand{\fieldnamelocation}{location}
+
 % Helper macros to render individual header fields
 \newcommand{\renderheaderfieldlinkedin}{%
   \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
@@ -290,55 +302,51 @@
 \providebool{headerline1hascontent}%
 
 % Helper to process social field (line 1 only)
+% Uses field name constants to avoid magic strings
 \newcommand{\processsocialfield}[1]{%
-  \def\tempchecklinkedin{linkedin}%
-  \def\tempcheckgithub{github}%
-  \def\tempcheckportfolio{portfolio}%
-  \def\tempchecktwitter{twitter}%
-  \def\tempcheckwebsite{website}%
-  \def\tempcheck{#1}%
-  \ifx\tempcheck\tempchecklinkedin
+  \def\tempfieldname{#1}%
+  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamelinkedin}%
+  \ifx\tempfieldname\tempcheck
     \renderheaderfieldlinkedin
     \ifnotempty{\mylinkedin}{\booltrue{headerline1hascontent}}{}%
-  \else
-    \ifx\tempcheck\tempcheckgithub
-      \renderheaderfieldgithub
-      \ifnotempty{\mygithub}{\booltrue{headerline1hascontent}}{}%
-    \else
-      \ifx\tempcheck\tempcheckportfolio
-        \renderheaderfieldportfolio
-        \ifnotempty{\myportfolio}{\booltrue{headerline1hascontent}}{}%
-      \else
-        \ifx\tempcheck\tempchecktwitter
-          \renderheaderfieldtwitter
-          \ifnotempty{\mytwitter}{\booltrue{headerline1hascontent}}{}%
-        \else
-          \ifx\tempcheck\tempcheckwebsite
-            \renderheaderfieldwebsite
-            \ifnotempty{\mywebsite}{\booltrue{headerline1hascontent}}{}%
-          \fi
-        \fi
-      \fi
-    \fi
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamegithub}%
+  \ifx\tempfieldname\tempcheck
+    \renderheaderfieldgithub
+    \ifnotempty{\mygithub}{\booltrue{headerline1hascontent}}{}%
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnameportfolio}%
+  \ifx\tempfieldname\tempcheck
+    \renderheaderfieldportfolio
+    \ifnotempty{\myportfolio}{\booltrue{headerline1hascontent}}{}%
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnametwitter}%
+  \ifx\tempfieldname\tempcheck
+    \renderheaderfieldtwitter
+    \ifnotempty{\mytwitter}{\booltrue{headerline1hascontent}}{}%
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamewebsite}%
+  \ifx\tempfieldname\tempcheck
+    \renderheaderfieldwebsite
+    \ifnotempty{\mywebsite}{\booltrue{headerline1hascontent}}{}%
   \fi
 }
 
 % Helper to process contact field (line 2 only)
+% Uses field name constants to avoid magic strings
 \newcommand{\processcontactfield}[1]{%
-  \def\tempcheckemail{email}%
-  \def\tempcheckphone{phone}%
-  \def\tempchecklocation{location}%
-  \def\tempcheck{#1}%
-  \ifx\tempcheck\tempcheckemail
+  \def\tempfieldname{#1}%
+  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnameemail}%
+  \ifx\tempfieldname\tempcheck
     \renderheaderfieldemail
-  \else
-    \ifx\tempcheck\tempcheckphone
-      \renderheaderfieldphone
-    \else
-      \ifx\tempcheck\tempchecklocation
-        \renderheaderfieldlocation
-      \fi
-    \fi
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamephone}%
+  \ifx\tempfieldname\tempcheck
+    \renderheaderfieldphone
+  \fi
+  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamelocation}%
+  \ifx\tempfieldname\tempcheck
+    \renderheaderfieldlocation
   \fi
 }
 
