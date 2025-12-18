@@ -8,6 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Configurable Header Order** (#TBD)
+  - New `\headerorder` macro to control which contact fields appear in CV/cover letter headers
+  - Similar to `\cvsectionorder`, allows per-company customization of header fields
+  - Available fields: `linkedin`, `github`, `portfolio`, `twitter`, `website`, `email`, `phone`, `location`
+  - Fields automatically placed on line 1 (social) or line 2 (contact) based on type
+  - Default: all fields in standard order
+  - Example companies demonstrate different configurations:
+    - Google: All fields (full demo)
+    - Microsoft: No Twitter, no Website
+    - Meta: No LinkedIn, Twitter, Website, Location
+    - NASA: Minimal (Email, Phone, Location only)
+    - Hyperion: Standard (LinkedIn, GitHub, Portfolio, Email, Phone)
+
+- **Twitter and Website Support** (#TBD)
+  - Added `\mytwitter` and `\mywebsite` fields to `personal_info.tex`
+  - FontAwesome icons: `\faTwitterSquare` (Twitter), `\faGlobeAmericas` (Website)
+  - Auto-generated URLs: `\mytwitterurl`, `\mywebsiteurl`
+  - Example data added to `personal_info.example.tex`
+
 - **Location Field Support** (#TBD)
   - Optional `\mylocation` field in `personal_info.tex` for city/state/country
   - FontAwesome icons for contact information: `\faEnvelope` (email), `\faPhone` (phone), `\faMapMarker` (location)

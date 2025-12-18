@@ -57,11 +57,23 @@ Edit `personal_info.tex` and fill in:
 - (Optional) Name
 - (Optional) Phone
 - (Optional) Location (city, state/country - e.g., "San Francisco, CA" or "Helsinki, Finland")
-- (Optional) LinkedIn / GitHub / portfolio URLs
+- (Optional) LinkedIn / GitHub / Portfolio / Twitter / Website URLs
 
-**Contact info layout:** The header displays contact information in a clean 2-line format with FontAwesome icons:
-- **Line 1:** LinkedIn, GitHub, Portfolio (only shown if provided)
-- **Line 2:** Email (required), Phone, Location (only shown if provided)
+**Contact info layout:** The header displays contact information in a configurable 2-line format with FontAwesome icons:
+- **Line 1:** Social links (LinkedIn, GitHub, Portfolio, Twitter, Website) - only shown if provided and included in `\headerorder`
+- **Line 2:** Contact info (Email, Phone, Location) - only shown if provided and included in `\headerorder`
+
+**Customizing header fields:** You can control which fields appear and in what order by overriding `\headerorder` in your company-specific `cv.tex` or `cover_letter.tex`:
+
+```latex
+% Show only LinkedIn, GitHub, Email, Phone
+\renewcommand{\headerorder}{linkedin,github,email,phone}
+
+% Show all fields
+\renewcommand{\headerorder}{linkedin,github,portfolio,twitter,website,email,phone,location}
+```
+
+Available fields: `linkedin`, `github`, `portfolio`, `twitter`, `website`, `email`, `phone`, `location`
 
 `personal_info.tex` is **ignored by git** (see `.gitignore`), so your private data will not be committed.
 
@@ -269,6 +281,19 @@ The template is designed around focused, 1‑page CVs, tailored per application.
 
 **How do I change colors or fonts?**  
 Edit `companies/<name>/shared.tex` to set `\cvthemeprimary`, `\cvthemesection`, `\cvthemelink`, etc. Global page setup and fonts are configured in `document_settings.tex`.
+
+**Can I customize which contact fields appear in the header?**  
+Yes. Override `\headerorder` in your company `cv.tex` or `cover_letter.tex` to control which fields appear and in what order:
+
+```latex
+% Show only LinkedIn, GitHub, Email, Phone
+\renewcommand{\headerorder}{linkedin,github,email,phone}
+
+% Show all fields
+\renewcommand{\headerorder}{linkedin,github,portfolio,twitter,website,email,phone,location}
+```
+
+Available fields: `linkedin`, `github`, `portfolio`, `twitter`, `website`, `email`, `phone`, `location`. Fields are automatically placed on line 1 (social) or line 2 (contact) based on their type.
 
 **Can I localize section titles (Skills, Education, etc.)?**  
 Yes. Override the title macros in your company files, for example:
