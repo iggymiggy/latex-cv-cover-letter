@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  validate:
+    name: Validate Templates
+    runs-on: ubuntu-22.04  # LTS version: stable, fast, well-supported for LaTeX
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: false
+        tags: latex-cv:latest
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+    
+    - name: Validate all templates
+      run: docker run --rm -v "$PWD:/workspace" -w /workspace latex-cv:latest make validate
+    
+    - name: Lint LaTeX files
+      run: docker run --rm -v "$PWD:/workspace" -w /workspace latex-cv:latest make lint
+      continue-on-error: true  # Linting warnings don't fail the build
+    
+    - name: Build all companies
+      run: docker run --rm -v "$PWD:/workspace" -w /workspace latex-cv:latest make all
+    
+    - name: Generate examples
+      run: docker run --rm -v "$PWD:/workspace" -w /workspace latex-cv:latest make examples
+
+  test-templates:
+    name: Test Base Templates
+    runs-on: ubuntu-22.04  # LTS version: stable, fast, well-supported for LaTeX
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: false
+        tags: latex-cv:latest
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+    
+    - name: Build base templates
+      run: docker run --rm -v "$PWD:/workspace" -w /workspace latex-cv:latest make templates
+      continue-on-error: true  # Templates may not have personal_info.tex
+

@@ -1,5 +1,8 @@
 # Professional CV / Resume and Cover Letter LaTeX Templates
 
+[![CI](https://github.com/iggymiggy/latex-cv-cover-letter/actions/workflows/ci.yml/badge.svg)](https://github.com/iggymiggy/latex-cv-cover-letter/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](templates/common.sty)
+
 A clean, modern LaTeX template for a professional **CV** (also called a **resume/résumé**) and cover letter. ATS-friendly and easy to customize.
 
 **Keywords**: CV, resume, résumé, curriculum vitae, cover letter
@@ -167,7 +170,23 @@ cp personal_info.example.tex personal_info.tex
 
 ### 2. Build Your CV and Cover Letter
 
-**Using Makefile (recommended):**
+**Option A: Using Docker (recommended for easy setup)**
+```bash
+# No need to install TeX Live locally!
+# Build all companies
+docker-compose run latex make all
+
+# Build specific company
+docker-compose run latex make <company>
+
+# Validate templates
+docker-compose run latex make validate
+
+# Interactive shell (for debugging)
+docker-compose run latex bash
+```
+
+**Option B: Using Makefile (requires local TeX Live installation)**
 ```bash
 # Build all companies (auto-detected from companies/ directory)
 make
@@ -393,6 +412,11 @@ technologies,experience,education,certificates,opensource,volunteer,languages,aw
 
 ## Requirements
 
+**Option 1: Docker (recommended - no local installation needed)**
+- Docker and Docker Compose
+- All LaTeX dependencies are included in the container
+
+**Option 2: Local LaTeX installation**
 - LaTeX distribution (TeX Live, MiKTeX, or MacTeX)
 - Packages: `xcolor`, `hyperref`, `bookmark`, `fontawesome5`, `babel`, `tabularx`, `titlesec`, `fancyhdr`, `enumitem`, `etoolbox`
 - Make (optional, for automated builds)
@@ -427,6 +451,54 @@ pdflatex cover_letter.tex  # LaTeX requires two passes for cross-references
 
 **Performance:** `make` builds all companies in parallel by default (uses all CPU cores). The Makefile uses optimized LaTeX flags (`-draftmode` for first pass) for faster compilation. Use `make all-sequential` for sequential builds (useful for debugging).
 
+### Docker Usage (Optional)
+
+The project includes Docker support for easy setup without installing TeX Live locally.
+
+**Benefits:**
+- ✅ No need to install TeX Live (~4-5 GB download)
+- ✅ Consistent environment across macOS, Linux, and Windows
+- ✅ Same environment as CI (reproducible builds)
+- ✅ Clean system (no system-wide LaTeX installation)
+- ✅ Easy version control (pin specific LaTeX version)
+
+**Quick start:**
+```bash
+# Build all companies
+docker-compose run latex make all
+
+# Build specific company
+docker-compose run latex make microsoft
+
+# Validate templates
+docker-compose run latex make validate
+
+# Lint LaTeX files
+docker-compose run latex make lint
+
+# Generate examples
+docker-compose run latex make examples
+
+# Interactive shell (for debugging)
+docker-compose run latex bash
+```
+
+**First time setup:**
+```bash
+# Build the Docker image (one-time, ~2-3 GB download)
+docker-compose build
+
+# Or pull pre-built image
+docker pull texlive/texlive:latest
+```
+
+**Files:**
+- `Dockerfile` - LaTeX environment with all dependencies
+- `docker-compose.yml` - Easy container management
+- `.dockerignore` - Excludes build artifacts from Docker context
+
+**Note:** Docker is optional. You can still use local TeX Live installation if preferred.
+
 ## Example Generation
 
 The project includes an automated script to generate example files for the README:
@@ -454,7 +526,27 @@ make all-examples-parallel  # Faster: parallel build + examples
 
 **Linting** (`make lint`): Checks for mismatched braces, undefined commands, typos, and hardcoded paths.
 
-Both are also available via pre-commit hooks (see below).
+Both are also available via pre-commit hooks (see below) and **GitHub Actions CI** (see below).
+
+### Continuous Integration (CI)
+
+The project includes GitHub Actions workflows that automatically:
+
+- ✅ Validate all templates compile on every commit/PR
+- ✅ Run linting checks
+- ✅ Build all company CVs and cover letters
+- ✅ Generate example PDFs and PNGs
+- ✅ Test base templates
+
+**Workflow file:** `.github/workflows/ci.yml`
+
+**CI Environment:** Uses Docker for consistent builds (same environment as local development). Docker image is cached for faster subsequent runs.
+
+The CI runs on:
+- Every push to `main` and `develop` branches
+- Every pull request to `main` and `develop` branches
+
+**Status badges** are available in the README header (update the repository path after pushing to GitHub).
 
 ### Pre-commit Hooks
 
