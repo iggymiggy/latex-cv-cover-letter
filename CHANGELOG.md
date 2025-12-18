@@ -8,6 +8,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Location Field Support** (#TBD)
+  - Optional `\mylocation` field in `personal_info.tex` for city/state/country
+  - FontAwesome icons for contact information: `\faEnvelope` (email), `\faPhone` (phone), `\faMapMarker` (location)
+  - Location displayed in CV and cover letter headers when provided
+  - Example locations added to all company CVs for demonstration
+
+- **Flexible Contact Information** (#TBD)
+  - Only email is required; all other contact fields are optional
+  - Name, phone, location, LinkedIn, GitHub, and portfolio can be left empty
+  - Headers automatically hide optional fields when not provided
+  - Updated validation to only require email field
+
+### Changed
+- **Contact Information Layout** (#TBD)
+  - Reorganized header to 2-line format:
+    - Line 1: LinkedIn, GitHub, Portfolio (optional)
+    - Line 2: Email (required), Phone, Location (optional)
+  - Added FontAwesome icons to all contact fields for visual consistency
+  - Improved spacing and alignment in headers
+
+- **Makefile Error Handling** (#TBD)
+  - Fixed Makefile to properly catch and report compilation errors
+  - Replaced `|| true` with proper error chaining using `&&` and `||`
+  - Builds now fail correctly when compilation errors occur
+  - Better error messages for debugging failed builds
+
+### Fixed
+- **Meta Company Configuration** (#TBD)
+  - Removed LinkedIn and location from Meta CV and cover letter headers
+  - Meta now displays: GitHub, Portfolio, Email, Phone (if provided)
+
+### Added
 - **Automated Example Generation** (#5)
   - `scripts/generate-examples.sh`: Automated script to copy PDFs and regenerate PNG images
   - `make examples`: Generate example files from built companies
