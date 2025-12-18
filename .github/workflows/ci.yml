@@ -22,7 +22,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        push: false
+        load: true          # Make image available to `docker run` on this runner
         tags: latex-cv:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
@@ -55,7 +55,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        push: false
+        load: true          # Make image available to `docker run` on this runner
         tags: latex-cv:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
