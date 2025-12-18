@@ -49,20 +49,7 @@
 \begin{document}
 
 % %----------HEADING-----------------
-\begin{center}
-  {\Huge \textbf{\color{\cvthemeaccent}\myname}} \\
-  \vspace{2pt}
-  {\Large \color{\cvthemetitle}\cvtitle} \\
-  \vspace{4pt}
-  % Optional: LinkedIn, GitHub, Portfolio (only show if not empty)
-  \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
-  \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
-  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\}{}%
-  % Required: Email only
-  \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
-  \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
-  \ifnotempty{\mylocation}{\faMapMarker\ \cvcolor{primary}{\mylocation}}{} \\
-\end{center}
+\renderheader
 
 
 %-----------CV SECTIONS------------

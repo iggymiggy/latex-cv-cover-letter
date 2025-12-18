@@ -256,6 +256,33 @@
 % - Cover letter files: DO NOT use glyphtounicode - \pdfgentounicode=1 (set below) already handles Unicode
 
 %-------------------------
+% Document Header (CV and Cover Letter)
+%-------------------------
+% \renderheader
+%   Renders the professional header with name, title, and contact information.
+%   Used in both CV and cover letter to ensure consistent appearance.
+%   Contact info is displayed in a 2-line format with FontAwesome icons:
+%   - Line 1: LinkedIn, GitHub, Portfolio (optional, only shown if provided)
+%   - Line 2: Email (required), Phone, Location (optional, only shown if provided)
+%   @usage: Call in CV or cover letter template: \renderheader
+\newcommand{\renderheader}{%
+  \begin{center}%
+    {\Huge \textbf{\textcolor{\cvthemeaccent}{\myname}}} \\%
+    \vspace{2pt}%
+    {\Large \textcolor{\cvthemetitle}{\cvtitle}} \\%
+    \vspace{4pt}%
+    % Line 1: Social links (optional)
+    \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
+    \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
+    \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\}{}%
+    % Line 2: Contact info (email required, phone and location optional)
+    \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
+    \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
+    \ifnotempty{\mylocation}{\faMapMarker\ \cvcolor{primary}{\mylocation}}{} \\%
+  \end{center}%
+}
+
+%-------------------------
 % Page Setup
 %-------------------------
 \pagestyle{fancy}

@@ -87,16 +87,7 @@
 \setupcoverletterdate
 
 %-----------HEADING------------
-\begin{center}
-  {\Huge \textbf{\textcolor{\cvthemeaccent}{\myname}}} \\
-  \vspace{2pt}
-  {\Large \textcolor{\cvthemetitle}{\cvtitle}} \\
-  \vspace{4pt}
-  \href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad
-  \href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\
-  \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
-  \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
-\end{center}
+\renderheader
 
 \vspace{20pt}
 
