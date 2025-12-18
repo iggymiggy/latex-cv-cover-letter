@@ -110,11 +110,15 @@ fi
 for company in "${COMPANIES[@]}"; do
     echo -e "${BLUE}Processing: $company${NC}"
     
-    # Process CV
-    process_company_file "$company" "cv"
+    # Process CV if source exists
+    if [ -f "companies/$company/${company}_cv.pdf" ]; then
+        process_company_file "$company" "cv"
+    fi
     
-    # Process cover letter
-    process_company_file "$company" "cover_letter"
+    # Process cover letter if source exists
+    if [ -f "companies/$company/${company}_cover_letter.pdf" ]; then
+        process_company_file "$company" "cover_letter"
+    fi
     
     echo ""
 done

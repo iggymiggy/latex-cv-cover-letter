@@ -35,16 +35,30 @@ all-sequential:
 templates: templates/cv_template.pdf templates/cover_letter_template.pdf
 
 # Build specific company (optimized: draftmode for first pass, final for second)
+# Builds CV and/or cover letter if the source files exist
 $(COMPANIES):
-	@echo "Building CV and cover letter for $@..."
+	@echo "Building $@..."
 	@cd companies/$@ && \
-	 ($(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true; \
-	  $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true; \
-	  test -f "$@_cv.pdf" && \
-	  $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true; \
-	  $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true; \
-	  test -f "$@_cover_letter.pdf" && \
-	  echo "✓ $@ built successfully: $@_cv.pdf, $@_cover_letter.pdf") || \
+	 (BUILT_FILES=""; \
+	  if [ -f "cv.tex" ]; then \
+	    $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true; \
+	    $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true; \
+	    if test -f "$@_cv.pdf"; then \
+	      BUILT_FILES="$$BUILT_FILES $@_cv.pdf"; \
+	    fi; \
+	  fi; \
+	  if [ -f "cover_letter.tex" ]; then \
+	    $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true; \
+	    $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true; \
+	    if test -f "$@_cover_letter.pdf"; then \
+	      BUILT_FILES="$$BUILT_FILES $@_cover_letter.pdf"; \
+	    fi; \
+	  fi; \
+	  if [ -n "$$BUILT_FILES" ]; then \
+	    echo "✓ $@ built successfully:$$BUILT_FILES"; \
+	  else \
+	    echo "✗ $@ build failed. No PDFs generated. Check compilation errors above." && exit 1; \
+	  fi) || \
 	 (echo "✗ $@ build failed. Check compilation errors above." && exit 1)
 
 # Build CV template (optimized)
@@ -128,11 +142,14 @@ help:
 	@echo "  make help                 Show this help message"
 	@echo ""
 	@echo "Output format:"
-	@echo "  Company files:    {company}_cv.pdf, {company}_cover_letter.pdf"
+	@echo "  Company files:    {company}_cv.pdf, {company}_cover_letter.pdf (built if source exists)"
 	@echo "  Template files:   cv_template.pdf, cover_letter_template.pdf"
 	@echo ""
+	@echo "Note:"
+	@echo "  Companies can have cv.tex, cover_letter.tex, or both. Only existing files are built."
+	@echo ""
 	@echo "Examples:"
-	@echo "  make google       Builds google_cv.pdf and google_cover_letter.pdf"
+	@echo "  make google       Builds google_cv.pdf and google_cover_letter.pdf (if both exist)"
 	@echo "  make all          Build all companies"
 	@echo "  make validate     Check all files compile"
 	@echo "  make lint         Check for LaTeX errors"
