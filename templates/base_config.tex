@@ -8,12 +8,14 @@
 \newcommand{\cvtitle}{Cloud Evangelist | AI Whisperer}
 
 %-----------HEADER ORDER (CONFIGURABLE)------------
-% Control which contact fields appear in the header and in what order.
-% Format: comma-separated list of field names
+% Control which contact fields appear in the header, in what order, and where line breaks occur.
+% Format: comma-separated list of field names and optional \newline commands
 % Available fields: linkedin, github, portfolio, twitter, website, email, phone, location
-% Default: all available fields in standard order
-% Companies can override with: \renewcommand{\headerorder}{linkedin,github,email,phone}
-\providecommand{\headerorder}{linkedin,github,portfolio,twitter,website,email,phone,location}
+% Line breaks: Use \newline (LaTeX native command) to insert a line break at that position
+% Default: all available fields in standard order (two lines: social on line 1, contact on line 2)
+% Companies can override with: \renewcommand{\headerorder}{linkedin,github,portfolio,\newline,email,phone,location}
+% Example with custom breaks: \renewcommand{\headerorder}{linkedin,github,\newline,twitter,website,\newline,email,phone}
+\providecommand{\headerorder}{linkedin,github,portfolio,twitter,website,\newline,email,phone,location}
 
 %-----------CV SECTION TITLES (LOCALIZABLE DEFAULTS)------------
 % These control the visible section titles in the CV.

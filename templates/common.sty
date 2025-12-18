@@ -273,108 +273,97 @@
 \newcommand{\fieldnamelocation}{location}
 
 % Helper macros to render individual header fields
+% All fields wrap icon+text in \mbox{} to prevent wrapping and keep them together
 \newcommand{\renderheaderfieldlinkedin}{%
-  \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
+  \ifnotempty{\mylinkedin}{\mbox{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin}} \quad}{}%
 }
 \newcommand{\renderheaderfieldgithub}{%
-  \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
+  \ifnotempty{\mygithub}{\mbox{\href{\mygithuburl}{\faGithub\ github.com/\mygithub}} \quad}{}%
 }
 \newcommand{\renderheaderfieldportfolio}{%
-  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \quad}{}%
+  \ifnotempty{\myportfolio}{\mbox{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio}} \quad}{}%
 }
 \newcommand{\renderheaderfieldtwitter}{%
-  \ifnotempty{\mytwitter}{\href{\mytwitterurl}{\mbox{\textbf{X}\ x.com/\mytwitter}} \quad}{}%
+  \ifnotempty{\mytwitter}{\mbox{\href{\mytwitterurl}{\textbf{X}\ x.com/\mytwitter}} \quad}{}%
 }
 \newcommand{\renderheaderfieldwebsite}{%
-  \ifnotempty{\mywebsite}{\href{\mywebsiteurl}{\faGlobeAmericas\ \mywebsite} \quad}{}%
+  \ifnotempty{\mywebsite}{\mbox{\href{\mywebsiteurl}{\faGlobeAmericas\ \mywebsite}} \quad}{}%
 }
 \newcommand{\renderheaderfieldemail}{%
-  \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
+  \mbox{\faEnvelope\ \href{mailto:\myemail}{\myemail}} \quad
 }
 \newcommand{\renderheaderfieldphone}{%
-  \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
+  \ifnotempty{\myphone}{\mbox{\faPhone\ \href{tel:\myphone}{\myphone}} \quad}{}%
 }
 \newcommand{\renderheaderfieldlocation}{%
-  \ifnotempty{\mylocation}{\faMapMarker\ \mylocation \quad}{}%
+  \ifnotempty{\mylocation}{\mbox{\faMapMarker\ \mylocation} \quad}{}%
 }
 
-% Boolean for tracking if line 1 has content (defined once, used in renderheaderline1)
-\providebool{headerline1hascontent}%
-
-% Helper to process social field (line 1 only)
+% Unified header field processor
+% Processes all header fields in order, supports \newline for line breaks
 % Uses field name constants to avoid magic strings
-\newcommand{\processsocialfield}[1]{%
+% LaTeX-native: users can use \newline in the list, which we detect and convert to \\
+\newcommand{\processheaderfield}[1]{%
   \def\tempfieldname{#1}%
-  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamelinkedin}%
+  % Check for \newline (LaTeX native line break command)
+  % Compare against the command \newline itself
+  \let\tempcheck=\newline
   \ifx\tempfieldname\tempcheck
-    \renderheaderfieldlinkedin
-    \ifnotempty{\mylinkedin}{\booltrue{headerline1hascontent}}{}%
-  \fi
-  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamegithub}%
-  \ifx\tempfieldname\tempcheck
-    \renderheaderfieldgithub
-    \ifnotempty{\mygithub}{\booltrue{headerline1hascontent}}{}%
-  \fi
-  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnameportfolio}%
-  \ifx\tempfieldname\tempcheck
-    \renderheaderfieldportfolio
-    \ifnotempty{\myportfolio}{\booltrue{headerline1hascontent}}{}%
-  \fi
-  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnametwitter}%
-  \ifx\tempfieldname\tempcheck
-    \renderheaderfieldtwitter
-    \ifnotempty{\mytwitter}{\booltrue{headerline1hascontent}}{}%
-  \fi
-  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamewebsite}%
-  \ifx\tempfieldname\tempcheck
-    \renderheaderfieldwebsite
-    \ifnotempty{\mywebsite}{\booltrue{headerline1hascontent}}{}%
+    \\%
+  \else
+    % Check all field types
+    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamelinkedin}%
+    \ifx\tempfieldname\tempcheck
+      \renderheaderfieldlinkedin
+    \fi
+    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamegithub}%
+    \ifx\tempfieldname\tempcheck
+      \renderheaderfieldgithub
+    \fi
+    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnameportfolio}%
+    \ifx\tempfieldname\tempcheck
+      \renderheaderfieldportfolio
+    \fi
+    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnametwitter}%
+    \ifx\tempfieldname\tempcheck
+      \renderheaderfieldtwitter
+    \fi
+    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamewebsite}%
+    \ifx\tempfieldname\tempcheck
+      \renderheaderfieldwebsite
+    \fi
+    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnameemail}%
+    \ifx\tempfieldname\tempcheck
+      \renderheaderfieldemail
+    \fi
+    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamephone}%
+    \ifx\tempfieldname\tempcheck
+      \renderheaderfieldphone
+    \fi
+    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamelocation}%
+    \ifx\tempfieldname\tempcheck
+      \renderheaderfieldlocation
+    \fi
   \fi
 }
 
-% Helper to process contact field (line 2 only)
-% Uses field name constants to avoid magic strings
-\newcommand{\processcontactfield}[1]{%
-  \def\tempfieldname{#1}%
-  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnameemail}%
-  \ifx\tempfieldname\tempcheck
-    \renderheaderfieldemail
-  \fi
-  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamephone}%
-  \ifx\tempfieldname\tempcheck
-    \renderheaderfieldphone
-  \fi
-  \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamelocation}%
-  \ifx\tempfieldname\tempcheck
-    \renderheaderfieldlocation
-  \fi
-}
-
-
-% Render header fields in specified order, splitting into two lines
-% Social fields (linkedin, github, portfolio, twitter, website) go on line 1
-% Contact fields (email, phone, location) go on line 2
-% Process the list twice: once for social fields, once for contact fields
+% Render header fields in specified order
+% Supports \newline (LaTeX native command) for custom line breaks
+% Example: \renewcommand{\headerorder}{linkedin,github,\newline,email,phone}
 \newcommand{\renderheaderfields}{%
-  \boolfalse{headerline1hascontent}%
   \begingroup
-  \edef\x{\endgroup\noexpand\forcsvlist{\noexpand\processsocialfield}{\headerorder}}\x%
-  \ifbool{headerline1hascontent}{\\}{}%
-  \begingroup
-  \edef\x{\endgroup\noexpand\forcsvlist{\noexpand\processcontactfield}{\headerorder}}\x%
-  \\%
+  \edef\x{\endgroup\noexpand\forcsvlist{\noexpand\processheaderfield}{\headerorder}}\x%
 }
 
 % \renderheader
 %   Renders the professional header with name, title, and contact information.
 %   Used in both CV and cover letter to ensure consistent appearance.
-%   Contact info order is controlled by \headerorder (default: all fields).
-%   Fields are automatically split into two lines:
-%   - Line 1: Social links (linkedin, github, portfolio, twitter, website)
-%   - Line 2: Contact info (email, phone, location)
-%   Companies can override \headerorder to customize which fields appear and in what order.
+%   Contact info order and line breaks are controlled by \headerorder.
+%   Use \newline (LaTeX native command) to insert line breaks anywhere in the header.
+%   Companies can override \headerorder to customize which fields appear, in what order, and where line breaks occur.
 %   @usage: Call in CV or cover letter template: \renderheader
-%   @example: \renewcommand{\headerorder}{linkedin,github,email,phone}  % Only show these fields
+%   @example: \renewcommand{\headerorder}{linkedin,github,portfolio,\newline,email,phone,location}
+%   @example: \renewcommand{\headerorder}{linkedin,github,\newline,twitter,website,\newline,email,phone}
 \newcommand{\renderheader}{%
   \begin{center}%
     {\Huge \textbf{\textcolor{\cvthemeaccent}{\myname}}} \\%

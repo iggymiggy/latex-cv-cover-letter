@@ -56,6 +56,13 @@ When updating example files (PDFs/PNGs):
 - **Before committing:** Verify README.md and CHANGELOG.md are updated if needed
 - If you forget to update documentation, the user will remind you - don't repeat this mistake!
 
+## Context7 Documentation Lookup
+- **ALWAYS use Context7 MCP server for documentation lookups**
+- When you need to look up LaTeX package documentation, commands, or best practices, use Context7 instead of web search
+- Use `mcp_context7_resolve-library-id` to find library IDs, then `mcp_context7_get-library-docs` to get documentation
+- This provides up-to-date, accurate documentation directly from source
+- Example: When working with LaTeX packages (etoolbox, fontawesome5, hyperref, etc.), use Context7 to get official documentation
+
 ## Local-Only Files
 - **CRITICAL: When user asks to create a file "LOCALLY" or "local only":**
   1. **ALWAYS add it to `.git/info/exclude`** (NOT `.gitignore`)
