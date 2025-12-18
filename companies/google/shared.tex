@@ -16,7 +16,8 @@
 % Title color: Used for professional title (defaults to accent)
 \renewcommand{\cvthemetitle}{\cvthemeaccent}
 
-% Header configuration: All fields (full demo)
-% Controls which contact fields appear in header and their order
+% Header configuration: All fields with custom line breaks
+% Controls which contact fields appear in header, their order, and line breaks
 % Applied to both CV and cover letter for consistency
-\renewcommand{\headerorder}{linkedin,github,portfolio,twitter,website,email,phone,location}
+% Use \newline (LaTeX native command) to insert line break at that position
+\renewcommand{\headerorder}{linkedin,github,portfolio,twitter,website,\newline,email,phone,location}
