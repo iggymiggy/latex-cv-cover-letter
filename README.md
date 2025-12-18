@@ -243,14 +243,6 @@ project/
 
 ## Configuration
 
-### Personal Information
-
-Copy `personal_info.example.tex` to `personal_info.tex` and edit with your information:
-- **Required**: Name, email, phone
-- **Optional**: LinkedIn, GitHub, portfolio URLs (leave empty if not applicable)
-
-**Note:** `personal_info.tex` is ignored by Git to protect your personal data.
-
 ### Base Configuration (`templates/base_config.tex`)
 
 Contains default values for all fields:
@@ -426,66 +418,31 @@ Most packages are included in standard LaTeX distributions.
 
 ## Building
 
-**Using Makefile (recommended):**
-```bash
-make                      # Build all companies (parallel by default)
-make all-sequential       # Build all companies sequentially (for debugging)
-make <company>            # Build specific company (auto-detected)
-make templates            # Build base templates
-make examples             # Generate example PDFs and PNGs
-make all-examples         # Build all and generate examples
-make validate             # Validate all templates compile
-make lint                 # Lint LaTeX files
-make clean                # Clean build artifacts
-make help                 # Show all commands
-```
+You have two main ways to build:
 
-**Manual compilation:**
-```bash
-cd companies/google
-pdflatex cv.tex
-pdflatex cover_letter.tex  # LaTeX requires two passes for cross-references
-```
+- **Makefile**: See **Quick Start → 2. Build Your CV and Cover Letter** for concrete commands (`make`, `make <company>`, `make templates`, etc.).
+- **Manual LaTeX**: `cd companies/<company> && pdflatex cv.tex && pdflatex cover_letter.tex` (run twice for cross‑references).
 
-**Output:** Makefile generates `{company}_cv.pdf` and `{company}_cover_letter.pdf`. Companies are auto-detected from `companies/` directory.
+**Output:** Makefile generates `{company}_cv.pdf` and `{company}_cover_letter.pdf`. Companies are auto‑detected from `companies/` directory.
 
-**Performance:** `make` builds all companies in parallel by default (uses all CPU cores). The Makefile uses optimized LaTeX flags (`-draftmode` for first pass) for faster compilation. Use `make all-sequential` for sequential builds (useful for debugging).
+**Performance:** `make` builds all companies in parallel by default (uses all CPU cores). Use `make all-sequential` for sequential builds (useful for debugging).
 
 ### Docker Usage (Optional)
 
 The project includes Docker support for easy setup without installing TeX Live locally.
 
 **Benefits:**
-- ✅ No need to install TeX Live (~4-5 GB download)
+- ✅ No need to install TeX Live (~4–5 GB download)
 - ✅ Consistent environment across macOS, Linux, and Windows
 - ✅ Same environment as CI (reproducible builds)
-- ✅ Clean system (no system-wide LaTeX installation)
+- ✅ Clean system (no system‑wide LaTeX installation)
 - ✅ Easy version control (pin specific LaTeX version)
 
-**Quick start:**
-```bash
-# Build all companies
-docker-compose run latex make all
-
-# Build specific company
-docker-compose run latex make microsoft
-
-# Validate templates
-docker-compose run latex make validate
-
-# Lint LaTeX files
-docker-compose run latex make lint
-
-# Generate examples
-docker-compose run latex make examples
-
-# Interactive shell (for debugging)
-docker-compose run latex bash
-```
+See **Quick Start → 2. Build Your CV and Cover Letter (Option A: Docker)** for example commands.
 
 **First time setup:**
 ```bash
-# Build the Docker image (one-time, ~2-3 GB download)
+# Build the Docker image (one-time, ~2–3 GB download)
 docker-compose build
 
 # Or pull pre-built image
