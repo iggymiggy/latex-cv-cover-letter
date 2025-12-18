@@ -10,14 +10,11 @@
 %------------------------
 
 % Global document settings (paper size, etc.)
-% Works when compiling from root, templates/, or companies/<name>/
-% Define \loadfile helper before using it
-\newcommand{\loadfile}[2]{%
-  \IfFileExists{../../#1}{\input{../../#1}}{%
-  \IfFileExists{../#1}{\input{../#1}}{%
-  \IfFileExists{#1}{\input{#1}}{#2}}}%
-}
-\loadfile{document_settings.tex}{}
+% Load document_settings.tex directly (it defines \loadfile)
+% Try multiple paths to find document_settings.tex
+\IfFileExists{../../document_settings.tex}{\input{../../document_settings.tex}}{%
+\IfFileExists{../document_settings.tex}{\input{../document_settings.tex}}{%
+\IfFileExists{document_settings.tex}{\input{document_settings.tex}}{}}}
 
 \documentclass{article}
 

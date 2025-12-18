@@ -221,29 +221,31 @@
 % @param #1: Color type (primary, accent, title, link, section)
 % @param #2: Content to color
 % @usage: \cvcolor{primary}{San Francisco, CA}
+% Uses flat pattern for better readability (similar to \rendersectionbyname)
 \newcommand{\cvcolor}[2]{%
   \def\tempcolortype{#1}%
-  \def\tempprimary{primary}%
-  \def\tempaccent{accent}%
-  \def\temptitle{title}%
-  \def\templink{link}%
-  \def\tempsection{section}%
-  \ifx\tempcolortype\tempprimary
+  % Check each color type using flat pattern (mutually exclusive via \else)
+  \def\tempcheck{primary}%
+  \ifx\tempcolortype\tempcheck
     \textcolor{\cvthemeprimary}{#2}%
   \else
-    \ifx\tempcolortype\tempaccent
+    \def\tempcheck{accent}%
+    \ifx\tempcolortype\tempcheck
       \textcolor{\cvthemeaccent}{#2}%
     \else
-      \ifx\tempcolortype\temptitle
+      \def\tempcheck{title}%
+      \ifx\tempcolortype\tempcheck
         \textcolor{\cvthemetitle}{#2}%
       \else
-        \ifx\tempcolortype\templink
+        \def\tempcheck{link}%
+        \ifx\tempcolortype\tempcheck
           \textcolor{\cvthemelink}{#2}%
         \else
-          \ifx\tempcolortype\tempsection
+          \def\tempcheck{section}%
+          \ifx\tempcolortype\tempcheck
             \textcolor{\cvthemesection}{#2}%
           \else
-            \textcolor{\cvthemeprimary}{#2}% Default to primary
+            \textcolor{\cvthemeprimary}{#2}% Default to primary if no match
           \fi
         \fi
       \fi
@@ -282,57 +284,6 @@
 }
 \newcommand{\renderheaderfieldlocation}{%
   \ifnotempty{\mylocation}{\faMapMarker\ \mylocation \quad}{}%
-}
-
-% Process header field by name (similar to \rendersectionbyname)
-\newcommand{\renderheaderfieldbyname}[1]{%
-  \def\tempcheck{linkedin}%
-  \ifx\tempcheck#1
-    \renderheaderfieldlinkedin
-  \else
-    \def\tempcheck{github}%
-    \ifx\tempcheck#1
-      \renderheaderfieldgithub
-    \else
-      \def\tempcheck{portfolio}%
-      \ifx\tempcheck#1
-        \renderheaderfieldportfolio
-      \else
-        \def\tempcheck{twitter}%
-        \ifx\tempcheck#1
-          \renderheaderfieldtwitter
-        \else
-          \def\tempcheck{website}%
-          \ifx\tempcheck#1
-            \renderheaderfieldwebsite
-          \else
-            \def\tempcheck{email}%
-            \ifx\tempcheck#1
-              \renderheaderfieldemail
-            \else
-              \def\tempcheck{phone}%
-              \ifx\tempcheck#1
-                \renderheaderfieldphone
-              \else
-                \def\tempcheck{location}%
-                \ifx\tempcheck#1
-                  \renderheaderfieldlocation
-                \fi
-              \fi
-            \fi
-          \fi
-        \fi
-      \fi
-    \fi
-  \fi
-}
-
-% Render header field if it matches the given name
-\newcommand{\renderheaderfieldif}[2]{%
-  \def\tempcheck{#1}%
-  \ifx\tempcheck#2
-    #1
-  \fi
 }
 
 % Boolean for tracking if line 1 has content (defined once, used in renderheaderline1)

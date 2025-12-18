@@ -1,5 +1,14 @@
 % Global document settings (shared by CV and cover letter)
 %
+% Helper macro for flexible file loading
+% Works when compiling from root, templates/, or companies/<name>/
+% Tries multiple path locations to find files
+\newcommand{\loadfile}[2]{%
+  \IfFileExists{../../#1}{\input{../../#1}}{%
+  \IfFileExists{../#1}{\input{../#1}}{%
+  \IfFileExists{#1}{\input{#1}}{#2}}}%
+}
+
 % Paper size (default: A4)
 % - Use: a4paper (most of the world)
 % - Use: letterpaper (US/Canada)
