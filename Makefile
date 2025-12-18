@@ -36,11 +36,13 @@ templates: templates/cv_template.pdf templates/cover_letter_template.pdf
 # Build specific company (optimized: draftmode for first pass, final for second)
 $(COMPANIES):
 	@echo "Building CV and cover letter for $@..."
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true
-	@cd companies/$@ && $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true
-	@echo "✓ $@ built successfully: $@_cv.pdf, $@_cover_letter.pdf"
+	@cd companies/$@ && \
+	 ($(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cv" cv.tex > /dev/null 2>&1 && \
+	  $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cv" cv.tex > /dev/null 2>&1 && \
+	  $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 && \
+	  $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 && \
+	  echo "✓ $@ built successfully: $@_cv.pdf, $@_cover_letter.pdf") || \
+	 (echo "✗ $@ build failed. Check compilation errors above." && exit 1)
 
 # Build CV template (optimized)
 templates/cv_template.pdf: templates/cv_template.tex
