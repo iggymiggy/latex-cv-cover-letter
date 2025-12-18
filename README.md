@@ -53,10 +53,15 @@ cp personal_info.example.tex personal_info.tex
 
 Edit `personal_info.tex` and fill in:
 
-- Name
-- Email
-- Phone
+- **Email** (required)
+- (Optional) Name
+- (Optional) Phone
+- (Optional) Location (city, state/country - e.g., "San Francisco, CA" or "Helsinki, Finland")
 - (Optional) LinkedIn / GitHub / portfolio URLs
+
+**Contact info layout:** The header displays contact information in a clean 2-line format with FontAwesome icons:
+- **Line 1:** LinkedIn, GitHub, Portfolio (only shown if provided)
+- **Line 2:** Email (required), Phone, Location (only shown if provided)
 
 `personal_info.tex` is **ignored by git** (see `.gitignore`), so your private data will not be committed.
 
@@ -209,6 +214,30 @@ docker-compose run latex make
     ├── nasa/
     ├── microsoft/
     └── my-company/             # Your custom folder
+
+---
+
+## Visual examples
+
+The repo includes pre-built example PDFs and PNG previews under `examples/companies/`:
+
+- **Google**
+  - CV: `examples/companies/google_cv.png`
+  - Cover letter: `examples/companies/google_cover_letter.png`
+- **Hyperion**
+  - CV: `examples/companies/hyperion_cv.png`
+  - Cover letter: `examples/companies/hyperion_cover_letter.png`
+- **Meta**
+  - CV: `examples/companies/meta_cv.png`
+  - Cover letter: `examples/companies/meta_cover_letter.png`
+- **Microsoft**
+  - CV: `examples/companies/microsoft_cv.png`
+  - Cover letter: `examples/companies/microsoft_cover_letter.png`
+- **NASA**
+  - CV: `examples/companies/nasa_cv.png`
+  - Cover letter: `examples/companies/nasa_cover_letter.png`
+
+You can open these images directly in GitHub or your file browser to quickly see how each layout looks before copying a company folder.
 ```
 
 ---
@@ -216,8 +245,9 @@ docker-compose run latex make
 ## Validation & quality checks
 
 - `make validate` – compiles all CVs/CLs and runs built‑in config checks:
-  - ensures required fields (`\myname`, `\myemail`, `\myphone`) are set,
+  - ensures required fields (`\myemail` is the only required field) are set,
   - warns on obvious placeholder values (e.g. `example@example.com`),
+  - all other fields (name, phone, location, LinkedIn, GitHub, portfolio) are optional,
   - hides optional sections cleanly when left empty.
 
 - `make lint` – runs LaTeX linters via `scripts/lint.sh` to catch common issues.
@@ -239,6 +269,17 @@ The template is designed around focused, 1‑page CVs, tailored per application.
 
 **How do I change colors or fonts?**  
 Edit `companies/<name>/shared.tex` to set `\cvthemeprimary`, `\cvthemesection`, `\cvthemelink`, etc. Global page setup and fonts are configured in `document_settings.tex`.
+
+**Can I localize section titles (Skills, Education, etc.)?**  
+Yes. Override the title macros in your company files, for example:
+
+```latex
+\renewcommand{\cvsectiontitleexperience}{Työkokemus}
+\renewcommand{\cvsectiontitleeducation}{Koulutus}
+\renewcommand{\cvsectiontitlelanguages}{Kielitaito}
+```
+
+These affect the CV section headers; the cover letter date language is controlled separately via `\letterdatelanguage` in `templates/base_config.tex`.
 
 ---
 
