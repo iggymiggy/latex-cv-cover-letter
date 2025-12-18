@@ -7,6 +7,14 @@
 % Professional title/tagline
 \newcommand{\cvtitle}{Cloud Evangelist | AI Whisperer}
 
+%-----------HEADER ORDER (CONFIGURABLE)------------
+% Control which contact fields appear in the header and in what order.
+% Format: comma-separated list of field names
+% Available fields: linkedin, github, portfolio, twitter, website, email, phone, location
+% Default: all available fields in standard order
+% Companies can override with: \renewcommand{\headerorder}{linkedin,github,email,phone}
+\providecommand{\headerorder}{linkedin,github,portfolio,twitter,website,email,phone,location}
+
 %-----------CV SECTION TITLES (LOCALIZABLE DEFAULTS)------------
 % These control the visible section titles in the CV.
 % Override in company files with \renewcommand to localize (e.g., Finnish, German).

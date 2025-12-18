@@ -258,27 +258,171 @@
 %-------------------------
 % Document Header (CV and Cover Letter)
 %-------------------------
+% Helper macros to render individual header fields
+\newcommand{\renderheaderfieldlinkedin}{%
+  \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
+}
+\newcommand{\renderheaderfieldgithub}{%
+  \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
+}
+\newcommand{\renderheaderfieldportfolio}{%
+  \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \quad}{}%
+}
+\newcommand{\renderheaderfieldtwitter}{%
+  \ifnotempty{\mytwitter}{\href{\mytwitterurl}{\mbox{\textbf{X}\ x.com/\mytwitter}} \quad}{}%
+}
+\newcommand{\renderheaderfieldwebsite}{%
+  \ifnotempty{\mywebsite}{\href{\mywebsiteurl}{\faGlobeAmericas\ \mywebsite} \quad}{}%
+}
+\newcommand{\renderheaderfieldemail}{%
+  \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
+}
+\newcommand{\renderheaderfieldphone}{%
+  \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
+}
+\newcommand{\renderheaderfieldlocation}{%
+  \ifnotempty{\mylocation}{\faMapMarker\ \mylocation \quad}{}%
+}
+
+% Process header field by name (similar to \rendersectionbyname)
+\newcommand{\renderheaderfieldbyname}[1]{%
+  \def\tempcheck{linkedin}%
+  \ifx\tempcheck#1
+    \renderheaderfieldlinkedin
+  \else
+    \def\tempcheck{github}%
+    \ifx\tempcheck#1
+      \renderheaderfieldgithub
+    \else
+      \def\tempcheck{portfolio}%
+      \ifx\tempcheck#1
+        \renderheaderfieldportfolio
+      \else
+        \def\tempcheck{twitter}%
+        \ifx\tempcheck#1
+          \renderheaderfieldtwitter
+        \else
+          \def\tempcheck{website}%
+          \ifx\tempcheck#1
+            \renderheaderfieldwebsite
+          \else
+            \def\tempcheck{email}%
+            \ifx\tempcheck#1
+              \renderheaderfieldemail
+            \else
+              \def\tempcheck{phone}%
+              \ifx\tempcheck#1
+                \renderheaderfieldphone
+              \else
+                \def\tempcheck{location}%
+                \ifx\tempcheck#1
+                  \renderheaderfieldlocation
+                \fi
+              \fi
+            \fi
+          \fi
+        \fi
+      \fi
+    \fi
+  \fi
+}
+
+% Render header field if it matches the given name
+\newcommand{\renderheaderfieldif}[2]{%
+  \def\tempcheck{#1}%
+  \ifx\tempcheck#2
+    #1
+  \fi
+}
+
+% Boolean for tracking if line 1 has content (defined once, used in renderheaderline1)
+\providebool{headerline1hascontent}%
+
+% Helper to process social field (line 1 only)
+\newcommand{\processsocialfield}[1]{%
+  \def\tempchecklinkedin{linkedin}%
+  \def\tempcheckgithub{github}%
+  \def\tempcheckportfolio{portfolio}%
+  \def\tempchecktwitter{twitter}%
+  \def\tempcheckwebsite{website}%
+  \def\tempcheck{#1}%
+  \ifx\tempcheck\tempchecklinkedin
+    \renderheaderfieldlinkedin
+    \ifnotempty{\mylinkedin}{\booltrue{headerline1hascontent}}{}%
+  \else
+    \ifx\tempcheck\tempcheckgithub
+      \renderheaderfieldgithub
+      \ifnotempty{\mygithub}{\booltrue{headerline1hascontent}}{}%
+    \else
+      \ifx\tempcheck\tempcheckportfolio
+        \renderheaderfieldportfolio
+        \ifnotempty{\myportfolio}{\booltrue{headerline1hascontent}}{}%
+      \else
+        \ifx\tempcheck\tempchecktwitter
+          \renderheaderfieldtwitter
+          \ifnotempty{\mytwitter}{\booltrue{headerline1hascontent}}{}%
+        \else
+          \ifx\tempcheck\tempcheckwebsite
+            \renderheaderfieldwebsite
+            \ifnotempty{\mywebsite}{\booltrue{headerline1hascontent}}{}%
+          \fi
+        \fi
+      \fi
+    \fi
+  \fi
+}
+
+% Helper to process contact field (line 2 only)
+\newcommand{\processcontactfield}[1]{%
+  \def\tempcheckemail{email}%
+  \def\tempcheckphone{phone}%
+  \def\tempchecklocation{location}%
+  \def\tempcheck{#1}%
+  \ifx\tempcheck\tempcheckemail
+    \renderheaderfieldemail
+  \else
+    \ifx\tempcheck\tempcheckphone
+      \renderheaderfieldphone
+    \else
+      \ifx\tempcheck\tempchecklocation
+        \renderheaderfieldlocation
+      \fi
+    \fi
+  \fi
+}
+
+
+% Render header fields in specified order, splitting into two lines
+% Social fields (linkedin, github, portfolio, twitter, website) go on line 1
+% Contact fields (email, phone, location) go on line 2
+% Process the list twice: once for social fields, once for contact fields
+\newcommand{\renderheaderfields}{%
+  \boolfalse{headerline1hascontent}%
+  \begingroup
+  \edef\x{\endgroup\noexpand\forcsvlist{\noexpand\processsocialfield}{\headerorder}}\x%
+  \ifbool{headerline1hascontent}{\\}{}%
+  \begingroup
+  \edef\x{\endgroup\noexpand\forcsvlist{\noexpand\processcontactfield}{\headerorder}}\x%
+  \\%
+}
+
 % \renderheader
 %   Renders the professional header with name, title, and contact information.
 %   Used in both CV and cover letter to ensure consistent appearance.
-%   Contact info is displayed in a 2-line format with FontAwesome icons:
-%   - Line 1: LinkedIn, GitHub, Portfolio (optional, only shown if provided)
-%   - Line 2: Email (required), Phone, Location (optional, only shown if provided)
+%   Contact info order is controlled by \headerorder (default: all fields).
+%   Fields are automatically split into two lines:
+%   - Line 1: Social links (linkedin, github, portfolio, twitter, website)
+%   - Line 2: Contact info (email, phone, location)
+%   Companies can override \headerorder to customize which fields appear and in what order.
 %   @usage: Call in CV or cover letter template: \renderheader
+%   @example: \renewcommand{\headerorder}{linkedin,github,email,phone}  % Only show these fields
 \newcommand{\renderheader}{%
   \begin{center}%
     {\Huge \textbf{\textcolor{\cvthemeaccent}{\myname}}} \\%
     \vspace{2pt}%
     {\Large \textcolor{\cvthemetitle}{\cvtitle}} \\%
     \vspace{4pt}%
-    % Line 1: Social links (optional)
-    \ifnotempty{\mylinkedin}{\href{\mylinkedinurl}{\faLinkedin\ linkedin.com/in/\mylinkedin} \quad}{}%
-    \ifnotempty{\mygithub}{\href{\mygithuburl}{\faGithub\ github.com/\mygithub} \quad}{}%
-    \ifnotempty{\myportfolio}{\href{\myportfoliourl}{\faFolderOpen\ \myportfolio} \\}{}%
-    % Line 2: Contact info (email required, phone and location optional)
-    \faEnvelope\ \href{mailto:\myemail}{\myemail} \quad
-    \ifnotempty{\myphone}{\faPhone\ \href{tel:\myphone}{\myphone} \quad}{}%
-    \ifnotempty{\mylocation}{\faMapMarker\ \cvcolor{primary}{\mylocation}}{} \\%
+    \renderheaderfields
   \end{center}%
 }
 

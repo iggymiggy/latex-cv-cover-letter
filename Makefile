@@ -4,10 +4,11 @@
 
 # LaTeX compiler
 LATEX = pdflatex
-# Optimized flags: nonstopmode, draftmode for first pass (faster), halt on error
-LATEX_FLAGS = -interaction=nonstopmode -halt-on-error
-LATEX_FLAGS_FIRST = $(LATEX_FLAGS) -draftmode
-LATEX_FLAGS_FINAL = $(LATEX_FLAGS)
+# Optimized flags: nonstopmode, draftmode for first pass (faster)
+# First pass: allow errors (they're often resolved in second pass)
+# Final pass: nonstopmode (errors will be visible in log, but won't stop build)
+LATEX_FLAGS_FIRST = -interaction=nonstopmode -draftmode
+LATEX_FLAGS_FINAL = -interaction=nonstopmode
 
 # Auto-detect company directories
 COMPANIES = $(shell find companies -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
@@ -37,10 +38,12 @@ templates: templates/cv_template.pdf templates/cover_letter_template.pdf
 $(COMPANIES):
 	@echo "Building CV and cover letter for $@..."
 	@cd companies/$@ && \
-	 ($(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cv" cv.tex > /dev/null 2>&1 && \
-	  $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cv" cv.tex > /dev/null 2>&1 && \
-	  $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 && \
-	  $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 && \
+	 ($(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true; \
+	  $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cv" cv.tex > /dev/null 2>&1 || true; \
+	  test -f "$@_cv.pdf" && \
+	  $(LATEX) $(LATEX_FLAGS_FIRST) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true; \
+	  $(LATEX) $(LATEX_FLAGS_FINAL) -jobname="$@_cover_letter" cover_letter.tex > /dev/null 2>&1 || true; \
+	  test -f "$@_cover_letter.pdf" && \
 	  echo "✓ $@ built successfully: $@_cv.pdf, $@_cover_letter.pdf") || \
 	 (echo "✗ $@ build failed. Check compilation errors above." && exit 1)
 
