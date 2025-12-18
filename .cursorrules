@@ -56,6 +56,15 @@ When updating example files (PDFs/PNGs):
 - **Before committing:** Verify README.md and CHANGELOG.md are updated if needed
 - If you forget to update documentation, the user will remind you - don't repeat this mistake!
 
+## Conciseness
+- **Be concise in comments and documentation:**
+  - Avoid repeating the same information multiple times
+  - Remove redundant phrases and meta-text
+  - Comments should be brief and to the point
+  - README.md should be concise - avoid unnecessary explanations
+  - If information is mentioned once, don't repeat it in the same section
+  - Prefer one clear line over multiple verbose lines
+
 ## Context7 Documentation Lookup
 - **ALWAYS use Context7 MCP server for documentation lookups**
 - When you need to look up LaTeX package documentation, commands, or best practices, use Context7 instead of web search
