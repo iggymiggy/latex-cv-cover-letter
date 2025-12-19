@@ -299,6 +299,16 @@
   \ifnotempty{\mylocation}{\mbox{\faMapMarker\ \mylocation} \quad}{}%
 }
 
+% Helper: compare current header field name against a constant and render on match
+% @param #1: Field name constant (e.g., \fieldnamelinkedin)
+% @param #2: Rendering macro to call on match (e.g., \renderheaderfieldlinkedin)
+\newcommand{\matchheaderfield}[2]{%
+  \expandafter\def\expandafter\tempcheck\expandafter{#1}%
+  \ifx\tempfieldname\tempcheck
+    #2%
+  \fi
+}
+
 % Unified header field processor
 % Processes all header fields in order, supports \newline for line breaks
 % Uses field name constants to avoid magic strings
@@ -311,39 +321,15 @@
   \ifx\tempfieldname\tempcheck
     \\%
   \else
-    % Check all field types
-    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamelinkedin}%
-    \ifx\tempfieldname\tempcheck
-      \renderheaderfieldlinkedin
-    \fi
-    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamegithub}%
-    \ifx\tempfieldname\tempcheck
-      \renderheaderfieldgithub
-    \fi
-    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnameportfolio}%
-    \ifx\tempfieldname\tempcheck
-      \renderheaderfieldportfolio
-    \fi
-    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnametwitter}%
-    \ifx\tempfieldname\tempcheck
-      \renderheaderfieldtwitter
-    \fi
-    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamewebsite}%
-    \ifx\tempfieldname\tempcheck
-      \renderheaderfieldwebsite
-    \fi
-    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnameemail}%
-    \ifx\tempfieldname\tempcheck
-      \renderheaderfieldemail
-    \fi
-    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamephone}%
-    \ifx\tempfieldname\tempcheck
-      \renderheaderfieldphone
-    \fi
-    \expandafter\def\expandafter\tempcheck\expandafter{\fieldnamelocation}%
-    \ifx\tempfieldname\tempcheck
-      \renderheaderfieldlocation
-    \fi
+    % Check all field types using helper (keeps expansion logic in one place)
+    \matchheaderfield{\fieldnamelinkedin}{\renderheaderfieldlinkedin}%
+    \matchheaderfield{\fieldnamegithub}{\renderheaderfieldgithub}%
+    \matchheaderfield{\fieldnameportfolio}{\renderheaderfieldportfolio}%
+    \matchheaderfield{\fieldnametwitter}{\renderheaderfieldtwitter}%
+    \matchheaderfield{\fieldnamewebsite}{\renderheaderfieldwebsite}%
+    \matchheaderfield{\fieldnameemail}{\renderheaderfieldemail}%
+    \matchheaderfield{\fieldnamephone}{\renderheaderfieldphone}%
+    \matchheaderfield{\fieldnamelocation}{\renderheaderfieldlocation}%
   \fi
 }
 
