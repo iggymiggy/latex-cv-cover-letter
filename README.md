@@ -167,6 +167,8 @@ For each `companies/<name>/` folder:
   - Set `\companyname`, `\companyaddress`, `\companycity`.
   - Set `\lettertitle`, `\letteropening`, `\letterclosing`, and `\letterbody`.
   - Use `\lettersection{...}` for structured sections (see `companies/google/`).
+  - Optional: call `\setcoverletterlanguage` after `\letterdatelanguage` to localize defaults.
+  - Optional: localize cover letter strings based on `\letterdatelanguage` (see `companies/google/cover_letter.tex`).
 
 > **Idea:** keep your core profile in one place, then adjust only the company‑specific parts per folder. That way you can quickly generate tailored CV + cover letters for each application.
 

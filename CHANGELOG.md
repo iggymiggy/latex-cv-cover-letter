@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Cover letter localization helper** (#TBD)
+  - `\setcoverletterlanguage` provides English/Finnish defaults for opening, closing, title, attachment, and section titles
+  - Uses `\letterdatelanguage` and supports optional `\jobtitle`
 - **Flexible Header System with Custom Line Breaks** (#TBD)
   - New `\headerorder` macro to control which contact fields appear, their order, and line breaks
   - Use `\newline` (LaTeX native command) to insert line breaks anywhere in the header
@@ -40,6 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated validation to only require email field
 
 ### Changed
+- **Google cover letter validation** (#TBD)
+  - Clears the placeholder phone value before validation to avoid repeated warnings in the example
 - **Contact Information Layout** (#TBD)
   - Reorganized header to 2-line format:
     - Line 1: LinkedIn, GitHub, Portfolio (optional)
@@ -54,6 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better error messages for debugging failed builds
 
 ### Fixed
+- **PDF metadata sanitization** (#TBD)
+  - Strip special tokens from PDF metadata strings to prevent hyperref warnings
 - **Meta Company Configuration** (#TBD)
   - Removed LinkedIn and location from Meta CV and cover letter headers
   - Meta now displays: GitHub, Portfolio, Email, Phone (if provided)

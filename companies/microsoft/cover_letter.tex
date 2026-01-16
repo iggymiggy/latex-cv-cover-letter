@@ -41,10 +41,8 @@
 %-----------COVER LETTER SETTINGS (COMPANY-SPECIFIC)------------
 \renewcommand{\letterdatelanguage}{english}
 \renewcommand{\letterdate}{auto}
-\renewcommand{\letterclosing}{Sincerely}
-\renewcommand{\letteropening}{Dear Hiring Manager,}
+\setcoverletterlanguage
 \renewcommand{\lettertitle}{Job Application for Senior Cloud Engineer}
-\renewcommand{\letterattachment}{Attached: Curriculum Vitae}
 
 %-----------LETTER BODY (COMPANY-SPECIFIC)------------
 % Override lettersection to use date color (primary) for section titles
@@ -56,13 +54,13 @@
 
 \providecommand{\letterbody}{}%
 \renewcommand{\letterbody}{%
-  \lettersection{About Me}
+  \lettersection{\lettersectiontitleabout}
   I am a Senior Cloud Engineer with over seven years of experience designing and implementing enterprise-scale cloud solutions. My expertise spans Microsoft Azure and AWS, with deep knowledge in containerization, Infrastructure-as-Code, and AI-enhanced development workflows. I have successfully architected multi-region Kubernetes clusters, automated infrastructure provisioning, and integrated modern AI tools like GitHub Copilot and Cursor to increase developer productivity by 35\%.
 
-  \lettersection{Why \companyname?}
+  \lettersection{\lettersectiontitlewhycompany}
   Microsoft's commitment to empowering every person and organization through innovative cloud solutions aligns perfectly with my passion for building scalable, reliable infrastructure. I am particularly drawn to Azure's cutting-edge capabilities and Microsoft's leadership in AI-enhanced development tools. The opportunity to contribute to Azure's infrastructure while working with technologies I use daily, such as GitHub Copilot, is exactly the kind of challenge I seek.
 
-  \lettersection{Why Me?}
+  \lettersection{\lettersectiontitlewhyme}
   My hands-on experience with Azure, including designing AKS clusters and implementing Infrastructure-as-Code with Terraform, directly matches the requirements of this role. I have a proven track record of improving system reliability to 99.95\% uptime and reducing deployment time by 50\%. My multi-cloud expertise, combined with my passion for AI-enhanced development workflows, positions me to make immediate contributions to Microsoft's cloud engineering team.
 }
 

@@ -443,12 +443,26 @@
     \edef\temppdfkeywords{\pdfmetakeywords}%
   \fi
   
-  % Set PDF metadata via hyperref (using expanded values)
+  % Sanitize strings for PDF metadata (remove commands and special tokens)
+  \begingroup
+  \pdfstringdefDisableCommands{%
+    \def\newline{ }%
+    \def\\{ }%
+    \def\&{and}%
+    \def\cvcolor##1##2{##2}%
+  }%
+  \pdfstringdef\temppdftitlepdf{\temppdftitle}%
+  \pdfstringdef\temppdfauthorpdf{\temppdfauthor}%
+  \pdfstringdef\temppdfsubjectpdf{\temppdfsubject}%
+  \pdfstringdef\temppdfkeywordspdf{\temppdfkeywords}%
+  \endgroup
+
+  % Set PDF metadata via hyperref (using sanitized values)
   \hypersetup{%
-    pdftitle={\temppdftitle},
-    pdfauthor={\temppdfauthor},
-    pdfsubject={\temppdfsubject},
-    pdfkeywords={\temppdfkeywords},
+    pdftitle={\temppdftitlepdf},
+    pdfauthor={\temppdfauthorpdf},
+    pdfsubject={\temppdfsubjectpdf},
+    pdfkeywords={\temppdfkeywordspdf},
     pdfcreator={LaTeX CV Template System v\templateversion},
     pdfproducer={pdflatex},
   }%
@@ -665,6 +679,29 @@
   \ifx\letterdateexpanded\checkdateauto
     \renewcommand{\letterdate}{\today}%
   \fi
+}
+
+% \setcoverletterlanguage
+%   Sets localized defaults for cover letter strings based on \letterdatelanguage.
+%   Companies can call this after setting \letterdatelanguage, then override fields if needed.
+\newcommand{\setcoverletterlanguage}{%
+  \ifdefstring{\letterdatelanguage}{finnish}{%
+    \renewcommand{\letterclosing}{Kiitos ajastanne}%
+    \renewcommand{\letteropening}{Arvoisa Rekrytointivastaava,}%
+    \renewcommand{\lettertitle}{\ifnotempty{\jobtitle}{Saatekirje - \jobtitle}{Saatekirje}}%
+    \renewcommand{\letterattachment}{Liitteenä: CV}%
+    \renewcommand{\lettersectiontitleabout}{Kuka minä olen?}%
+    \renewcommand{\lettersectiontitlewhycompany}{Miksi \companyname?}%
+    \renewcommand{\lettersectiontitlewhyme}{Miksi minä?}%
+  }{%
+    \renewcommand{\letterclosing}{Sincerely}%
+    \renewcommand{\letteropening}{Dear Hiring Manager,}%
+    \renewcommand{\lettertitle}{\ifnotempty{\jobtitle}{Job Application for \jobtitle}{Job Application}}%
+    \renewcommand{\letterattachment}{Attached: Curriculum Vitae}%
+    \renewcommand{\lettersectiontitleabout}{About Me}%
+    \renewcommand{\lettersectiontitlewhycompany}{Why \companyname?}%
+    \renewcommand{\lettersectiontitlewhyme}{Why Me?}%
+  }%
 }
 
 %-------------------------

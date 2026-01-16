@@ -50,10 +50,14 @@
 %-----------COVER LETTER SETTINGS (COMPANY-SPECIFIC)------------
 \renewcommand{\letterdatelanguage}{finnish}
 \renewcommand{\letterdate}{auto}
+\setcoverletterlanguage
 \renewcommand{\letterclosing}{Ystävällisin terveisin}
 \renewcommand{\letteropening}{Hyvä rekrytointitiimi,}
 \renewcommand{\lettertitle}{Hakemus: Senior Software Engineer}
 \renewcommand{\letterattachment}{Liitteenä: ansioluettelo}
+\renewcommand{\lettersectiontitleabout}{Minusta}
+\renewcommand{\lettersectiontitlewhycompany}{Miksi \companyname?}
+\renewcommand{\lettersectiontitlewhyme}{Miksi juuri minä?}
 
 %-----------LETTER BODY (COMPANY-SPECIFIC)------------
 % Style: headed sections without horizontal rule, content in Finnish.
@@ -65,13 +69,13 @@
 
 \providecommand{\letterbody}{}%
 \renewcommand{\letterbody}{%
-  \lettersection{Minusta}
+  \lettersection{\lettersectiontitleabout}
   Olen kokenut ohjelmisto- ja pilviasiantuntija, joka on työskennellyt useiden globaalien tuotteiden parissa skaalautuvissa ympäristöissä. Nautin monimutkaisten järjestelmien yksinkertaistamisesta, automaation rakentamisesta ja tiimien tukemisesta siten, että he voivat keskittyä arvoa tuottavaan työhön. Yhdistän vahvan teknisen osaamisen käytännönläheiseen asenteeseen ja selkeään viestintään.
 
-  \lettersection{Miksi \companyname?}
+  \lettersection{\lettersectiontitlewhycompany}
   Meta on tunnettu kunnianhimoisista tuotteistaan, massiivisesta mittakaavastaan ja avoimen lähdekoodin yhteisön tukemisesta. Minua motivoi mahdollisuus rakentaa infrastruktuuria ja kehitysympäristöjä, jotka vaikuttavat miljardeihin käyttäjiin ja sadoihin kehittäjätiimeihin. Arvostan myös Metan kulttuuria, jossa dataohjattu päätöksenteko, jatkuva parantaminen ja yhteistyö ovat keskiössä.
 
-  \lettersection{Miksi juuri minä?}
+  \lettersection{\lettersectiontitlewhyme}
   Taustani pilviarkkitehtuurissa, DevOps-käytännöissä ja suurten hajautettujen järjestelmien ylläpidossa sopii hyvin \companyname:n tarpeisiin. Olen johtanut tiimejä, toteuttanut laajoja Kubernetes- ja IaC-ratkaisuja sekä vienyt käyttöön kehittäjien tuottavuutta parantavia työkaluja. Uskon, että voin auttaa Metaa rakentamaan entistä luotettavampia, tehokkaampia ja kehittäjäystävällisempiä palveluja.
 }
 

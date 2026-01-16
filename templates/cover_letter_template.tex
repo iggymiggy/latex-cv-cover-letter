@@ -38,6 +38,9 @@
 % This provides default values for all cover letter fields
 \loadfile{templates/base_config.tex}{}
 
+% Apply localized defaults based on \letterdatelanguage
+\setcoverletterlanguage
+
 % Default letter body (generic lorem ipsum)
 % Companies can override \letterbody in their cover_letter.tex file
 \providecommand{\letterbody}{%
